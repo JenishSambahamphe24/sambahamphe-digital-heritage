@@ -1,0 +1,28 @@
+{
+  "name": "sambahamphe-community",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "format:write": "turbo run format:write",
+    "check": "turbo run check",
+    "typecheck": "turbo run typecheck",
+    "infra:up": "docker compose up -d --wait",
+    "infra:down": "docker compose down",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "catalog:generic",
+    "@commitlint/config-conventional": "catalog:generic",
+    "husky": "catalog:generic",
+    "turbo": "catalog:generic"
+  },
+  "packageManager": "pnpm@10.31.0",
+  "engines": {
+    "node": ">=24"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "@repo/config",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./eslint/base": "./eslint/base.js",
+    "./eslint/node": "./eslint/node.js",
+    "./eslint/api": "./eslint/api.js",
+    "./prettier/base": "./prettier/base.js",
+    "./prettier/node": "./prettier/node.js",
+    "./prettier/api": "./prettier/api.js",
+    "./tsconfig/base.json": "./tsconfig/base.json",
+    "./tsconfig/node.json": "./tsconfig/node.json"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "check": "prettier --write . && eslint --fix ."
+  },
+  "peerDependencies": {
+    "@eslint/js": "catalog:generic",
+    "@ianvs/prettier-plugin-sort-imports": "catalog:generic",
+    "eslint": "catalog:generic",
+    "globals": "catalog:generic",
+    "prettier": "catalog:generic",
+    "typescript": "catalog:generic",
+    "typescript-eslint": "catalog:generic"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    },
+    "typescript-eslint": {
+      "optional": true
+    }
+  }
+}

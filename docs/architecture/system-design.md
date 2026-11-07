@@ -23,7 +23,7 @@ flowchart LR
 
   PG[(PostgreSQL 17)]
   RD[(Redis 7)]
-  S3[(S3-compatible storage<br/>Cloudflare R2 / MinIO in dev)]
+  S3[(S3-compatible storage<br/>Cloudflare R2 / SeaweedFS in dev)]
   MAIL[Transactional email<br/>SMTP provider]
 
   WEB -- server-side fetch / cookies --> API
@@ -317,7 +317,7 @@ Expo + Expo Router, the same `api-client` and `contracts`, bearer-token auth. Re
 
 | Environment | Setup |
 |---|---|
-| **Local dev** | `docker compose up`: Postgres 17, Redis 7, MinIO (S3), Mailpit. Apps run via `pnpm dev` (Turborepo). |
+| **Local dev** | `pnpm infra:up`: Postgres 17, Redis 7.4, SeaweedFS (S3), Mailpit. Apps run via `pnpm dev` (Turborepo). |
 | **CI** | GitHub Actions: install (pnpm cache) → lint → typecheck → unit tests → integration tests (Testcontainers Postgres/Redis) → build → Playwright e2e against compose stack. |
 | **Staging / Production** | Recommended starting point (low cost, simple): one VPS (4 vCPU / 8 GB) running Docker Compose with Caddy (TLS), `api`, `worker`, `web`, `admin`, Redis. **Managed Postgres** (or self-hosted with WAL-G continuous backup to object storage). **Cloudflare R2** for media (no egress fees) behind Cloudflare CDN. |
 
