@@ -38,7 +38,7 @@ Error codes: `400` malformed, `401` unauthenticated, `403` forbidden, `404` not 
 
 ```json
 {
-  "type": "https://sambahamphe.org/problems/validation-error",
+  "type": "urn:sambahamphe:problem:validation_error",
   "title": "Validation failed",
   "status": 422,
   "code": "validation_error",
@@ -52,6 +52,7 @@ Error codes: `400` malformed, `401` unauthenticated, `403` forbidden, `404` not 
 }
 ```
 
+- `type` is a URN (`urn:sambahamphe:problem:<code>`) until the organization has a domain to host problem documentation pages.
 - `code` is a stable machine-readable string clients may switch on (`validation_error`, `version_conflict`, `genealogy_cycle`, `position_already_filled`, `invalid_state_transition`, …).
 - Domain errors map to codes in one place (`core/errors`). Database constraint violations (e.g., exclusion constraint on appointments) are translated to domain codes, never leaked raw.
 - Messages are English; clients localize by `code` where it matters.

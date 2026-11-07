@@ -48,7 +48,9 @@ The database code lives inside `apps/api` (`src/database/`). Bitsky keeps it in 
 
 **Decision.** `packages/contracts` holds Zod schemas for all request/response bodies and enums. NestJS validates with them; OpenAPI 3.1 is generated from them; `packages/api-client` is generated from OpenAPI.
 **Why.** One source of truth usable at runtime on server and client (forms), avoiding class-validator DTOs duplicated by frontend types.
-**Consequences.** We forgo NestJS's decorator-based Swagger in favor of Zod→OpenAPI generation (e.g., `@asteasolutions/zod-to-openapi` or `nestjs-zod`; final library chosen in Phase 1 after a spike).
+**Consequences.** We forgo NestJS's decorator-based Swagger in favor of Zod→OpenAPI generation; the generator library is chosen in M1.3 with the first input-taking endpoints.
+
+**Update (2026-11-07).** NestJS 12 validates Standard Schema objects natively (`@Body({ schema })`, `StandardSchemaValidationPipe`), and Zod 4 is a Standard Schema. Request validation therefore needs **no adapter library** (`nestjs-zod` dropped).
 
 ## ADR-006 — Self-hosted authentication in the API
 
@@ -141,7 +143,9 @@ Short labels on taxonomy/reference data (category names, position titles, unit a
 - Structure is documented externally, so new contributors can learn it from the official docs.
 - Official integrations: throttler, config, terminus (health), BullMQ.
 
-**Consequences.** More concepts to learn up front (decorators, modules, DI). Zod validation needs a small adapter instead of Nest's default `class-validator` (see ADR-005). Express knowledge still applies underneath.
+**Consequences.** More concepts to learn up front (decorators, modules, DI). Zod validation works natively in NestJS 12 (ADR-005). Express knowledge still applies underneath.
+
+**Update (2026-11-07) — NestJS 12, ESM.** NestJS 12 (Aug 2026) ships ESM-only packages. The API is an ESM project (`"type": "module"`, `module: nodenext`, `.js` extensions on relative imports), built with the default `tsc` compiler via `nest build`. Tests run on Vitest with SWC, which keeps the decorator metadata Nest's injection needs.
 
 ## ADR-020 — Genealogy scope: Sambahamphe male line
 
@@ -229,7 +233,7 @@ Rules (service layer, inside the write transaction):
 |---|---|
 | Root + per-app `CLAUDE.md`, app rules blocking | Keeps rules next to the code they govern |
 | pnpm **catalogs**, no literal versions; `packages/*` use `peerDependencies`; one lockfile; no app code at root | Cheap, avoids version drift from day one |
-| `@repo/config` presets (eslint / prettier / tsconfig) with Bitsky's settings: double quotes, semicolons, trailing commas, sorted imports, Tailwind class sorting, strict TS with no-unused | Same formatting at work and here |
+| `@repo/config` presets (eslint / prettier / tsconfig) with Bitsky's settings: double quotes, semicolons, trailing commas, sorted imports, Tailwind class sorting, strict TS with no-unused | Same formatting at work and here. Differences: ESLint **10** (Bitsky's 9 is out of support since Nov 2026), `no-floating-promises` on, `noUncheckedIndexedAccess` on |
 | Helpers = classes with static methods (`<name>.helper.ts`) | One shape for cross-cutting code |
 | Comments only for a non-obvious *why*; no AI-authorship comments, no `console.log` | Readable, honest code |
 | `I`/`T` type prefixes, named exports, function declarations, named `Props` interfaces | Consistency with the maintainer's daily code |
