@@ -1,0 +1,35 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+.next
+out
+build
+coverage
+
+# Caches
+.turbo
+.eslintcache
+*.tsbuildinfo
+
+# Expo
+.expo
+
+# Environment — real values never committed
+.env
+.env.*
+!.env.example
+
+*.local
+
+# Local media uploads / database dumps from dev
+apps/*/uploads/
+*.dump
+
+# OS / editor
+.DS_Store
+
+# Personal, local-only Claude files
+.claude/local/
+**/.claude/worktrees/
