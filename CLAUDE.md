@@ -137,6 +137,7 @@ Detailed rules go in each app's `CLAUDE.md` when it is created. The core shape:
 
 ## Workflow
 
-- **Commits:** Conventional Commits, `type(scope): summary` (enforced by commitlint). Scope is the workspace or domain: `feat(genealogy): …`, `chore(config): …`.
+- **Branches:** `develop` is the main branch. Work happens on short-lived branches named `<type>/<short-description>` (`feat/branch-access`, `chore/monorepo-tooling`) and merges into `develop`.
+- **Commits:** Conventional Commits, `type(scope): summary` (enforced by commitlint). Scope is the workspace or domain: `feat(genealogy): …`, `chore(config): …`. No AI co-author trailers or "generated with" lines in commits or PRs.
 - **One concern per PR.** Fill in the PR template; mark sections that don't apply as `N/A — <reason>`.
 - **Before calling work done:** typecheck, lint and tests pass for affected workspaces, and the behavior was actually exercised. Never report a check as passing unless it was run.

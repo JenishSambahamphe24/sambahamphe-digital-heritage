@@ -64,7 +64,7 @@ The database code lives inside `apps/api` (`src/database/`). Bitsky keeps it in 
 
 ## ADR-008 — S3-compatible object storage with pre-signed uploads
 
-**Decision.** Cloudflare R2 in production (zero egress cost), MinIO locally; clients upload directly via pre-signed URLs; the worker processes files.
+**Decision.** Cloudflare R2 in production (zero egress cost), SeaweedFS locally (MinIO stopped publishing community images in late 2025); clients upload directly via pre-signed URLs; the worker processes files.
 **Consequences.** API servers never stream large files; storage provider swappable (S3 API). Restricted media requires signed GET URLs.
 
 ## ADR-009 — Rich text stored as Tiptap/ProseMirror JSON
@@ -250,7 +250,7 @@ Rules (service layer, inside the write transaction):
 | Coin-as-string money rules | No money in this platform |
 | graphify knowledge graph | Built for a very large codebase; ours is small |
 | `.devops` ECS task definitions | We deploy with Docker Compose on one server (hosting-and-costs) |
-| Release scripts, nightly/production branch guard, package changelogs/versioning | One maintainer, one environment. Use `main` + feature branches; add release tooling only when needed |
+| Release scripts, nightly/production branch guard, package changelogs/versioning | One maintainer, one environment. `develop` is the main branch, with short-lived feature branches merged into it; add release branches and tooling only when needed |
 | Auto-migrate on boot with advisory lock; expand/contract migration rule; read-replica handling | Exist because several backends share one database. We have one API; run `migrate deploy` as a deploy step |
 | CI matrix (separate lint/test/typecheck runners), affected-only filters | One CI job is fast enough at our size |
 | Claude PR-review GitHub workflow | Paid API use; a local review is enough for one developer |

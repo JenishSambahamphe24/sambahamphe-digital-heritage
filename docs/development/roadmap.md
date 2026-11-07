@@ -29,11 +29,11 @@ Decided 2026-11-07: Q-1 (access policy), Q-2 (male line), Q-3 (English + Nepali)
 
 ## Phase 1 — Foundation
 
-**M1.1 Monorepo & tooling**
+**M1.1 Monorepo & tooling** — ✅ done (2026-11-07)
 - git init, pnpm workspace with **catalogs** (`generic`, `fe`, `be`), Turborepo tasks (`dev`, `build`, `lint`, `format`, `format:write`, `check`, `typecheck`, `test`).
 - `@repo/config` presets following Bitsky (ADR-025): eslint (`base`, `node`, `api`, `react`), prettier (`base`, `api`, `react`), tsconfig (`base`, `node`, `react`).
 - commitlint (conventional) + husky (`commit-msg`; `pre-push` runs lint + format). Root `CLAUDE.md`, `.gitattributes`, PR template (already in place).
-- `docker-compose.yml`: Postgres 17, Redis 7, MinIO, Mailpit.
+- `docker-compose.yml`: Postgres 17, Redis 7.4, SeaweedFS (S3), Mailpit; ports bound to 127.0.0.1, overridable via `.env`.
 - GitHub Actions CI: one job (install → lint → format check → typecheck → test) on pull requests.
 
 **M1.2 API skeleton**

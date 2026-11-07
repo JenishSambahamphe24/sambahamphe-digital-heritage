@@ -1,0 +1,53 @@
+# Local development services only. Production runs from
+# infrastructure/deployment and uses Cloudflare R2 instead of SeaweedFS.
+name: sambahamphe
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: sambahamphe
+      POSTGRES_PASSWORD: sambahamphe
+      POSTGRES_DB: sambahamphe
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sambahamphe -d sambahamphe"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7.4-alpine
+    ports:
+      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # S3-compatible object storage. MinIO no longer publishes community images
+  # (source-only since late 2025), so local dev uses SeaweedFS.
+  storage:
+    image: chrislusf/seaweedfs:4.48
+    command: server -dir=/data -s3 -s3.port=8333 -ip.bind=0.0.0.0
+    ports:
+      - "127.0.0.1:${S3_PORT:-8333}:8333"
+    volumes:
+      - storage-data:/data
+
+  mail:
+    image: axllent/mailpit:v1.32.0
+    ports:
+      - "127.0.0.1:${SMTP_PORT:-1025}:1025"
+      - "127.0.0.1:${MAILPIT_UI_PORT:-8025}:8025"
+
+volumes:
+  postgres-data:
+  redis-data:
+  storage-data:

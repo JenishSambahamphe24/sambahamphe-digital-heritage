@@ -1,0 +1,25 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Never install a release younger than 14 days (in minutes). Most hijacked npm
+# releases are caught and pulled within that window.
+minimumReleaseAge: 20160
+
+# Every dependency version lives here. Reference with "catalog:<name>" in a
+# package.json; never write a literal version (CLAUDE.md). Add `fe` and `be`
+# catalogs when the first frontend / backend workspace needs them.
+catalogs:
+  generic:
+    "@commitlint/cli": ^21.2.0
+    "@commitlint/config-conventional": ^21.2.0
+    "@eslint/js": ^9.39.0
+    "@ianvs/prettier-plugin-sort-imports": ^4.7.1
+    "@types/node": ^24.0.0
+    eslint: ^9.39.0
+    globals: ^16.0.0
+    husky: ^9.1.7
+    prettier: ^3.9.0
+    turbo: ^2.11.0
+    typescript: ~5.9.3
+    typescript-eslint: ^8.60.0
