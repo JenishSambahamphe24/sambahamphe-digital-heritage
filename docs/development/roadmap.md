@@ -51,13 +51,14 @@ Decided 2026-11-07: Q-1 (access policy), Q-2 (male line), Q-3 (English + Nepali)
 - Audit interceptor.
 - Tests: auth flows, token reuse, permission matrix.
 
-**M1.4 Shared packages**
-- `contracts` (common schemas: pagination, problem, FuzzyDate, LocalizedText).
-- `dates`: BS↔AD conversion with exhaustive tests against a reference table; FuzzyDate normalization.
-- `api-client` generation pipeline.
-- `ui`: tokens, typography (Latin/Devanagari/Limbu fonts), buttons, forms, layout primitives.
+**M1.4 Shared packages** — ✅ done (2026-11-09)
+- `@repo/dates`: BS↔AD conversion (1970–2090 BS), verified against 30,572 reference pairs; FuzzyDate validation, normalization and en/ne formatting.
+- `@repo/contracts`: the API's Zod request/response schemas, problem details, pagination.
+- OpenAPI from the same schemas, committed spec with a freshness test, `/api/docs` outside production; `@repo/api-client` typed client.
+- `ui` moved to M1.5, where the first frontend uses it.
 
 **M1.5 Web & admin shells**
+- `@repo/ui`: tokens, typography (Latin/Devanagari/Limbu fonts), buttons, forms, layout primitives — built alongside the first screens that use them.
 - `web`: App Router, locales (`en`, `ne`), layout, header/footer, home/about placeholders driven by real API health only (no fake content), SEO basics.
 - `admin`: login, session handling, navigation shell, user list & role assignment screens.
 - Playwright: login journey.
