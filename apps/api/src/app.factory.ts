@@ -3,10 +3,12 @@ import type { NestExpressApplication } from "@nestjs/platform-express";
 
 import { RequestMethod, StandardSchemaValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
+import { SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
 import { Logger } from "nestjs-pino";
 
 import { AppModule } from "./app.module.js";
+import { DOCS_PATH, OpenApiHelper } from "./core/openapi/openapi.helper.js";
 import { ValidationExceptionHelper } from "./core/validation/validation-exception.helper.js";
 
 export const API_PREFIX = "api/v1";
@@ -38,6 +40,11 @@ export class AppFactory {
     );
     app.setGlobalPrefix(API_PREFIX, { exclude: UNPREFIXED_ROUTES });
     app.enableShutdownHooks();
+    // The spec is public anyway (committed in packages/api-client), but the
+    // interactive explorer has no place on the production site.
+    if (env.NODE_ENV !== "production") {
+      SwaggerModule.setup(DOCS_PATH, app, () => OpenApiHelper.createDocument(app));
+    }
     return app;
   }
 }
