@@ -11,6 +11,9 @@
     "format:write": "turbo run format:write",
     "check": "turbo run check",
     "typecheck": "turbo run typecheck",
+    "db:generate": "pnpm --filter api db:generate",
+    "db:migrate": "pnpm --filter api db:migrate",
+    "db:studio": "pnpm --filter api db:studio",
     "infra:up": "docker compose up -d --wait",
     "infra:down": "docker compose down",
     "prepare": "husky"

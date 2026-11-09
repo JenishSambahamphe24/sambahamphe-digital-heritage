@@ -36,12 +36,16 @@ Decided 2026-11-07: Q-1 (access policy), Q-2 (male line), Q-3 (English + Nepali)
 - `docker-compose.yml`: Postgres 17, Redis 7.4, SeaweedFS (S3), Mailpit; ports bound to 127.0.0.1, overridable via `.env`.
 - GitHub Actions CI: one job (install → lint → format check → typecheck → test) on pull requests.
 
-**M1.2 API skeleton**
-- NestJS app with http + worker entrypoints, Zod env validation, pino logging, request IDs, problem+json error filter, health checks, Zod validation pipe, OpenAPI generation spike (choose library).
-- Drizzle setup (drizzle-kit, schema-per-table), first migration (extensions, `users`, auth tables, roles/permissions, `audit_log`, `outbox`), seed script for system roles/permissions.
-- Testcontainers integration-test harness.
+**M1.2 API skeleton** — ✅ done (2026-11-07)
+- NestJS 12 (ESM) app, Zod env validation (refuses to start on bad config), pino logging with request IDs, problem+json error filter, `/health/live` + `/health/ready`.
+- Drizzle setup (drizzle-kit, schema-per-table), first custom migration enabling `citext`, `pg_trgm`, `unaccent`, `btree_gist`.
+- Testcontainers integration-test harness (`TestDatabase`), Vitest + SWC.
+- Moved to M1.3, where they get their first real use: worker entrypoint + Redis/BullMQ, request validation and OpenAPI generation, `users`/auth/roles tables, `audit_log`, `outbox`, role seeds.
 
 **M1.3 Auth & access**
+- Tables: `users`, `auth_sessions`, `one_time_tokens`, `roles`, `permissions`, `role_assignments`, `audit_log`, `outbox`; seed system roles and permissions.
+- Worker entrypoint (BullMQ on Redis) with the first job: sending verification and reset emails (Mailpit locally).
+- Request validation with NestJS 12 Standard Schema + Zod; choose the Zod→OpenAPI generator and serve docs in non-production.
 - Register with email or phone (ADR-024; SMS behind a provider interface, enabled once Q-16 is settled), verify email/phone, login, refresh rotation with reuse detection, logout, password reset; rate limiting.
 - RBAC guard + scoped policy service (org-unit/branch scopes stubbed until those tables exist).
 - Audit interceptor.
