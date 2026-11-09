@@ -64,17 +64,18 @@ create table users (
   -- the link to a family-tree person lives in user_person_links (ADR-022), never on this table
 );
 
-create table auth_sessions (
-  id                 uuid primary key,
-  user_id            uuid not null references users,
-  family_id          uuid not null,                -- rotation chain; reuse → revoke family
-  refresh_token_hash text not null unique,         -- sha-256 of opaque token
-  client             auth_client not null,         -- web | admin | mobile
-  user_agent         text,
-  ip_hash            text,
-  expires_at         timestamptz not null,
-  revoked_at         timestamptz,
-  replaced_by_id     uuid references auth_sessions,
+create table auth_sessions (                       -- server-side sessions (ADR-006)
+  id                  uuid primary key,
+  user_id             uuid not null references users,
+  token_hash          text not null unique,         -- sha-256 of the 256-bit session token
+  client              auth_client not null,         -- web | admin | mobile
+  user_agent          text,
+  ip_hash             text,
+  last_seen_at        timestamptz not null,
+  idle_expires_at     timestamptz not null,         -- slides with use
+  absolute_expires_at timestamptz not null,         -- hard cap, never extended
+  revoked_at          timestamptz,
+  revoked_reason      text,                         -- logout | logout_all | password_reset | admin
   created_at
 );
 create index on auth_sessions (user_id) where revoked_at is null;

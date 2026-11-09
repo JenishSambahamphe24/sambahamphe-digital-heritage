@@ -55,8 +55,18 @@ The database code lives inside `apps/api` (`src/database/`). Bitsky keeps it in 
 ## ADR-006 — Self-hosted authentication in the API
 
 **Context.** Options: Auth0/Clerk (cost, vendor lock-in for a long-lived archive), Keycloak (heavy to operate), Auth.js (tied to Next.js, not suitable for mobile + NestJS as the authority), own implementation.
-**Decision.** Implement auth in NestJS: argon2id passwords, short-lived EdDSA JWT access tokens, rotating hashed refresh tokens, cookie transport for web/admin, bearer for mobile. Add OAuth (Google) later via a standard library.
-**Consequences.** We own security-sensitive code; it is kept small, follows OWASP ASVS L2 guidance, and gets dedicated tests. No per-user vendor cost; users are stored with the rest of the archive.
+**Decision.** Implement auth in NestJS with **server-side sessions** (revised 2026-11-09, replacing the earlier JWT + refresh-token design):
+- argon2id password hashing;
+- login creates a row in `auth_sessions` and returns one random 256-bit session token; only its SHA-256 hash is stored;
+- every authenticated request looks the hash up (indexed) and checks expiry and revocation;
+- transport: an `HttpOnly; Secure; SameSite=Lax` cookie for the browser apps (`sid` public, `admin_sid` admin), `Authorization: Bearer` for mobile;
+- members' sessions slide for 30 days; admin sessions expire after 2 hours idle or 12 hours absolute;
+- CSRF: the API is served under each frontend's own origin, so cookies are host-only. Unsafe methods require an allow-listed `Origin` and a JSON body (cross-site HTML forms can't send JSON), on top of SameSite=Lax;
+- OAuth (Google) later via a standard library.
+
+**Why sessions instead of JWT + refresh.** One backend means a JWT's main benefit (verification without a central lookup) doesn't apply. Revocation must be **immediate** for an archive of living people's data: a removed editor or revoked branch access stops on the next request, not when a token expires. Sessions also remove signing-key management, refresh endpoints, reuse detection and client-side refresh races. The cost is one indexed lookup per request, negligible at this scale and cacheable in Redis if ever needed.
+
+**Consequences.** We own security-sensitive code; it is kept small, follows OWASP ASVS L2 guidance, and gets dedicated tests. No per-user vendor cost; users are stored with the rest of the archive. Users can list and revoke their own sessions (devices).
 
 ## ADR-007 — Separate admin app
 
