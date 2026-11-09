@@ -130,7 +130,7 @@ Controllers contain no business logic (brief §11.14). Domain logic that has no 
 - **Web/admin:** the token in an `HttpOnly; Secure; SameSite=Lax` cookie. CSRF: unsafe methods require an allow-listed `Origin` header and a JSON body.
 - **Mobile:** same endpoints with `X-Client: mobile`; the token is returned in the body, kept in Expo SecureStore and sent as `Authorization: Bearer`.
 - **Lifetimes:** member sessions slide for 30 days (the expiry is extended at most once a minute to avoid a write per request); admin sessions end after 2 h idle or 12 h absolute.
-- Rate limiting on login/reset/registration (Redis-backed `@nestjs/throttler`), plus account lockout backoff.
+- Rate limiting per client IP on login, registration, verification and reset (`@nestjs/throttler`, 10/min; 300/min default). Counters are **in memory**, correct for our single API instance; several instances would need shared Redis storage (the Redis storage adapter did not yet support NestJS 12 in Nov 2026). Per-account lockout backoff is a later addition.
 
 ### 4.2 Authorization
 
@@ -183,7 +183,7 @@ Two complementary mechanisms:
 | `imports` | genealogy CSV/GEDCOM import (staged into change requests) |
 | `maintenance` | expire announcements, purge expired sessions, refresh search materializations |
 
-Jobs are idempotent and retried with exponential backoff. Domain writes that must trigger jobs use a **transactional outbox** table so a job is never enqueued for a transaction that rolled back.
+Jobs are idempotent and retried with exponential backoff. Domain writes that must trigger jobs use a **transactional outbox** table so a job is never enqueued for a transaction that rolled back. The worker polls it every second (`FOR UPDATE SKIP LOCKED`), adds each row to BullMQ with the row id as job id (duplicates are ignored), then deletes the row. Payloads can contain one-time links, so nothing is kept after hand-off, and finished jobs are removed from Redis.
 
 ### 4.7 Internationalization
 
