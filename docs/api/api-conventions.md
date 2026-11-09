@@ -149,7 +149,7 @@ Redis-backed. Default 300 req/min per IP for anonymous reads, 600/min per user; 
 | Area | Endpoints (abridged) |
 |---|---|
 | Auth | `POST /auth/register` (email and/or phone), `/auth/verify-phone`, `/auth/resend-code`, `/auth/login` (email or phone), `/auth/logout`, `GET /me/sessions`, `DELETE /me/sessions/{id}`, `/auth/verify-email`, `/auth/password-reset`, `/auth/password-reset/confirm`; `GET /me` |
-| Users & access | `GET/PATCH /admin/users/{id}`, `POST /admin/users/{id}/verify-member`, `GET/POST /admin/roles`, `POST /admin/role-assignments`, `DELETE /admin/role-assignments/{id}` |
+| Users & access | `GET /admin/users?q=&page=&pageSize=` (offset paging), `GET /admin/users/{id}/role-assignments`, `GET /admin/roles` (system roles + permissions; synced from code), `POST /admin/role-assignments` (`{ userId, roleKey, scopeType, orgUnitId?, branchId?, expiresAt? }`), `DELETE /admin/role-assignments/{id}`. Verified family membership is branch access (ADR-021), not a user flag.
 | Persons | `GET /persons?q=&branchId=&clanId=`, `GET /persons/{id}`, `GET /persons/{id}/family` (parents, unions, children, siblings), `GET /persons/{id}/history` (revisions) |
 | Identity claims | `POST /identity-claims/lookup` (name + father's name + birth year → ≤3 masked matches, 10/day), `POST /identity-claims`, `GET /me/identity-claims`, `GET /admin/identity-claims?status=requested`, `POST /admin/identity-claims/{id}/approve` (option `grantBranchAccess`, default true), `/reject`, `/revoke` |
 | My family tree | `GET /me/family` (own record's family unit), `POST /me/family/members` (relationship + person data → creates a change request; returns duplicate candidates first if any) |
@@ -164,7 +164,7 @@ Redis-backed. Default 300 req/min per IP for anonymous reads, 600/min per user; 
 | Events | `GET /events?when=upcoming|past&categoryId=&orgUnitId=`, `GET /events/by-slug/{locale}/{slug}`, `POST/PATCH /events`, `POST /events/{id}/cancel` |
 | Media | `POST /media/uploads`, `POST /media/{id}/complete`, `GET /media?q=&kind=`, `PATCH /media/{id}`, `GET /galleries`, `GET /galleries/{slug}`, `PUT /galleries/{id}/items` |
 | Search | `GET /search?q=&types=content,persons,events` |
-| Audit | `GET /admin/audit-log?entityType=&entityId=&actorId=` |
+| Audit | `GET /admin/audit-log?entityType=&entityId=&actorId=&action=&cursor=&limit=` (cursor paging, newest first) |
 | Health | `GET /health/live`, `GET /health/ready` |
 
 Genealogy writes are **not** exposed as direct `POST /persons` / `POST /parent-child` endpoints; they are change-request operations (ADR-012). Editors' UI submits a change request that auto-approves.

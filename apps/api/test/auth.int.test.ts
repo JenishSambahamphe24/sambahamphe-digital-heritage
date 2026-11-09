@@ -3,6 +3,7 @@ import type { App } from "supertest/types.js";
 import request from "supertest";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
+import { RoleAssignmentsService } from "../src/modules/access/application/role-assignments.service.js";
 import { AUTH_RATE_LIMIT } from "../src/modules/auth/auth.constants.js";
 import { TEST_ADMIN_ORIGIN, TEST_WEB_ORIGIN } from "./support/test-env.js";
 import { TestMailbox } from "./support/test-mailbox.js";
@@ -221,6 +222,12 @@ describe("login and sessions", () => {
     const ip = freshIp();
     const email = uniqueEmail("admin");
     await registerAndVerify(email, ip);
+    const [user] = await stack.database.query<{ id: string }>(
+      `select id from users where email = '${email}'`,
+    );
+    await stack.app
+      .get(RoleAssignmentsService)
+      .assign(null, { userId: user?.id ?? "", roleKey: "contributor", scopeType: "global" });
 
     const login = await request(server)
       .post(`${API}/auth/login`)

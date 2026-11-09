@@ -3,7 +3,9 @@ import type { TSessionRow } from "../internal/sessions.repository.js";
 
 import { Injectable } from "@nestjs/common";
 
+import { AuditService } from "../../../core/audit/audit.service.js";
 import { AppConfig } from "../../../core/config/app-config.js";
+import { DatabaseService } from "../../../core/database/database.service.js";
 import { IpHashHelper } from "../../../core/security/ip-hash.helper.js";
 import { SessionPolicyHelper } from "../domain/session-policy.helper.js";
 import { TokenHelper } from "../domain/token.helper.js";
@@ -19,6 +21,8 @@ export class SessionService {
   constructor(
     private readonly sessions: SessionsRepository,
     private readonly config: AppConfig,
+    private readonly audit: AuditService,
+    private readonly database: DatabaseService,
   ) {}
 
   async create(userId: string, client: TAuthClient, meta: IRequestMeta): Promise<ICreatedSession> {
@@ -50,7 +54,22 @@ export class SessionService {
   }
 
   revoke(sessionId: string, userId: string, reason: string): Promise<boolean> {
-    return this.sessions.revoke(sessionId, userId, reason);
+    return this.database.db.transaction(async (tx) => {
+      const revoked = await this.sessions.revoke(sessionId, userId, reason, tx);
+      if (revoked) {
+        await this.audit.record(
+          {
+            action: "auth.session_revoked",
+            entityType: "session",
+            entityId: sessionId,
+            actorId: userId,
+            changes: { reason },
+          },
+          tx,
+        );
+      }
+      return revoked;
+    });
   }
 
   listActive(userId: string): Promise<TSessionRow[]> {

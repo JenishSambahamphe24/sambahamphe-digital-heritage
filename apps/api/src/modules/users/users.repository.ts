@@ -1,7 +1,7 @@
 import type { TDbExecutor } from "../../core/database/database.types.js";
 
 import { Injectable } from "@nestjs/common";
-import { eq } from "drizzle-orm";
+import { asc, count, eq, ilike, or } from "drizzle-orm";
 
 import { DatabaseService } from "../../core/database/database.service.js";
 import { users } from "../../core/database/schema/index.js";
@@ -44,6 +44,29 @@ export class UsersRepository {
     executor: TDbExecutor = this.database.db,
   ): Promise<void> {
     await executor.update(users).set({ passwordHash }).where(eq(users.id, id));
+  }
+
+  async list(query: {
+    q?: string;
+    offset: number;
+    limit: number;
+  }): Promise<{ rows: TUserRow[]; total: number }> {
+    // Escape LIKE wildcards so a search for "_" matches an underscore, not everything.
+    const pattern = query.q ? `%${query.q.replace(/[\\%_]/g, (match) => `\\${match}`)}%` : null;
+    const where = pattern
+      ? or(ilike(users.email, pattern), ilike(users.displayName, pattern))
+      : undefined;
+    const [rows, totals] = await Promise.all([
+      this.database.db
+        .select()
+        .from(users)
+        .where(where)
+        .orderBy(asc(users.createdAt))
+        .offset(query.offset)
+        .limit(query.limit),
+      this.database.db.select({ total: count() }).from(users).where(where),
+    ]);
+    return { rows, total: totals[0]?.total ?? 0 };
   }
 
   async touchLastLogin(id: string): Promise<void> {

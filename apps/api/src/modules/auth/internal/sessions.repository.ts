@@ -58,8 +58,13 @@ export class SessionsRepository {
       .where(eq(authSessions.id, id));
   }
 
-  async revoke(id: string, userId: string, reason: string): Promise<boolean> {
-    const revoked = await this.database.db
+  async revoke(
+    id: string,
+    userId: string,
+    reason: string,
+    executor: TDbExecutor = this.database.db,
+  ): Promise<boolean> {
+    const revoked = await executor
       .update(authSessions)
       .set({ revokedAt: new Date(), revokedReason: reason })
       .where(

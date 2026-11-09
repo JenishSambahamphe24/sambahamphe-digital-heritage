@@ -34,6 +34,20 @@ Small modules stay flat (`health/`). A module with real business logic uses the 
 - Auth-sensitive public endpoints add `@Throttle({ default: AUTH_RATE_LIMIT })`.
 - Never reveal whether an email exists: registration, resend and reset answer `202 { status: "check_email" }` either way.
 
+## Access control
+
+- Permissions and system roles are defined in `modules/access/access.catalog.ts` and synced to the database at startup. Add a permission there; never insert one by hand.
+- `@RequirePermission(PERMISSION.x)` on a route checks a **global** grant. Checks about a specific board or branch go in the service: `accessService.can(request, permission, { orgUnitPath, branchPath })`.
+- `super_admin` holds every permission implicitly. Only a super admin can grant or revoke it, and the last one can't be removed.
+- The admin CMS (`X-Client: admin`) requires at least one active role, checked at login and on every request.
+- First super admin: `pnpm --filter api build && pnpm --filter api admin:bootstrap --email <verified address>` (refuses once one exists).
+
+## Audit
+
+- Record domain events with `audit.record({ action, entityType, entityId, changes }, tx)` **inside the transaction of the change**. Actor, request id, hashed IP and user agent are filled in from the request context.
+- `changes` holds ids, keys and statuses only — never names, emails, phones or birth dates.
+- `audit_log` is append-only, enforced by a database trigger.
+
 ## Background work (worker)
 
 - `src/worker.ts` is a second entrypoint (no HTTP). `pnpm --filter api dev:worker` runs it; root `pnpm dev` runs API and worker together.

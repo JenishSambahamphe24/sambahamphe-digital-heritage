@@ -9,11 +9,14 @@ import type { TTokenPurpose } from "../internal/one-time-tokens.repository.js";
 
 import { HttpStatus, Injectable } from "@nestjs/common";
 
+import { AuditService } from "../../../core/audit/audit.service.js";
 import { AppConfig } from "../../../core/config/app-config.js";
+import { DatabaseErrorHelper } from "../../../core/database/database-error.helper.js";
 import { DatabaseService } from "../../../core/database/database.service.js";
 import { AppException } from "../../../core/errors/app.exception.js";
 import { OutboxService } from "../../../core/outbox/outbox.service.js";
 import { OUTBOX_TOPIC } from "../../../core/outbox/outbox.topics.js";
+import { AccessService } from "../../access/application/access.service.js";
 import { UserResponseHelper } from "../../users/user-response.helper.js";
 import { UsersRepository } from "../../users/users.repository.js";
 import { EMAIL_VERIFICATION_TTL_MS, PASSWORD_RESET_TTL_MS } from "../auth.constants.js";
@@ -25,7 +28,6 @@ import { SessionService } from "./session.service.js";
 
 const VERIFY_EMAIL_PATH = "/verify-email";
 const RESET_PASSWORD_PATH = "/reset-password";
-const UNIQUE_VIOLATION = "23505";
 
 export interface ILoginResult {
   user: TUserResponse;
@@ -43,6 +45,8 @@ export class AuthService {
     private readonly sessions: SessionService,
     private readonly outbox: OutboxService,
     private readonly config: AppConfig,
+    private readonly audit: AuditService,
+    private readonly access: AccessService,
   ) {}
 
   async register(request: TRegisterRequest): Promise<void> {
@@ -64,11 +68,15 @@ export class AuthService {
           tx,
         );
         await this.sendTokenEmail(tx, user, "email_verification");
+        await this.audit.record(
+          { action: "auth.registered", entityType: "user", entityId: user.id },
+          tx,
+        );
       });
     } catch (error) {
       // Two simultaneous sign-ups with one email: the loser hits the unique
       // index. Answer exactly as for an existing account.
-      if (!AuthService.isUniqueViolation(error)) {
+      if (!DatabaseErrorHelper.isUniqueViolation(error)) {
         throw error;
       }
     }
@@ -89,6 +97,15 @@ export class AuthService {
     await this.database.db.transaction(async (tx) => {
       const row = await this.consumeToken(tx, token, "email_verification");
       await this.users.markEmailVerified(row.userId, tx);
+      await this.audit.record(
+        {
+          action: "auth.email_verified",
+          entityType: "user",
+          entityId: row.userId,
+          actorId: row.userId,
+        },
+        tx,
+      );
     });
   }
 
@@ -103,6 +120,13 @@ export class AuthService {
       : await PasswordHelper.verifyAgainstDummy(request.password);
 
     if (!user || !passwordOk) {
+      // Never record the attempted email: it may be a typo of someone else's
+      // address, or not an email at all.
+      await this.audit.record({
+        action: "auth.login_failed",
+        entityType: user ? "user" : undefined,
+        entityId: user?.id ?? null,
+      });
       throw new AppException(
         HttpStatus.UNAUTHORIZED,
         "invalid_credentials",
@@ -119,8 +143,24 @@ export class AuthService {
       );
     }
 
+    if (client === "admin" && !(await this.access.hasAnyRole(user.id))) {
+      throw new AppException(
+        HttpStatus.FORBIDDEN,
+        "admin_access_required",
+        "Admin access required",
+        "This account has no role in the admin system.",
+      );
+    }
+
     const { token, session } = await this.sessions.create(user.id, client, meta);
     await this.users.touchLastLogin(user.id);
+    await this.audit.record({
+      action: "auth.login_succeeded",
+      entityType: "session",
+      entityId: session.id,
+      actorId: user.id,
+      changes: { client },
+    });
     return { user: UserResponseHelper.fromRow(user), token, expiresAt: session.absoluteExpiresAt };
   }
 
@@ -132,6 +172,10 @@ export class AuthService {
       }
       await this.tokens.invalidateOutstanding(user.id, "password_reset", tx);
       await this.sendTokenEmail(tx, user, "password_reset");
+      await this.audit.record(
+        { action: "auth.password_reset_requested", entityType: "user", entityId: user.id },
+        tx,
+      );
     });
   }
 
@@ -143,6 +187,15 @@ export class AuthService {
       // The reset link proves control of the inbox.
       await this.users.markEmailVerified(row.userId, tx);
       await this.sessionRows.revokeAllForUser(row.userId, "password_reset", tx);
+      await this.audit.record(
+        {
+          action: "auth.password_reset_completed",
+          entityType: "user",
+          entityId: row.userId,
+          actorId: row.userId,
+        },
+        tx,
+      );
     });
   }
 
@@ -207,15 +260,5 @@ export class AuthService {
       params: { displayName: user.displayName, ...params },
     };
     await this.outbox.enqueue(tx, OUTBOX_TOPIC.sendEmail, job);
-  }
-
-  private static isUniqueViolation(error: unknown): boolean {
-    const cause = error instanceof Error && "cause" in error ? error.cause : error;
-    return (
-      typeof cause === "object" &&
-      cause !== null &&
-      "code" in cause &&
-      cause.code === UNIQUE_VIOLATION
-    );
   }
 }

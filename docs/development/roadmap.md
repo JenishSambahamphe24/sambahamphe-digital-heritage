@@ -42,7 +42,7 @@ Decided 2026-11-07: Q-1 (access policy), Q-2 (male line), Q-3 (English + Nepali)
 - Testcontainers integration-test harness (`TestDatabase`), Vitest + SWC.
 - Moved to M1.3, where they get their first real use: worker entrypoint + Redis/BullMQ, request validation and OpenAPI generation, `users`/auth/roles tables, `audit_log`, `outbox`, role seeds.
 
-**M1.3 Auth & access**
+**M1.3 Auth & access** — ✅ done (2026-11-09)
 - Tables: `users`, `auth_sessions`, `one_time_tokens`, `roles`, `permissions`, `role_assignments`, `audit_log`, `outbox`; seed system roles and permissions.
 - Worker entrypoint (BullMQ on Redis) with the first job: sending verification and reset emails (Mailpit locally).
 - Request validation with NestJS 12 Standard Schema + Zod; choose the Zod→OpenAPI generator and serve docs in non-production.

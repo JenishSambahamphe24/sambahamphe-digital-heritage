@@ -170,7 +170,7 @@ Mapping to the [genealogy access policy](../product/genealogy-access-policy.md) 
 
 Two complementary mechanisms:
 
-- **`audit_log`** — every write: actor, action, entity, before/after diff, request ID, IP hash. Append-only (DB role has `INSERT`/`SELECT` only). Answers "who did what, when".
+- **`audit_log`** — named domain events (`auth.login_failed`, `role.assigned`, later `person.updated`…): actor, action, entity, a small `changes` object with ids/keys only, request ID, IP hash. Written by services **inside the transaction of the change** (`AuditService.record(event, tx)`); request details come from a per-request context (`AsyncLocalStorage`). A generic "log every write request" interceptor was considered and dropped: its entries only say "`POST /x` happened", which the request log already shows. **Append-only is enforced by a database trigger** that rejects `UPDATE`, `DELETE` and `TRUNCATE`, so it holds even for scripts and console sessions. Answers "who did what, when".
 - **Entity revisions** — for genealogy records and content: full snapshots per version, used for diff, restore and the change-request base-version check. Answers "what did this record look like at version n".
 
 ### 4.6 Background jobs (BullMQ)
