@@ -1,7 +1,7 @@
-import type { TUserResponse } from "./dto/user.response.dto.js";
 import type { TUserRow } from "./users.repository.js";
+import type { TUserResponse } from "@repo/contracts";
 
-import { userResponseSchema } from "./dto/user.response.dto.js";
+import { userResponseSchema } from "@repo/contracts";
 
 export class UserResponseHelper {
   static fromRow(row: TUserRow): TUserResponse {

@@ -1,14 +1,25 @@
 import type { IAuthContext, IRequestMeta } from "../auth.types.js";
-import type { TConfirmPasswordResetRequest } from "./dto/confirm-password-reset.request.dto.js";
-import type { TEmailRequest } from "./dto/email.request.dto.js";
-import type { TLoginRequest } from "./dto/login.request.dto.js";
-import type { TLoginResponse } from "./dto/login.response.dto.js";
-import type { TRegisterRequest } from "./dto/register.request.dto.js";
-import type { TTokenRequest } from "./dto/token.request.dto.js";
+import type {
+  TConfirmPasswordResetRequest,
+  TEmailRequest,
+  TLoginRequest,
+  TLoginResponse,
+  TRegisterRequest,
+  TTokenRequest,
+} from "@repo/contracts";
 import type { Request, Response } from "express";
 
 import { Body, Controller, HttpCode, HttpStatus, Post, Req, Res } from "@nestjs/common";
 import { Throttle } from "@nestjs/throttler";
+
+import {
+  confirmPasswordResetRequestSchema,
+  emailRequestSchema,
+  loginRequestSchema,
+  loginResponseSchema,
+  registerRequestSchema,
+  tokenRequestSchema,
+} from "@repo/contracts";
 
 import { AppConfig } from "../../../core/config/app-config.js";
 import { AuthService } from "../application/auth.service.js";
@@ -18,12 +29,6 @@ import { AuthClientHelper } from "../domain/auth-client.helper.js";
 import { SessionCookieHelper } from "../domain/session-cookie.helper.js";
 import { CurrentAuth } from "../guards/current-auth.decorator.js";
 import { Public } from "../guards/public.decorator.js";
-import { confirmPasswordResetRequestSchema } from "./dto/confirm-password-reset.request.dto.js";
-import { emailRequestSchema } from "./dto/email.request.dto.js";
-import { loginRequestSchema } from "./dto/login.request.dto.js";
-import { loginResponseSchema } from "./dto/login.response.dto.js";
-import { registerRequestSchema } from "./dto/register.request.dto.js";
-import { tokenRequestSchema } from "./dto/token.request.dto.js";
 
 const CHECK_EMAIL = { status: "check_email" } as const;
 const STRICT_LIMIT = { default: AUTH_RATE_LIMIT };

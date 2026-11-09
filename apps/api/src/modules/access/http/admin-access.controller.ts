@@ -1,10 +1,14 @@
 import type { IAuthContext } from "../../auth/auth.types.js";
-import type { TAssignRoleRequest } from "./dto/assign-role.request.dto.js";
-import type { TIdParams } from "./dto/id.params.dto.js";
-import type { TRoleAssignmentResponse } from "./dto/role-assignment.response.dto.js";
-import type { TRoleResponse } from "./dto/role.response.dto.js";
+import type {
+  TAssignRoleRequest,
+  TIdParams,
+  TRoleAssignmentResponse,
+  TRoleResponse,
+} from "@repo/contracts";
 
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post } from "@nestjs/common";
+
+import { assignRoleRequestSchema, idParamsSchema, roleResponseSchema } from "@repo/contracts";
 
 import { CurrentAuth } from "../../auth/guards/current-auth.decorator.js";
 import { PERMISSION } from "../access.catalog.js";
@@ -12,9 +16,6 @@ import { RoleAssignmentsService } from "../application/role-assignments.service.
 import { RequirePermission } from "../guards/require-permission.decorator.js";
 import { AccessRepository } from "../internal/access.repository.js";
 import { RoleAssignmentResponseHelper } from "../role-assignment-response.helper.js";
-import { assignRoleRequestSchema } from "./dto/assign-role.request.dto.js";
-import { idParamsSchema } from "./dto/id.params.dto.js";
-import { roleResponseSchema } from "./dto/role.response.dto.js";
 
 @Controller("admin")
 export class AdminAccessController {

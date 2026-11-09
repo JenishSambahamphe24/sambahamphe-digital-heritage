@@ -189,6 +189,9 @@ importers:
       '@node-rs/argon2':
         specifier: catalog:be
         version: 2.2.2
+      '@repo/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       bullmq:
         specifier: catalog:be
         version: 6.4.2(ioredis@6.0.0)(pg@8.23.1)
@@ -331,6 +334,39 @@ importers:
       typescript-eslint:
         specifier: catalog:generic
         version: 8.72.0(eslint@10.13.0(jiti@2.7.0))(typescript@5.9.3)
+
+  packages/contracts:
+    devDependencies:
+      '@eslint/js':
+        specifier: catalog:generic
+        version: 10.0.1(eslint@10.13.0(jiti@2.7.0))
+      '@ianvs/prettier-plugin-sort-imports':
+        specifier: catalog:generic
+        version: 4.7.1(prettier@3.9.10)
+      '@repo/config':
+        specifier: workspace:*
+        version: link:../config
+      '@types/node':
+        specifier: catalog:generic
+        version: 24.19.2
+      eslint:
+        specifier: catalog:generic
+        version: 10.13.0(jiti@2.7.0)
+      globals:
+        specifier: catalog:generic
+        version: 16.5.0
+      prettier:
+        specifier: catalog:generic
+        version: 3.9.10
+      typescript:
+        specifier: catalog:generic
+        version: 5.9.3
+      typescript-eslint:
+        specifier: catalog:generic
+        version: 8.72.0(eslint@10.13.0(jiti@2.7.0))(typescript@5.9.3)
+      zod:
+        specifier: catalog:generic
+        version: 4.6.7
 
   packages/dates:
     devDependencies:

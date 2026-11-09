@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { userResponseSchema } from "../../../users/dto/user.response.dto.js";
+import { userResponseSchema } from "../users/user.response.dto.js";
 
 export const loginResponseSchema = z.object({
   user: userResponseSchema,

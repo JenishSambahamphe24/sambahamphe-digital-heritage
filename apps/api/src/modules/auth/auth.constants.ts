@@ -23,10 +23,5 @@ export const SESSION_TOKEN_BYTES = 32;
 export const EMAIL_VERIFICATION_TTL_MS = DAY_MS;
 export const PASSWORD_RESET_TTL_MS = HOUR_MS;
 
-export const PASSWORD_MIN_LENGTH = 10;
-// argon2 cost grows with input; capping it stops multi-megabyte "passwords"
-// from being used to burn CPU.
-export const PASSWORD_MAX_LENGTH = 128;
-
 export const AUTH_RATE_LIMIT = { limit: 10, ttl: MINUTE_MS } as const;
 export const DEFAULT_RATE_LIMIT = { limit: 300, ttl: MINUTE_MS } as const;

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { PASSWORD_MAX_LENGTH } from "../../auth.constants.js";
-import { emailField } from "./fields.js";
+import { emailField } from "./auth-fields.js";
+import { PASSWORD_MAX_LENGTH } from "./auth.limits.js";
 
 // No minimum length on login: an old account's shorter password must still be
 // accepted; length rules apply only when a password is set.

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { displayNameField, emailField, localeField, passwordField } from "./fields.js";
+import { displayNameField, emailField, localeField, passwordField } from "./auth-fields.js";
 
 export const registerRequestSchema = z.object({
   email: emailField,

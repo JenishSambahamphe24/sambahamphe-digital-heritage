@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { tokenField } from "./fields.js";
+import { tokenField } from "./auth-fields.js";
 
 export const tokenRequestSchema = z.object({ token: tokenField });
 

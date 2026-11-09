@@ -1,14 +1,13 @@
-import type { TAuditEntryResponse } from "./dto/audit-entry.response.dto.js";
-import type { TListAuditLogQuery } from "./dto/list-audit-log.query.dto.js";
+import type { TAuditEntryResponse, TListAuditLogQuery } from "@repo/contracts";
 
 import { Controller, Get, Query } from "@nestjs/common";
+
+import { auditEntryResponseSchema, listAuditLogQuerySchema } from "@repo/contracts";
 
 import { PERMISSION } from "../../access/access.catalog.js";
 import { RequirePermission } from "../../access/guards/require-permission.decorator.js";
 import { AuditCursorHelper } from "../audit-cursor.helper.js";
 import { AuditLogRepository } from "../audit-log.repository.js";
-import { auditEntryResponseSchema } from "./dto/audit-entry.response.dto.js";
-import { listAuditLogQuerySchema } from "./dto/list-audit-log.query.dto.js";
 
 @Controller("admin/audit-log")
 export class AdminAuditLogController {

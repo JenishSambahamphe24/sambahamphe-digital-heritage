@@ -1,11 +1,9 @@
 import type { TDbExecutor } from "../../../core/database/database.types.js";
 import type { IEmailJob } from "../../email/email.types.js";
-import type { TUserResponse } from "../../users/dto/user.response.dto.js";
 import type { TUserRow } from "../../users/users.repository.js";
 import type { IRequestMeta, TAuthClient } from "../auth.types.js";
-import type { TLoginRequest } from "../http/dto/login.request.dto.js";
-import type { TRegisterRequest } from "../http/dto/register.request.dto.js";
 import type { TTokenPurpose } from "../internal/one-time-tokens.repository.js";
+import type { TLoginRequest, TRegisterRequest, TUserResponse } from "@repo/contracts";
 
 import { HttpStatus, Injectable } from "@nestjs/common";
 

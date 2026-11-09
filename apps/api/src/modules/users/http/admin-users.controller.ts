@@ -1,13 +1,12 @@
-import type { TAdminUserResponse } from "./dto/admin-user.response.dto.js";
-import type { TListUsersQuery } from "./dto/list-users.query.dto.js";
+import type { TAdminUserResponse, TListUsersQuery } from "@repo/contracts";
 
 import { Controller, Get, Query } from "@nestjs/common";
+
+import { adminUserResponseSchema, listUsersQuerySchema } from "@repo/contracts";
 
 import { PERMISSION } from "../../access/access.catalog.js";
 import { RequirePermission } from "../../access/guards/require-permission.decorator.js";
 import { UsersRepository } from "../users.repository.js";
-import { adminUserResponseSchema } from "./dto/admin-user.response.dto.js";
-import { listUsersQuerySchema } from "./dto/list-users.query.dto.js";
 
 interface IOffsetPage<T> {
   data: T[];

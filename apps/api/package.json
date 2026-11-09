@@ -26,6 +26,7 @@
     "@nestjs/platform-express": "catalog:be",
     "@nestjs/throttler": "catalog:be",
     "@node-rs/argon2": "catalog:be",
+    "@repo/contracts": "workspace:*",
     "bullmq": "catalog:be",
     "cookie-parser": "catalog:be",
     "drizzle-orm": "catalog:be",
