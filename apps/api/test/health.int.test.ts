@@ -7,9 +7,6 @@ import { AppFactory } from "../src/app.factory.js";
 import { TestDatabase } from "./support/test-database.js";
 import { TestEnv } from "./support/test-env.js";
 
-// Port 1 is never a Postgres server, so connections fail fast.
-const UNREACHABLE_DATABASE_URL = "postgres://nobody:nothing@127.0.0.1:1/none";
-
 async function createApp(databaseUrl: string): Promise<NestExpressApplication> {
   const env = TestEnv.build({ DATABASE_URL: databaseUrl });
   const app = await AppFactory.create(env);
@@ -81,11 +78,17 @@ describe("health and error handling (real Postgres)", () => {
   });
 });
 
-describe("readiness when the database is down", () => {
+describe("readiness when the database goes down while running", () => {
+  let database: TestDatabase;
   let app: NestExpressApplication;
+  let databaseHost: string;
 
   beforeAll(async () => {
-    app = await createApp(UNREACHABLE_DATABASE_URL);
+    database = await TestDatabase.start();
+    databaseHost = new URL(database.url).hostname;
+    app = await createApp(database.url);
+    await request(app.getHttpServer()).get("/health/ready").expect(200);
+    await database.stop();
   });
 
   afterAll(async () => {
@@ -96,7 +99,7 @@ describe("readiness when the database is down", () => {
     const response = await request(app.getHttpServer()).get("/health/ready").expect(503);
 
     expect(response.body).toMatchObject({ code: "service_unavailable", status: 503 });
-    expect(JSON.stringify(response.body)).not.toContain("127.0.0.1");
+    expect(JSON.stringify(response.body)).not.toContain(databaseHost);
   });
 
   it("liveness stays green: the process itself is fine", async () => {
