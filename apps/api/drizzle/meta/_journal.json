@@ -8,6 +8,13 @@
       "when": 1794062242122,
       "tag": "0000_enable_extensions",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794211760281,
+      "tag": "0001_add_users_sessions_tokens_outbox",
+      "breakpoints": true
     }
   ]
 }

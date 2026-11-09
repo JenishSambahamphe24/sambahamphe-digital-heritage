@@ -980,15 +980,14 @@ create index on audit_log (entity_type, entity_id, occurred_at desc);
 create index on audit_log (actor_id, occurred_at desc);
 -- app DB role: GRANT INSERT, SELECT only. Partition by year when > ~10M rows.
 
-create table outbox (
-  id           uuid primary key,
-  topic        text not null,                  -- 'media.process', 'email.send', 'web.revalidate'
-  payload      jsonb not null,
-  created_at   timestamptz not null default now(),
-  dispatched_at timestamptz,
-  attempts     int not null default 0
+create table outbox (                         -- rows are deleted once handed to BullMQ
+  id           uuid primary key,              -- reused as the BullMQ job id (idempotent hand-off)
+  topic        text not null,                  -- 'email.send' (later 'media.process', 'web.revalidate')
+  payload      jsonb not null,                 -- may hold one-time links: never kept after hand-off
+  attempts     int not null default 0,
+  created_at   timestamptz not null default now()
 );
-create index on outbox (created_at) where dispatched_at is null;
+create index on outbox (created_at);
 
 create table notifications (
   id         uuid primary key,

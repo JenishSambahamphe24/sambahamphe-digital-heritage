@@ -1,5 +1,5 @@
+import type { TDatabase } from "./database.types.js";
 import type { OnApplicationShutdown } from "@nestjs/common";
-import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 
 import { Injectable } from "@nestjs/common";
 import { sql } from "drizzle-orm";
@@ -14,7 +14,7 @@ const CONNECTION_TIMEOUT_MS = 2_000;
 
 @Injectable()
 export class DatabaseService implements OnApplicationShutdown {
-  readonly db: NodePgDatabase<typeof schema>;
+  readonly db: TDatabase;
   private readonly pool: pg.Pool;
 
   constructor(config: AppConfig) {
