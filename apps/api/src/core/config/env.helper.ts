@@ -18,6 +18,18 @@ export class EnvHelper {
     return result.data;
   }
 
+  static loadOrExit(): TEnv {
+    try {
+      return EnvHelper.load();
+    } catch (error) {
+      if (error instanceof InvalidEnvError) {
+        console.error(error.message);
+        process.exit(1);
+      }
+      throw error;
+    }
+  }
+
   static load(): TEnv {
     if (existsSync(ENV_FILE)) {
       process.loadEnvFile(ENV_FILE);

@@ -4,14 +4,14 @@ import request from "supertest";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { AppFactory } from "../src/app.factory.js";
-import { EnvHelper } from "../src/core/config/env.helper.js";
 import { TestDatabase } from "./support/test-database.js";
+import { TestEnv } from "./support/test-env.js";
 
 // Port 1 is never a Postgres server, so connections fail fast.
 const UNREACHABLE_DATABASE_URL = "postgres://nobody:nothing@127.0.0.1:1/none";
 
 async function createApp(databaseUrl: string): Promise<NestExpressApplication> {
-  const env = EnvHelper.parse({ NODE_ENV: "test", LOG_LEVEL: "silent", DATABASE_URL: databaseUrl });
+  const env = TestEnv.build({ DATABASE_URL: databaseUrl });
   const app = await AppFactory.create(env);
   await app.init();
   return app;

@@ -3,31 +3,43 @@ import { describe, expect, it } from "vitest";
 import { EnvHelper } from "./env.helper.js";
 import { InvalidEnvError } from "./invalid-env.error.js";
 
-const VALID_DATABASE_URL = "postgres://user:pass@localhost:5432/db";
+const REQUIRED = {
+  DATABASE_URL: "postgres://user:pass@localhost:5432/db",
+  REDIS_URL: "redis://localhost:6379",
+  SMTP_URL: "smtp://localhost:1025",
+  MAIL_FROM: "Test <test@example.com>",
+  PUBLIC_WEB_URL: "http://localhost:3000",
+  ADMIN_WEB_URL: "http://localhost:3002",
+  IP_HASH_SECRET: "x".repeat(32),
+};
 
 describe("EnvHelper.parse", () => {
-  it("applies defaults when only the database URL is given", () => {
-    const env = EnvHelper.parse({ DATABASE_URL: VALID_DATABASE_URL });
+  it("applies defaults for optional settings", () => {
+    const env = EnvHelper.parse(REQUIRED);
 
-    expect(env).toEqual({
+    expect(env).toMatchObject({
       NODE_ENV: "development",
       PORT: 3001,
-      DATABASE_URL: VALID_DATABASE_URL,
       LOG_LEVEL: "info",
+      COOKIE_SECURE: true,
+      TRUST_PROXY_HOPS: 0,
     });
   });
 
-  it("coerces PORT from a string", () => {
-    expect(EnvHelper.parse({ DATABASE_URL: VALID_DATABASE_URL, PORT: "4000" }).PORT).toBe(4000);
+  it("coerces numbers and booleans from strings", () => {
+    const env = EnvHelper.parse({ ...REQUIRED, PORT: "4000", COOKIE_SECURE: "false" });
+
+    expect(env.PORT).toBe(4000);
+    expect(env.COOKIE_SECURE).toBe(false);
   });
 
   it("accepts the postgresql:// scheme too", () => {
     const url = "postgresql://user:pass@localhost:5432/db";
-    expect(EnvHelper.parse({ DATABASE_URL: url }).DATABASE_URL).toBe(url);
+    expect(EnvHelper.parse({ ...REQUIRED, DATABASE_URL: url }).DATABASE_URL).toBe(url);
   });
 
   it("lists every invalid field at once", () => {
-    const parse = () => EnvHelper.parse({ DATABASE_URL: "mysql://x", PORT: "abc" });
+    const parse = () => EnvHelper.parse({ ...REQUIRED, DATABASE_URL: "mysql://x", PORT: "abc" });
 
     expect(parse).toThrow(InvalidEnvError);
     try {
@@ -38,7 +50,9 @@ describe("EnvHelper.parse", () => {
     }
   });
 
-  it("rejects a missing database URL", () => {
-    expect(() => EnvHelper.parse({})).toThrow(/DATABASE_URL/);
+  it("rejects a short IP hash secret", () => {
+    expect(() => EnvHelper.parse({ ...REQUIRED, IP_HASH_SECRET: "short" })).toThrow(
+      /IP_HASH_SECRET/,
+    );
   });
 });
