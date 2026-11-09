@@ -92,7 +92,7 @@ Modules are grouped into bounded contexts. A module owns its tables; other modul
 
 | Context | Module | Owns | Notes |
 |---|---|---|---|
-| **Identity & Access** | `auth` | sessions, refresh tokens, password resets | Login, refresh, logout, email verification |
+| **Identity & Access** | `auth` | sessions, one-time tokens (verification, password reset) | Login, logout, session list, email verification |
 | | `users` | users, user_person_links | Account profile; identity claims linking an account to a Person (ADR-022) |
 | | `access` | roles, permissions, role assignments | Policy evaluation incl. scopes |
 | **People & Genealogy** | `people` | persons, person names, consents, person ⇄ media | The shared **Person** — used by genealogy, boards, articles, photo tags |
@@ -125,11 +125,12 @@ Controllers contain no business logic (brief §11.14). Domain logic that has no 
 ### 4.1 Authentication
 
 - Email **or** mobile number + password (argon2id); at least one identifier must be verified (email link or SMS code, ADR-024) before contributing. SMS sending goes through a provider interface, run by the worker.
-- **Access token**: JWT, 10 min, signed with an asymmetric key (EdDSA) so the web app's server can verify without a shared secret.
-- **Refresh token**: opaque random 256-bit, stored **hashed** in `auth_sessions`, rotated on every use, reuse detection revokes the whole session family.
-- **Web/admin:** tokens in `HttpOnly; Secure; SameSite=Lax` cookies scoped to the API domain; CSRF protected by SameSite + `Origin` check + a double-submit token for state-changing requests.
-- **Mobile:** same endpoints with `X-Client: mobile`, tokens returned in body and kept in Expo SecureStore.
-- Rate limiting on login/reset/registration (Redis-backed `@nestjs/throttler`), plus account lockout backoff.
+- **Server-side sessions** (ADR-006): login creates an `auth_sessions` row and returns a random 256-bit token; only its SHA-256 hash is stored. Each request looks it up; revoking a session takes effect on the next request.
+- **Same-origin API:** in production Caddy serves the API under each frontend's origin (`sambahamphe.org.np/api/v1/…`, `admin.sambahamphe.org.np/api/v1/…`); locally the Next.js apps proxy `/api` to `localhost:3001`. Cookies are therefore host-only: the public `sid` and admin `admin_sid` can never mix, the Next.js server receives the cookie during SSR, and no CORS is needed for the browser apps.
+- **Web/admin:** the token in an `HttpOnly; Secure; SameSite=Lax` cookie. CSRF: unsafe methods require an allow-listed `Origin` header and a JSON body.
+- **Mobile:** same endpoints with `X-Client: mobile`; the token is returned in the body, kept in Expo SecureStore and sent as `Authorization: Bearer`.
+- **Lifetimes:** member sessions slide for 30 days (the expiry is extended at most once a minute to avoid a write per request); admin sessions end after 2 h idle or 12 h absolute.
+- Rate limiting per client IP on login, registration, verification and reset (`@nestjs/throttler`, 10/min; 300/min default). Counters are **in memory**, correct for our single API instance; several instances would need shared Redis storage (the Redis storage adapter did not yet support NestJS 12 in Nov 2026). Per-account lockout backoff is a later addition.
 
 ### 4.2 Authorization
 
@@ -169,7 +170,7 @@ Mapping to the [genealogy access policy](../product/genealogy-access-policy.md) 
 
 Two complementary mechanisms:
 
-- **`audit_log`** — every write: actor, action, entity, before/after diff, request ID, IP hash. Append-only (DB role has `INSERT`/`SELECT` only). Answers "who did what, when".
+- **`audit_log`** — named domain events (`auth.login_failed`, `role.assigned`, later `person.updated`…): actor, action, entity, a small `changes` object with ids/keys only, request ID, IP hash. Written by services **inside the transaction of the change** (`AuditService.record(event, tx)`); request details come from a per-request context (`AsyncLocalStorage`). A generic "log every write request" interceptor was considered and dropped: its entries only say "`POST /x` happened", which the request log already shows. **Append-only is enforced by a database trigger** that rejects `UPDATE`, `DELETE` and `TRUNCATE`, so it holds even for scripts and console sessions. Answers "who did what, when".
 - **Entity revisions** — for genealogy records and content: full snapshots per version, used for diff, restore and the change-request base-version check. Answers "what did this record look like at version n".
 
 ### 4.6 Background jobs (BullMQ)
@@ -182,7 +183,7 @@ Two complementary mechanisms:
 | `imports` | genealogy CSV/GEDCOM import (staged into change requests) |
 | `maintenance` | expire announcements, purge expired sessions, refresh search materializations |
 
-Jobs are idempotent and retried with exponential backoff. Domain writes that must trigger jobs use a **transactional outbox** table so a job is never enqueued for a transaction that rolled back.
+Jobs are idempotent and retried with exponential backoff. Domain writes that must trigger jobs use a **transactional outbox** table so a job is never enqueued for a transaction that rolled back. The worker polls it every second (`FOR UPDATE SKIP LOCKED`), adds each row to BullMQ with the row id as job id (duplicates are ignored), then deletes the row. Payloads can contain one-time links, so nothing is kept after hand-off, and finished jobs are removed from Redis.
 
 ### 4.7 Internationalization
 

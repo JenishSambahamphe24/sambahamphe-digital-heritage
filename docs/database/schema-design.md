@@ -64,17 +64,18 @@ create table users (
   -- the link to a family-tree person lives in user_person_links (ADR-022), never on this table
 );
 
-create table auth_sessions (
-  id                 uuid primary key,
-  user_id            uuid not null references users,
-  family_id          uuid not null,                -- rotation chain; reuse → revoke family
-  refresh_token_hash text not null unique,         -- sha-256 of opaque token
-  client             auth_client not null,         -- web | admin | mobile
-  user_agent         text,
-  ip_hash            text,
-  expires_at         timestamptz not null,
-  revoked_at         timestamptz,
-  replaced_by_id     uuid references auth_sessions,
+create table auth_sessions (                       -- server-side sessions (ADR-006)
+  id                  uuid primary key,
+  user_id             uuid not null references users,
+  token_hash          text not null unique,         -- sha-256 of the 256-bit session token
+  client              auth_client not null,         -- web | admin | mobile
+  user_agent          text,
+  ip_hash             text,
+  last_seen_at        timestamptz not null,
+  idle_expires_at     timestamptz not null,         -- slides with use
+  absolute_expires_at timestamptz not null,         -- hard cap, never extended
+  revoked_at          timestamptz,
+  revoked_reason      text,                         -- logout | logout_all | password_reset | admin
   created_at
 );
 create index on auth_sessions (user_id) where revoked_at is null;
@@ -126,8 +127,11 @@ create table role_assignments (
        or (scope_type = 'org_unit' and org_unit_id is not null and branch_id is null)
        or (scope_type = 'branch'   and branch_id is not null and org_unit_id is null) )
 );
-create unique index on role_assignments (user_id, role_id, scope_type, coalesce(org_unit_id, branch_id))
+-- nil uuid stands in for "no scope id" so two active GLOBAL grants of one role collide
+create unique index on role_assignments
+  (user_id, role_id, scope_type, coalesce(org_unit_id, branch_id, '00000000-0000-0000-0000-000000000000'::uuid))
   where revoked_at is null;
+-- org_unit_id / branch_id get their foreign keys when org_units / family_branches exist (Phase 2/3).
 ```
 
 Seeded system roles: `super_admin`, `admin`, `content_editor`, `contributor`, `genealogy_editor` (reviews and approves; may be branch-scoped), `org_manager`, `media_manager`.
@@ -964,30 +968,30 @@ Effective visibility of a media asset in a public context = the most restrictive
 create table audit_log (
   id                 bigint generated always as identity primary key,
   occurred_at        timestamptz not null default now(),
-  actor_type         actor_type not null,       -- user | system | job | import
+  actor_type         actor_type not null,       -- user | anonymous | system | job
   actor_id           uuid,
   action             text not null,             -- 'person.update', 'appointment.create', 'auth.login_failed'
   entity_type        text,
   entity_id          uuid,
-  change_request_id  uuid,
-  diff               jsonb,                     -- {field: [before, after]}; PII-minimized for auth events
+  changes            jsonb,                     -- ids, keys, statuses only; never names, emails, phones, birth dates
   request_id         text,
   ip_hash            text,
   user_agent         text
 );
 create index on audit_log (entity_type, entity_id, occurred_at desc);
 create index on audit_log (actor_id, occurred_at desc);
--- app DB role: GRANT INSERT, SELECT only. Partition by year when > ~10M rows.
+-- Append-only: trigger audit_log_reject_change() rejects UPDATE, DELETE and TRUNCATE
+-- (migration 0003). Legal erasure: documented superuser procedure only.
+-- change_request_id is added with the contributions module (Phase 3). Partition by year when > ~10M rows.
 
-create table outbox (
-  id           uuid primary key,
-  topic        text not null,                  -- 'media.process', 'email.send', 'web.revalidate'
-  payload      jsonb not null,
-  created_at   timestamptz not null default now(),
-  dispatched_at timestamptz,
-  attempts     int not null default 0
+create table outbox (                         -- rows are deleted once handed to BullMQ
+  id           uuid primary key,              -- reused as the BullMQ job id (idempotent hand-off)
+  topic        text not null,                  -- 'email.send' (later 'media.process', 'web.revalidate')
+  payload      jsonb not null,                 -- may hold one-time links: never kept after hand-off
+  attempts     int not null default 0,
+  created_at   timestamptz not null default now()
 );
-create index on outbox (created_at) where dispatched_at is null;
+create index on outbox (created_at);
 
 create table notifications (
   id         uuid primary key,
@@ -1038,7 +1042,7 @@ Enums that the organization may want to extend without a deploy (event categorie
 | Lineage members have male/female gender | `CHECK` constraint |
 | No genealogy cycles; male-line rule; exactly one accepted father per lineage person; union partner consistency; org unit type nesting; `max_holders > 1` | Service layer, in transaction with advisory/row lock, covered by integration tests |
 | No silent overwrite | `version` column + change-request base version |
-| Append-only audit | DB grants |
+| Append-only audit | Trigger rejecting UPDATE / DELETE / TRUNCATE (works whatever DB role connects) |
 | Privacy | `people/domain/privacy.ts` + response schemas + `person_presumed_living` SQL function for list queries |
 
 ## 14. Data volume & indexing notes

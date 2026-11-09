@@ -137,7 +137,7 @@ Detailed rules go in each app's `CLAUDE.md` when it is created. The core shape:
 
 ## Workflow
 
-- **Branches:** `develop` is the main branch. Work happens on short-lived branches named `<type>/<short-description>` (`feat/branch-access`, `chore/monorepo-tooling`) and merges into `develop`.
+- **Branches:** `develop` is the main branch. While there is a single contributor, work happens on **one branch per roadmap milestone** (`feat/m1.3-auth`), not per small feature or fix. Open a **draft PR into `develop` as soon as the branch exists** so CI runs on every push, and merge when the milestone is done. Switch to short-lived per-feature branches once other contributors join.
 - **Commits:** Conventional Commits, `type(scope): summary` (enforced by commitlint). Scope is the workspace or domain: `feat(genealogy): …`, `chore(config): …`. No AI co-author trailers or "generated with" lines in commits or PRs.
-- **One concern per PR.** Fill in the PR template; mark sections that don't apply as `N/A — <reason>`.
+- **One milestone per PR, one logical step per commit.** Keep commits small and self-contained inside the milestone branch so any step can be reverted alone. Fill in the PR template; mark sections that don't apply as `N/A — <reason>`.
 - **Before calling work done:** typecheck, lint and tests pass for affected workspaces, and the behavior was actually exercised. Never report a check as passing unless it was run.
