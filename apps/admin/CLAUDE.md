@@ -11,6 +11,7 @@ Admin CMS: React + Vite single-page app (ADR-007). No SEO, no server rendering. 
 - Messages: `use-intl` with `messages/en.json` / `ne.json` (same keys in both). The chosen language is remembered per browser (`localStorage`, with try/catch).
 - Destructive actions (removing a role) go through `ConfirmDialog` from `@repo/ui`.
 - Dropdowns use `Select` from `@repo/ui` (custom popover, never the browser's native list). `Textarea` lives in `src/components/`. Show a 422's field errors with `FieldErrorsHelper.byPath(error)`, which maps the API's stable codes to `field_error_*` messages; never show the server's text.
+- Board dates (terms, appointments) use `OrgDateInput`: entered in BS or AD, stored as an AD day plus precision (year / month / day), shown back in BS.
 - On `409 version_conflict`, show the toast and let the query refetch; edit forms are keyed by `version` so they restart from the saved data.
 - A failed action is a toast (`ToastHelper.show`; `AppToaster` is mounted in `main.tsx`), never an `Alert` inserted into the form: messages must not resize their container (root `CLAUDE.md`).
 - Vite forwards `/api` with `X-Client: admin` in development; Caddy does the same in production. The API then uses the `admin_sid` cookie and the admin-only rules.

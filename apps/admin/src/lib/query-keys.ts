@@ -11,4 +11,12 @@ export const QUERY_KEYS = {
   persons: (q: string, page: number) => ["persons", { q, page }] as const,
   personsAll: ["persons"],
   person: (id: string) => ["person", id] as const,
+  orgTree: ["org", "tree"],
+  orgUnitTypes: ["org", "unit-types"],
+  orgUnit: (id: string) => ["org", "unit", id] as const,
+  orgTerms: (unitId: string) => ["org", "unit", unitId, "terms"] as const,
+  orgAppointments: (unitId: string) => ["org", "unit", unitId, "appointments"] as const,
+  orgPositions: ["org", "positions"],
+  orgPersonOptions: (unitId: string, q: string) => ["org", "person-options", unitId, q] as const,
+  orgAll: ["org"],
 } as const;

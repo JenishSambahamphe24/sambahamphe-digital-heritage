@@ -14,6 +14,14 @@ const KNOWN_CODES = [
   "place_cycle",
   "unknown_parent",
   "person_not_active",
+  "slug_taken",
+  "term_overlap",
+  "position_taken",
+  "position_full",
+  "already_appointed",
+  "appointment_not_active",
+  "position_key_taken",
+  "position_has_overlapping_holders",
 ] as const;
 
 type TKnownCode = (typeof KNOWN_CODES)[number];

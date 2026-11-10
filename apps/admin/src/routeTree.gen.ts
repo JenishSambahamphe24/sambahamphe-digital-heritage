@@ -13,6 +13,10 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedAuditLogRouteImport } from './routes/_authenticated/audit-log'
+import { Route as AuthenticatedOrganizationIndexRouteImport } from './routes/_authenticated/organization/index'
+import { Route as AuthenticatedOrganizationUnitIdRouteImport } from './routes/_authenticated/organization/$unitId'
+import { Route as AuthenticatedOrganizationNewRouteImport } from './routes/_authenticated/organization/new'
+import { Route as AuthenticatedOrganizationPositionsRouteImport } from './routes/_authenticated/organization/positions'
 import { Route as AuthenticatedPersonsIndexRouteImport } from './routes/_authenticated/persons/index'
 import { Route as AuthenticatedPersonsPersonIdRouteImport } from './routes/_authenticated/persons/$personId'
 import { Route as AuthenticatedPersonsNewRouteImport } from './routes/_authenticated/persons/new'
@@ -41,6 +45,30 @@ const AuthenticatedAuditLogRoute = AuthenticatedAuditLogRouteImport.update({
   path: '/audit-log',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedOrganizationIndexRoute =
+  AuthenticatedOrganizationIndexRouteImport.update({
+    id: '/organization/',
+    path: '/organization/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedOrganizationUnitIdRoute =
+  AuthenticatedOrganizationUnitIdRouteImport.update({
+    id: '/organization/$unitId',
+    path: '/organization/$unitId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedOrganizationNewRoute =
+  AuthenticatedOrganizationNewRouteImport.update({
+    id: '/organization/new',
+    path: '/organization/new',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedOrganizationPositionsRoute =
+  AuthenticatedOrganizationPositionsRouteImport.update({
+    id: '/organization/positions',
+    path: '/organization/positions',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedPersonsIndexRoute =
   AuthenticatedPersonsIndexRouteImport.update({
     id: '/persons/',
@@ -91,11 +119,15 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/login': typeof LoginRoute
   '/audit-log': typeof AuthenticatedAuditLogRoute
+  '/organization/$unitId': typeof AuthenticatedOrganizationUnitIdRoute
+  '/organization/new': typeof AuthenticatedOrganizationNewRoute
+  '/organization/positions': typeof AuthenticatedOrganizationPositionsRoute
   '/persons/$personId': typeof AuthenticatedPersonsPersonIdRoute
   '/persons/new': typeof AuthenticatedPersonsNewRoute
   '/places/$placeId': typeof AuthenticatedPlacesPlaceIdRoute
   '/places/new': typeof AuthenticatedPlacesNewRoute
   '/users/$userId': typeof AuthenticatedUsersUserIdRoute
+  '/organization/': typeof AuthenticatedOrganizationIndexRoute
   '/persons/': typeof AuthenticatedPersonsIndexRoute
   '/places/': typeof AuthenticatedPlacesIndexRoute
   '/users/': typeof AuthenticatedUsersIndexRoute
@@ -104,11 +136,15 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/audit-log': typeof AuthenticatedAuditLogRoute
   '/': typeof AuthenticatedIndexRoute
+  '/organization/$unitId': typeof AuthenticatedOrganizationUnitIdRoute
+  '/organization/new': typeof AuthenticatedOrganizationNewRoute
+  '/organization/positions': typeof AuthenticatedOrganizationPositionsRoute
   '/persons/$personId': typeof AuthenticatedPersonsPersonIdRoute
   '/persons/new': typeof AuthenticatedPersonsNewRoute
   '/places/$placeId': typeof AuthenticatedPlacesPlaceIdRoute
   '/places/new': typeof AuthenticatedPlacesNewRoute
   '/users/$userId': typeof AuthenticatedUsersUserIdRoute
+  '/organization': typeof AuthenticatedOrganizationIndexRoute
   '/persons': typeof AuthenticatedPersonsIndexRoute
   '/places': typeof AuthenticatedPlacesIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
@@ -119,11 +155,15 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/_authenticated/audit-log': typeof AuthenticatedAuditLogRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/organization/$unitId': typeof AuthenticatedOrganizationUnitIdRoute
+  '/_authenticated/organization/new': typeof AuthenticatedOrganizationNewRoute
+  '/_authenticated/organization/positions': typeof AuthenticatedOrganizationPositionsRoute
   '/_authenticated/persons/$personId': typeof AuthenticatedPersonsPersonIdRoute
   '/_authenticated/persons/new': typeof AuthenticatedPersonsNewRoute
   '/_authenticated/places/$placeId': typeof AuthenticatedPlacesPlaceIdRoute
   '/_authenticated/places/new': typeof AuthenticatedPlacesNewRoute
   '/_authenticated/users/$userId': typeof AuthenticatedUsersUserIdRoute
+  '/_authenticated/organization/': typeof AuthenticatedOrganizationIndexRoute
   '/_authenticated/persons/': typeof AuthenticatedPersonsIndexRoute
   '/_authenticated/places/': typeof AuthenticatedPlacesIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
@@ -134,11 +174,15 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/audit-log'
+    | '/organization/$unitId'
+    | '/organization/new'
+    | '/organization/positions'
     | '/persons/$personId'
     | '/persons/new'
     | '/places/$placeId'
     | '/places/new'
     | '/users/$userId'
+    | '/organization/'
     | '/persons/'
     | '/places/'
     | '/users/'
@@ -147,11 +191,15 @@ export interface FileRouteTypes {
     | '/login'
     | '/audit-log'
     | '/'
+    | '/organization/$unitId'
+    | '/organization/new'
+    | '/organization/positions'
     | '/persons/$personId'
     | '/persons/new'
     | '/places/$placeId'
     | '/places/new'
     | '/users/$userId'
+    | '/organization'
     | '/persons'
     | '/places'
     | '/users'
@@ -161,11 +209,15 @@ export interface FileRouteTypes {
     | '/login'
     | '/_authenticated/audit-log'
     | '/_authenticated/'
+    | '/_authenticated/organization/$unitId'
+    | '/_authenticated/organization/new'
+    | '/_authenticated/organization/positions'
     | '/_authenticated/persons/$personId'
     | '/_authenticated/persons/new'
     | '/_authenticated/places/$placeId'
     | '/_authenticated/places/new'
     | '/_authenticated/users/$userId'
+    | '/_authenticated/organization/'
     | '/_authenticated/persons/'
     | '/_authenticated/places/'
     | '/_authenticated/users/'
@@ -204,6 +256,34 @@ declare module '@tanstack/react-router' {
       path: '/audit-log'
       fullPath: '/audit-log'
       preLoaderRoute: typeof AuthenticatedAuditLogRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/organization/': {
+      id: '/_authenticated/organization/'
+      path: '/organization'
+      fullPath: '/organization/'
+      preLoaderRoute: typeof AuthenticatedOrganizationIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/organization/$unitId': {
+      id: '/_authenticated/organization/$unitId'
+      path: '/organization/$unitId'
+      fullPath: '/organization/$unitId'
+      preLoaderRoute: typeof AuthenticatedOrganizationUnitIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/organization/new': {
+      id: '/_authenticated/organization/new'
+      path: '/organization/new'
+      fullPath: '/organization/new'
+      preLoaderRoute: typeof AuthenticatedOrganizationNewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/organization/positions': {
+      id: '/_authenticated/organization/positions'
+      path: '/organization/positions'
+      fullPath: '/organization/positions'
+      preLoaderRoute: typeof AuthenticatedOrganizationPositionsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/persons/': {
@@ -268,11 +348,15 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteChildren {
   AuthenticatedAuditLogRoute: typeof AuthenticatedAuditLogRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedOrganizationUnitIdRoute: typeof AuthenticatedOrganizationUnitIdRoute
+  AuthenticatedOrganizationNewRoute: typeof AuthenticatedOrganizationNewRoute
+  AuthenticatedOrganizationPositionsRoute: typeof AuthenticatedOrganizationPositionsRoute
   AuthenticatedPersonsPersonIdRoute: typeof AuthenticatedPersonsPersonIdRoute
   AuthenticatedPersonsNewRoute: typeof AuthenticatedPersonsNewRoute
   AuthenticatedPlacesPlaceIdRoute: typeof AuthenticatedPlacesPlaceIdRoute
   AuthenticatedPlacesNewRoute: typeof AuthenticatedPlacesNewRoute
   AuthenticatedUsersUserIdRoute: typeof AuthenticatedUsersUserIdRoute
+  AuthenticatedOrganizationIndexRoute: typeof AuthenticatedOrganizationIndexRoute
   AuthenticatedPersonsIndexRoute: typeof AuthenticatedPersonsIndexRoute
   AuthenticatedPlacesIndexRoute: typeof AuthenticatedPlacesIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
@@ -281,11 +365,16 @@ interface AuthenticatedRouteChildren {
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAuditLogRoute: AuthenticatedAuditLogRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedOrganizationUnitIdRoute: AuthenticatedOrganizationUnitIdRoute,
+  AuthenticatedOrganizationNewRoute: AuthenticatedOrganizationNewRoute,
+  AuthenticatedOrganizationPositionsRoute:
+    AuthenticatedOrganizationPositionsRoute,
   AuthenticatedPersonsPersonIdRoute: AuthenticatedPersonsPersonIdRoute,
   AuthenticatedPersonsNewRoute: AuthenticatedPersonsNewRoute,
   AuthenticatedPlacesPlaceIdRoute: AuthenticatedPlacesPlaceIdRoute,
   AuthenticatedPlacesNewRoute: AuthenticatedPlacesNewRoute,
   AuthenticatedUsersUserIdRoute: AuthenticatedUsersUserIdRoute,
+  AuthenticatedOrganizationIndexRoute: AuthenticatedOrganizationIndexRoute,
   AuthenticatedPersonsIndexRoute: AuthenticatedPersonsIndexRoute,
   AuthenticatedPlacesIndexRoute: AuthenticatedPlacesIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,

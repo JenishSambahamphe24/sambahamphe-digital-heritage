@@ -12,6 +12,16 @@ const KNOWN_FIELD_CODES = [
   "minor_authority_required",
   "minor_not_public",
   "consent_required",
+  "parent_required",
+  "parent_type_not_allowed",
+  "org_unit_cycle",
+  "org_unit_has_children",
+  "unknown_parent",
+  "unknown_person",
+  "unknown_position",
+  "position_inactive",
+  "unknown_term",
+  "outside_term",
 ] as const;
 
 export class FieldErrorsHelper {
