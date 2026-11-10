@@ -1,8 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 import { Link } from "#/i18n/navigation";
+import { BRAND_LOGO } from "#/lib/brand";
 import { ROUTES } from "#/lib/routes";
 
 import { useMe } from "../../account/hooks/useMe";
@@ -14,8 +16,17 @@ export function SiteHeader() {
   return (
     <header className="border-border bg-surface border-b">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-4">
-        <Link href={ROUTES.home} className="font-display text-primary text-lg font-semibold">
-          {t("site_name")}
+        <Link href={ROUTES.home} className="flex items-center gap-3">
+          <Image
+            src={BRAND_LOGO.src}
+            width={BRAND_LOGO.width}
+            height={BRAND_LOGO.height}
+            alt={t("logo_alt")}
+            sizes="48px"
+            preload
+            className="h-12 w-auto"
+          />
+          <span className="font-display text-primary text-lg font-semibold">{t("site_name")}</span>
         </Link>
         <div className="flex items-center gap-4">
           <nav className="flex gap-4 text-sm">

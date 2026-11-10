@@ -5,6 +5,7 @@ import { useTranslations } from "use-intl";
 import { Button } from "@repo/ui";
 
 import { apiClient } from "#/lib/api-client";
+import { BRAND_LOGO } from "#/lib/brand";
 import { QUERY_KEYS } from "#/lib/query-keys";
 
 import { LanguageSwitch } from "./LanguageSwitch";
@@ -31,7 +32,18 @@ export function AdminLayout() {
   return (
     <div className="bg-background flex min-h-screen">
       <aside className="border-border bg-surface w-56 shrink-0 border-r p-4">
-        <p className="font-display text-primary mb-6 text-lg font-semibold">{t("admin_title")}</p>
+        <div className="mb-6 flex items-center gap-3">
+          <img
+            src={BRAND_LOGO.src}
+            width={BRAND_LOGO.width}
+            height={BRAND_LOGO.height}
+            alt={t("logo_alt")}
+            className="h-10 w-auto"
+          />
+          <p className="font-display text-primary text-lg leading-tight font-semibold">
+            {t("admin_title")}
+          </p>
+        </div>
         <nav className="flex flex-col gap-1">
           <Link to="/users" className={NAV_LINK} activeProps={{ className: NAV_LINK_ACTIVE }}>
             {t("nav_users")}

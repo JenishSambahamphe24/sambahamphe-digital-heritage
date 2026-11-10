@@ -7,6 +7,7 @@ import { useTranslations } from "use-intl";
 import { Alert, Button, Card, FormField, Input } from "@repo/ui";
 
 import { apiClient } from "#/lib/api-client";
+import { BRAND_LOGO } from "#/lib/brand";
 import { ProblemMessageHelper } from "#/lib/problem-message.helper";
 import { QUERY_KEYS } from "#/lib/query-keys";
 
@@ -37,6 +38,13 @@ export function LoginPage() {
   return (
     <div className="bg-background flex min-h-screen items-center justify-center px-4">
       <Card className="flex w-full max-w-sm flex-col gap-5">
+        <img
+          src={BRAND_LOGO.src}
+          width={BRAND_LOGO.width}
+          height={BRAND_LOGO.height}
+          alt={t("logo_alt")}
+          className="h-20 w-auto self-center"
+        />
         <div>
           <p className="text-accent text-sm font-medium">{t("admin_title")}</p>
           <h1 className="font-display text-2xl font-semibold">{t("login_title")}</h1>

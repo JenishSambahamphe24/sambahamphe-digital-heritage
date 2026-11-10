@@ -1,36 +1,39 @@
 /*
- * Design tokens for every app. Placeholder palette (warm, earthy) until the
- * organization supplies its branding (requirements Q-10): change colors here
- * only — components use the semantic names, never raw values.
+ * Design tokens for every app, derived from the organization's logo
+ * (deep indigo ink #2c3090 and blue-grey mountain shading #b0b0d0, measured
+ * from the artwork). Contrast checked against WCAG AA: text pairs ≥ 4.5:1,
+ * form-field borders ≥ 3:1. Change colors here only — components use the
+ * semantic names, never raw values. Status colors stay red/green/amber
+ * regardless of brand, so an error always reads as an error.
  */
 @theme {
-  --color-background: #fbf8f3;
+  --color-background: #f7f7fc;
   --color-surface: #ffffff;
-  --color-surface-muted: #f4eee5;
-  --color-border: #e3d9cb;
-  --color-border-strong: #c9b8a2;
+  --color-surface-muted: #ececf7;
+  --color-border: #dcdcee;
+  --color-border-strong: #8c8ca6;
 
-  --color-foreground: #2b211a;
-  --color-foreground-muted: #6b5b4d;
-  --color-foreground-subtle: #8f7f70;
+  --color-foreground: #1b1c3a;
+  --color-foreground-muted: #4a4c6e;
+  --color-foreground-subtle: #6c6e92;
 
-  --color-primary: #8c2f1f;
-  --color-primary-hover: #74261a;
-  --color-primary-foreground: #fffaf4;
-  --color-accent: #b7832f;
+  --color-primary: #2d3192;
+  --color-primary-hover: #22256f;
+  --color-primary-foreground: #ffffff;
+  --color-accent: #4b50b8;
 
   --color-success: #2f6b3a;
   --color-success-subtle: #e6f1e7;
   --color-danger: #a12a2a;
   --color-danger-hover: #852222;
   --color-danger-subtle: #f8e5e3;
-  --color-warning: #8a5a00;
+  --color-warning: #7a5000;
   --color-warning-subtle: #fbf0d9;
-  --color-info: #1f5a7a;
-  --color-info-subtle: #e3eff5;
+  --color-info: #2d3192;
+  --color-info-subtle: #e8e9f7;
 
-  --color-overlay: #1b130d;
-  --color-focus: #b7832f;
+  --color-overlay: #12132b;
+  --color-focus: #4b50b8;
 
   /* Apps set these variables to their loaded fonts (next/font gives fonts
      generated names, so they can't be referenced by family name). Unset

@@ -70,5 +70,6 @@
   "error_not_found": "Not found.",
   "error_validation": "Some fields need attention.",
   "error_generic": "Something went wrong. Please try again.",
-  "error_network": "Can't reach the server. Check your connection and try again."
+  "error_network": "Can't reach the server. Check your connection and try again.",
+  "logo_alt": "Sambahamphe Utthan Sangh logo"
 }

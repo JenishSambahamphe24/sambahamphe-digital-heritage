@@ -164,7 +164,7 @@ These came up while analysing the brief. Items marked **(blocking)** affect the 
 | Q-7 | What evidence must a member give when requesting branch access? (known relative vouches, gaau committee confirmation, documents?) | Trust model for living-relative data | Free-text relation + optional vouching relative; a genealogy editor (optionally branch-scoped) decides |
 | Q-8 ✅ | Are positions the same on every board? | Position definition scope | **Decided: yes** — one position list for the whole organization |
 | Q-9 | Hosting budget and who operates the servers long-term? | Infra choice | **Proposed** in [../operations/hosting-and-costs.md](../operations/hosting-and-costs.md): Option A, ≈ NPR 60,000/year; awaiting the committee's approval |
-| Q-10 | Domain name, logo, brand colors, existing photography? | Phase 1 web foundation | Placeholder theme until supplied |
+| Q-10 | Domain name, logo, brand colors, existing photography? | Phase 1 web foundation | **Logo resolved:** supplied logo used on web and admin; palette derived from it (`packages/ui` theme). Domain name and photography still open |
 | Q-11 | Should Phase ordering stand? Genealogy is the core value but is scheduled 3rd. | Roadmap | Build shared Person core in Phase 1–2, full genealogy in Phase 3 (see roadmap) |
 | Q-12 | Video: are there large video archives to host, or is YouTube acceptable? | Storage & transcoding cost | YouTube/Vimeo embeds first |
 | Q-13 | Do regional boards span countries (e.g., diaspora in Hong Kong, UK, Gulf)? | Place model, timezones | Support any country in Place; events store their own timezone |

@@ -1,14 +1,24 @@
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 import { Alert } from "@repo/ui";
 
 import { Link } from "#/i18n/navigation";
+import { BRAND_LOGO } from "#/lib/brand";
 import { ROUTES } from "#/lib/routes";
 
 export function HomePage() {
   const t = useTranslations();
   return (
     <section className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-16">
+      <Image
+        src={BRAND_LOGO.src}
+        width={BRAND_LOGO.width}
+        height={BRAND_LOGO.height}
+        alt={t("logo_alt")}
+        sizes="160px"
+        className="h-40 w-auto self-start"
+      />
       <p className="text-accent text-sm font-medium tracking-wide uppercase">{t("site_name")}</p>
       <h1 className="font-display text-foreground text-4xl font-semibold">{t("home_title")}</h1>
       <p className="text-foreground-muted text-lg">{t("home_intro")}</p>
