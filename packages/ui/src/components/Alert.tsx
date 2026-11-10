@@ -1,29 +1,30 @@
+import type { TStatusTone } from "../status-tone.js";
 import type { ReactNode } from "react";
 
 import { cn } from "../cn.js";
-
-export type TAlertTone = "info" | "success" | "warning" | "danger";
-
-const TONE_CLASSES: Record<TAlertTone, string> = {
-  info: "border-info bg-info-subtle text-info",
-  success: "border-success bg-success-subtle text-success",
-  warning: "border-warning bg-warning-subtle text-warning",
-  danger: "border-danger bg-danger-subtle text-danger",
-};
+import { STATUS_TONE_CLASSES, STATUS_TONE_ICONS } from "../status-tone.js";
 
 export interface AlertProps {
-  tone?: TAlertTone;
+  tone?: TStatusTone;
   children: ReactNode;
   className?: string;
 }
 
+// For states that persist on the page (an invalid link, a missing token).
+// Short-lived feedback goes through ToastHelper instead.
 export function Alert({ tone = "info", children, className }: AlertProps) {
+  const Icon = STATUS_TONE_ICONS[tone];
   return (
     <div
       role={tone === "danger" ? "alert" : "status"}
-      className={cn("rounded-md border-l-4 px-4 py-3 text-sm", TONE_CLASSES[tone], className)}
+      className={cn(
+        "flex items-center gap-3 rounded-md border px-4 py-3 text-sm",
+        STATUS_TONE_CLASSES[tone],
+        className,
+      )}
     >
-      {children}
+      <Icon aria-hidden="true" className="size-5 shrink-0" />
+      <div className="min-w-0 flex-1">{children}</div>
     </div>
   );
 }

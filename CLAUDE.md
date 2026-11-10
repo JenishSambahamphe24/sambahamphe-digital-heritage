@@ -6,6 +6,7 @@ Digital heritage platform for Sambahamphe Utthan Sangh: genealogy, organizationa
 
 - **Product decisions are binding:** [docs/product/genealogy-access-policy.md](docs/product/genealogy-access-policy.md), [docs/product/member-registration-flow.md](docs/product/member-registration-flow.md), and the decisions table in [docs/product/requirements.md §7](docs/product/requirements.md).
 - **Design:** [docs/architecture/system-design.md](docs/architecture/system-design.md), [docs/architecture/architecture-decisions.md](docs/architecture/architecture-decisions.md) (ADRs), [docs/database/schema-design.md](docs/database/schema-design.md), [docs/api/api-conventions.md](docs/api/api-conventions.md).
+- **Visual design:** [docs/design/README.md](docs/design/README.md) — the Claude Design canvas (mirrored in `docs/design/canvas/` with `/sync-design`) and the design system generated from `packages/ui`. Build screens from the canvas.
 - **App-specific rules** live in `apps/<app>/CLAUDE.md` (and `packages/<pkg>/CLAUDE.md`). Read the relevant one before working in that workspace — its rules are blocking.
 - When a design decision changes, update the doc and ADR in the same change. Docs must not drift from code.
 

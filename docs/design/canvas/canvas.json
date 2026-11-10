@@ -1,0 +1,117 @@
+{
+  "v": 3,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-11-10T11:20:00Z"
+  },
+  "title": "Sambahamphe Utthan Sangh — Website",
+  "launch": {
+    "view": "canvas",
+    "page": "auth"
+  },
+  "pages": [
+    {
+      "id": "foundations",
+      "name": "Foundations"
+    },
+    {
+      "id": "auth",
+      "name": "Auth"
+    }
+  ],
+  "boards": {
+    "Colours.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1200,
+      "h": 760,
+      "title": "Colours",
+      "page": "foundations"
+    },
+    "Components.dc.html": {
+      "x": 1280,
+      "y": 0,
+      "w": 1200,
+      "h": 1460,
+      "title": "Components",
+      "page": "foundations"
+    },
+    "Main.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 900,
+      "title": "Desktop · Sign in / Create account",
+      "is_interactive": true,
+      "page": "auth"
+    },
+    "Mobile.dc.html": {
+      "x": 1520,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Mobile · Sign in",
+      "is_interactive": true,
+      "page": "auth"
+    },
+    "MobileNepali.dc.html": {
+      "x": 1990,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Mobile · साइन इन (Nepali)",
+      "page": "auth"
+    },
+    "CheckEmail.dc.html": {
+      "x": 0,
+      "y": 1020,
+      "w": 720,
+      "h": 640,
+      "title": "Check your email",
+      "page": "auth"
+    }
+  },
+  "order": [
+    "Colours.dc.html",
+    "Components.dc.html",
+    "Main.dc.html",
+    "Mobile.dc.html",
+    "MobileNepali.dc.html",
+    "CheckEmail.dc.html"
+  ],
+  "notes": {
+    "foundations-title": {
+      "x": 0,
+      "y": -300,
+      "text": "Foundations",
+      "kind": "title1",
+      "maxW": 2480,
+      "page": "foundations"
+    },
+    "flows": {
+      "x": 0,
+      "y": -300,
+      "text": "Sign in & create account",
+      "kind": "title1",
+      "maxW": 2380,
+      "page": "auth"
+    },
+    "brief": {
+      "x": 800,
+      "y": 1020,
+      "w": 420,
+      "text": "Bitsky-style split layout. Painting panel on the right (desktop) or a top banner (mobile); tabs switch Sign in / Create account (press Play). Only cleared images are used. New copy, such as the panel caption, still needs Nepali review.",
+      "fill": "blue",
+      "page": "auth"
+    }
+  },
+  "designSystems": [
+    {
+      "title": "Sambahamphe Utthan Sangh",
+      "namespace": "sambahampheui",
+      "artifact": "https://claude.ai/artifact/M6XNXUjVwWnxJXygH6zTak",
+      "version": "1794289501-8321",
+      "copiedAt": "2026-11-10T12:25:00Z"
+    }
+  ]
+}

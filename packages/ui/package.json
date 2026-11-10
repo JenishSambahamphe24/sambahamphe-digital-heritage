@@ -24,7 +24,9 @@
   },
   "peerDependencies": {
     "@radix-ui/react-dialog": "catalog:fe",
+    "@radix-ui/react-toast": "catalog:fe",
     "clsx": "catalog:fe",
+    "lucide-react": "catalog:fe",
     "react": "catalog:fe",
     "react-dom": "catalog:fe",
     "tailwind-merge": "catalog:fe"
@@ -33,6 +35,7 @@
     "@eslint/js": "catalog:generic",
     "@ianvs/prettier-plugin-sort-imports": "catalog:generic",
     "@radix-ui/react-dialog": "catalog:fe",
+    "@radix-ui/react-toast": "catalog:fe",
     "@repo/config": "workspace:*",
     "@types/react": "catalog:fe",
     "@types/react-dom": "catalog:fe",
@@ -40,6 +43,7 @@
     "eslint": "catalog:generic",
     "eslint-plugin-react-hooks": "catalog:fe",
     "globals": "catalog:generic",
+    "lucide-react": "catalog:fe",
     "prettier": "catalog:generic",
     "prettier-plugin-tailwindcss": "catalog:fe",
     "react": "catalog:fe",

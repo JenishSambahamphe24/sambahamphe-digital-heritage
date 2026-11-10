@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@radix-ui/react-dialog": "catalog:fe",
+    "@radix-ui/react-toast": "catalog:fe",
     "@repo/api-client": "workspace:*",
     "@repo/contracts": "workspace:*",
     "@repo/ui": "workspace:*",
@@ -21,6 +22,7 @@
     "@tanstack/react-query": "catalog:fe",
     "@tanstack/react-router": "catalog:fe",
     "clsx": "catalog:fe",
+    "lucide-react": "catalog:fe",
     "openapi-fetch": "catalog:generic",
     "react": "catalog:fe",
     "react-dom": "catalog:fe",
