@@ -265,6 +265,9 @@ importers:
       '@repo/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@repo/dates':
+        specifier: workspace:*
+        version: link:../../packages/dates
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -386,6 +389,9 @@ importers:
       '@repo/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@repo/dates':
+        specifier: workspace:*
+        version: link:../../packages/dates
       bullmq:
         specifier: catalog:be
         version: 6.4.2(ioredis@6.0.0)(pg@8.23.1)
@@ -519,6 +525,9 @@ importers:
       '@repo/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@repo/dates':
+        specifier: workspace:*
+        version: link:../../packages/dates
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -688,6 +697,9 @@ importers:
       '@repo/config':
         specifier: workspace:*
         version: link:../config
+      '@repo/dates':
+        specifier: workspace:*
+        version: link:../dates
       '@types/node':
         specifier: catalog:generic
         version: 24.19.2

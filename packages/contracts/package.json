@@ -21,12 +21,14 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
+    "@repo/dates": "workspace:*",
     "zod": "catalog:generic"
   },
   "devDependencies": {
     "@eslint/js": "catalog:generic",
     "@ianvs/prettier-plugin-sort-imports": "catalog:generic",
     "@repo/config": "workspace:*",
+    "@repo/dates": "workspace:*",
     "@types/node": "catalog:generic",
     "eslint": "catalog:generic",
     "globals": "catalog:generic",

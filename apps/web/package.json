@@ -17,6 +17,7 @@
     "@radix-ui/react-toast": "catalog:fe",
     "@repo/api-client": "workspace:*",
     "@repo/contracts": "workspace:*",
+    "@repo/dates": "workspace:*",
     "@repo/ui": "workspace:*",
     "@tanstack/react-form": "catalog:fe",
     "@tanstack/react-query": "catalog:fe",
