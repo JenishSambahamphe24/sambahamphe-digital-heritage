@@ -3,9 +3,7 @@ import type { IFuzzyDateDraft } from "../fuzzy-date-draft.helper";
 import { useLocale, useTranslations } from "use-intl";
 
 import { QUALIFIERS } from "@repo/dates";
-import { Input } from "@repo/ui";
-
-import { Select } from "#/components/Select";
+import { Input, Select } from "@repo/ui";
 
 import { FuzzyDateDraftHelper } from "../fuzzy-date-draft.helper";
 
@@ -28,24 +26,21 @@ export function FuzzyDateInput({ id, value, onChange, invalid }: FuzzyDateInputP
         <Select
           aria-label={t("date_calendar")}
           value={value.calendar}
-          onChange={(event) => set({ calendar: event.target.value as IFuzzyDateDraft["calendar"] })}
-        >
-          <option value="BS">{t("date_calendar_bs")}</option>
-          <option value="AD">{t("date_calendar_ad")}</option>
-        </Select>
+          onValueChange={(value) => set({ calendar: value as IFuzzyDateDraft["calendar"] })}
+          options={[
+            { value: "BS", label: t("date_calendar_bs") },
+            { value: "AD", label: t("date_calendar_ad") },
+          ]}
+        />
         <Select
           aria-label={t("date_qualifier")}
           value={value.qualifier}
-          onChange={(event) =>
-            set({ qualifier: event.target.value as IFuzzyDateDraft["qualifier"] })
-          }
-        >
-          {QUALIFIERS.map((qualifier) => (
-            <option key={qualifier} value={qualifier}>
-              {t("date_qualifier_value", { qualifier })}
-            </option>
-          ))}
-        </Select>
+          onValueChange={(value) => set({ qualifier: value as IFuzzyDateDraft["qualifier"] })}
+          options={QUALIFIERS.map((qualifier) => ({
+            value: qualifier,
+            label: t("date_qualifier_value", { qualifier }),
+          }))}
+        />
         <Input
           id={id}
           aria-label={t("date_year")}

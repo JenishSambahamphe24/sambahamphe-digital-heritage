@@ -24,6 +24,7 @@
   },
   "peerDependencies": {
     "@radix-ui/react-dialog": "catalog:fe",
+    "@radix-ui/react-select": "catalog:fe",
     "@radix-ui/react-toast": "catalog:fe",
     "clsx": "catalog:fe",
     "lucide-react": "catalog:fe",
@@ -35,6 +36,7 @@
     "@eslint/js": "catalog:generic",
     "@ianvs/prettier-plugin-sort-imports": "catalog:generic",
     "@radix-ui/react-dialog": "catalog:fe",
+    "@radix-ui/react-select": "catalog:fe",
     "@radix-ui/react-toast": "catalog:fe",
     "@repo/config": "workspace:*",
     "@types/react": "catalog:fe",

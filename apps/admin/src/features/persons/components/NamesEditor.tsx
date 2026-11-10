@@ -4,9 +4,7 @@ import type { TNameType } from "@repo/contracts";
 import { useTranslations } from "use-intl";
 
 import { NAME_TYPES } from "@repo/contracts";
-import { Button, Input } from "@repo/ui";
-
-import { Select } from "#/components/Select";
+import { Button, Input, Select } from "@repo/ui";
 
 const SCRIPTS = ["Latn", "Deva", "Limb"] as const;
 
@@ -37,27 +35,25 @@ export function NamesEditor({ value, onChange, invalid }: NamesEditorProps) {
             aria-label={t("person_name_type")}
             className="sm:col-span-2"
             value={name.nameType}
-            onChange={(event) => update(name.key, { nameType: event.target.value as TNameType })}
-          >
-            {NAME_TYPES.map((type) => (
-              <option key={type} value={type}>
-                {t("person_name_type_value", { type })}
-              </option>
-            ))}
-          </Select>
+            onValueChange={(value) => update(name.key, { nameType: value as TNameType })}
+            options={NAME_TYPES.map((type) => ({
+              value: type,
+              label: t("person_name_type_value", { type }),
+            }))}
+          />
           <Select
             aria-label={t("person_script")}
             className="sm:col-span-2"
             value={name.script}
-            onChange={(event) => update(name.key, { script: event.target.value })}
-          >
-            <option value="">{t("person_script_unset")}</option>
-            {SCRIPTS.map((script) => (
-              <option key={script} value={script}>
-                {t("person_script_value", { script })}
-              </option>
-            ))}
-          </Select>
+            onValueChange={(value) => update(name.key, { script: value })}
+            options={[
+              { value: "", label: t("person_script_unset") },
+              ...SCRIPTS.map((script) => ({
+                value: script,
+                label: t("person_script_value", { script }),
+              })),
+            ]}
+          />
           <label className="flex items-center gap-2 text-sm sm:col-span-2">
             <input
               type="radio"

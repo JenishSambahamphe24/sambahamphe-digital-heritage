@@ -3,9 +3,7 @@ import type { TPlaceAltNameKind } from "@repo/contracts";
 import { useTranslations } from "use-intl";
 
 import { PLACE_ALT_NAME_KINDS } from "@repo/contracts";
-import { Button, Input } from "@repo/ui";
-
-import { Select } from "#/components/Select";
+import { Button, Input, Select } from "@repo/ui";
 
 export interface IAltNameDraft {
   key: number;
@@ -40,14 +38,12 @@ export function AltNamesEditor({ value, onChange }: AltNamesEditorProps) {
             aria-label={t("place_alt_kind")}
             className="sm:col-span-3"
             value={alt.kind}
-            onChange={(event) => update(alt.key, { kind: event.target.value as TPlaceAltNameKind })}
-          >
-            {PLACE_ALT_NAME_KINDS.map((kind) => (
-              <option key={kind} value={kind}>
-                {t("place_alt_kind_value", { kind })}
-              </option>
-            ))}
-          </Select>
+            onValueChange={(value) => update(alt.key, { kind: value as TPlaceAltNameKind })}
+            options={PLACE_ALT_NAME_KINDS.map((kind) => ({
+              value: kind,
+              label: t("place_alt_kind_value", { kind }),
+            }))}
+          />
           <Input
             aria-label={t("place_alt_from")}
             placeholder={t("place_alt_from")}

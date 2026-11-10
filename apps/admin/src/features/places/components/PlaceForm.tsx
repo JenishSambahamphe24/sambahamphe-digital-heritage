@@ -7,9 +7,8 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "use-intl";
 
 import { PLACE_KINDS } from "@repo/contracts";
-import { Button, FormField, Input, ToastHelper } from "@repo/ui";
+import { Button, FormField, Input, Select, ToastHelper } from "@repo/ui";
 
-import { Select } from "#/components/Select";
 import { Textarea } from "#/components/Textarea";
 import { FieldErrorsHelper } from "#/lib/field-errors.helper";
 import { I18nTextHelper } from "#/lib/i18n-text.helper";
@@ -124,14 +123,12 @@ export function PlaceForm({ place, initialParent = null }: PlaceFormProps) {
         <Select
           id="place-kind"
           value={kind}
-          onChange={(event) => setKind(event.target.value as TPlaceKind)}
-        >
-          {PLACE_KINDS.map((option) => (
-            <option key={option} value={option}>
-              {t("place_kind", { kind: option })}
-            </option>
-          ))}
-        </Select>
+          onValueChange={(value) => setKind(value as TPlaceKind)}
+          options={PLACE_KINDS.map((option) => ({
+            value: option,
+            label: t("place_kind", { kind: option }),
+          }))}
+        />
       </FormField>
       <FormField id="place-parent" label={t("place_parent")} hint={t("place_parent_hint")}>
         <PlacePicker id="place-parent" value={parent} onChange={setParent} excludeId={place?.id} />

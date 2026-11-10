@@ -8,4 +8,5 @@ Design tokens and shared React components for `apps/web` and `apps/admin`.
 - `cn()` is the one helper kept as a plain function: it is called in nearly every component.
 - Components that use hooks or Radix start with `"use client"` so they work inside Next.js server components.
 - `FormField` always renders its message line (`min-h-5`), so an error appearing doesn't move the layout (root `CLAUDE.md`: messages never resize their container). Pass `reserveMessage={false}` only for a control that can never show a message.
+- `Select` is the only dropdown (Radix; a styled popover on every platform). Pass `options` as `{ value, label }`; `""` is a valid value for choices like "Not given".
 - Only promote something here when both apps need it; app-specific components stay in the app.

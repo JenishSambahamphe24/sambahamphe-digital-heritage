@@ -22,9 +22,8 @@ import {
   LIVING_STATUSES,
   VISIBILITY_LEVELS,
 } from "@repo/contracts";
-import { Button, FormField, Input, ToastHelper } from "@repo/ui";
+import { Button, FormField, Input, Select, ToastHelper } from "@repo/ui";
 
-import { Select } from "#/components/Select";
 import { Textarea } from "#/components/Textarea";
 import { FieldErrorsHelper } from "#/lib/field-errors.helper";
 import { I18nTextHelper } from "#/lib/i18n-text.helper";
@@ -154,14 +153,12 @@ export function PersonForm({ person }: PersonFormProps) {
           <Select
             id="person-lineage"
             value={lineageRole}
-            onChange={(event) => setLineageRole(event.target.value as TLineageRole)}
-          >
-            {LINEAGE_ROLES.map((role) => (
-              <option key={role} value={role}>
-                {t("person_lineage_role_value", { role })}
-              </option>
-            ))}
-          </Select>
+            onValueChange={(value) => setLineageRole(value as TLineageRole)}
+            options={LINEAGE_ROLES.map((role) => ({
+              value: role,
+              label: t("person_lineage_role_value", { role }),
+            }))}
+          />
         </FormField>
         <FormField id="person-gender" label={t("person_gender")} error={error("gender")}>
           <Select
@@ -169,28 +166,26 @@ export function PersonForm({ person }: PersonFormProps) {
             value={gender}
             invalid={errors.has("gender")}
             aria-describedby="person-gender-message"
-            onChange={(event) => setGender(event.target.value as TGender | "")}
-          >
-            <option value="">{t("person_gender_unset")}</option>
-            {GENDERS.map((option) => (
-              <option key={option} value={option}>
-                {t("person_gender_value", { gender: option })}
-              </option>
-            ))}
-          </Select>
+            onValueChange={(value) => setGender(value as TGender | "")}
+            options={[
+              { value: "", label: t("person_gender_unset") },
+              ...GENDERS.map((option) => ({
+                value: option,
+                label: t("person_gender_value", { gender: option }),
+              })),
+            ]}
+          />
         </FormField>
         <FormField id="person-living" label={t("person_living_status")}>
           <Select
             id="person-living"
             value={livingStatus}
-            onChange={(event) => setLivingStatus(event.target.value as TLivingStatus)}
-          >
-            {LIVING_STATUSES.map((status) => (
-              <option key={status} value={status}>
-                {t("person_living_status_value", { status })}
-              </option>
-            ))}
-          </Select>
+            onValueChange={(value) => setLivingStatus(value as TLivingStatus)}
+            options={LIVING_STATUSES.map((status) => ({
+              value: status,
+              label: t("person_living_status_value", { status }),
+            }))}
+          />
         </FormField>
       </div>
       <label className="flex items-center gap-2 text-sm">
@@ -285,15 +280,15 @@ export function PersonForm({ person }: PersonFormProps) {
             value={visibility}
             invalid={errors.has("visibility")}
             aria-describedby="person-visibility-message"
-            onChange={(event) => setVisibility(event.target.value as TLevelChoice)}
-          >
-            <option value="">{t("person_visibility_default")}</option>
-            {VISIBILITY_LEVELS.map((level) => (
-              <option key={level} value={level}>
-                {t("visibility_level", { level })}
-              </option>
-            ))}
-          </Select>
+            onValueChange={(value) => setVisibility(value as TLevelChoice)}
+            options={[
+              { value: "", label: t("person_visibility_default") },
+              ...VISIBILITY_LEVELS.map((level) => ({
+                value: level,
+                label: t("visibility_level", { level }),
+              })),
+            ]}
+          />
         </FormField>
         <div className="grid gap-x-4 sm:grid-cols-2">
           {FIELD_GROUPS.map((group) => (
@@ -308,20 +303,20 @@ export function PersonForm({ person }: PersonFormProps) {
                 value={fieldVisibility[group] ?? ""}
                 invalid={errors.has(`fieldVisibility.${group}`)}
                 aria-describedby={`person-group-${group}-message`}
-                onChange={(event) =>
+                onValueChange={(value) =>
                   setFieldVisibility({
                     ...fieldVisibility,
-                    [group]: event.target.value as TLevelChoice,
+                    [group]: value as TLevelChoice,
                   })
                 }
-              >
-                <option value="">{t("person_visibility_default")}</option>
-                {VISIBILITY_LEVELS.map((level) => (
-                  <option key={level} value={level}>
-                    {t("visibility_level", { level })}
-                  </option>
-                ))}
-              </Select>
+                options={[
+                  { value: "", label: t("person_visibility_default") },
+                  ...VISIBILITY_LEVELS.map((level) => ({
+                    value: level,
+                    label: t("visibility_level", { level }),
+                  })),
+                ]}
+              />
             </FormField>
           ))}
         </div>

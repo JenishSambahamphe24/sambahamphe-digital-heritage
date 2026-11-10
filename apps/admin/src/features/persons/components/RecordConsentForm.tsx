@@ -4,9 +4,8 @@ import { useState } from "react";
 import { useTranslations } from "use-intl";
 
 import { CONSENT_RELATIONS, FIELD_GROUPS, VISIBILITY_LEVELS } from "@repo/contracts";
-import { Button, FormField, Input, ToastHelper } from "@repo/ui";
+import { Button, FormField, Input, Select, ToastHelper } from "@repo/ui";
 
-import { Select } from "#/components/Select";
 import { ProblemMessageHelper } from "#/lib/problem-message.helper";
 
 import { usePersonActions } from "../hooks/usePersonActions";
@@ -67,27 +66,23 @@ export function RecordConsentForm({ personId }: RecordConsentFormProps) {
           <Select
             id="consent-relation"
             value={relation}
-            onChange={(event) => setRelation(event.target.value as TConsentRelation)}
-          >
-            {CONSENT_RELATIONS.map((option) => (
-              <option key={option} value={option}>
-                {t("consent_relation", { relation: option })}
-              </option>
-            ))}
-          </Select>
+            onValueChange={(value) => setRelation(value as TConsentRelation)}
+            options={CONSENT_RELATIONS.map((option) => ({
+              value: option,
+              label: t("consent_relation", { relation: option }),
+            }))}
+          />
         </FormField>
         <FormField id="consent-level" label={t("consent_level")}>
           <Select
             id="consent-level"
             value={level}
-            onChange={(event) => setLevel(event.target.value as TVisibilityLevel)}
-          >
-            {VISIBILITY_LEVELS.map((option) => (
-              <option key={option} value={option}>
-                {t("visibility_level", { level: option })}
-              </option>
-            ))}
-          </Select>
+            onValueChange={(value) => setLevel(value as TVisibilityLevel)}
+            options={VISIBILITY_LEVELS.map((option) => ({
+              value: option,
+              label: t("visibility_level", { level: option }),
+            }))}
+          />
         </FormField>
         <FormField id="consent-date" label={t("consent_date")}>
           <Input
