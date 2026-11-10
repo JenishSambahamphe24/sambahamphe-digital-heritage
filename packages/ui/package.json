@@ -1,0 +1,51 @@
+{
+  "name": "@repo/ui",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./theme.css": "./src/styles/theme.css"
+  },
+  "files": [
+    "dist",
+    "src/styles"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
+    "lint": "eslint .",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "check": "prettier --write . && eslint --fix .",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@radix-ui/react-dialog": "catalog:fe",
+    "clsx": "catalog:fe",
+    "react": "catalog:fe",
+    "react-dom": "catalog:fe",
+    "tailwind-merge": "catalog:fe"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:generic",
+    "@ianvs/prettier-plugin-sort-imports": "catalog:generic",
+    "@radix-ui/react-dialog": "catalog:fe",
+    "@repo/config": "workspace:*",
+    "@types/react": "catalog:fe",
+    "@types/react-dom": "catalog:fe",
+    "clsx": "catalog:fe",
+    "eslint": "catalog:generic",
+    "eslint-plugin-react-hooks": "catalog:fe",
+    "globals": "catalog:generic",
+    "prettier": "catalog:generic",
+    "prettier-plugin-tailwindcss": "catalog:fe",
+    "react": "catalog:fe",
+    "react-dom": "catalog:fe",
+    "tailwind-merge": "catalog:fe",
+    "typescript": "catalog:generic",
+    "typescript-eslint": "catalog:generic"
+  }
+}

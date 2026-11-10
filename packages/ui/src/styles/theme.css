@@ -1,0 +1,47 @@
+/*
+ * Design tokens for every app. Placeholder palette (warm, earthy) until the
+ * organization supplies its branding (requirements Q-10): change colors here
+ * only — components use the semantic names, never raw values.
+ */
+@theme {
+  --color-background: #fbf8f3;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f4eee5;
+  --color-border: #e3d9cb;
+  --color-border-strong: #c9b8a2;
+
+  --color-foreground: #2b211a;
+  --color-foreground-muted: #6b5b4d;
+  --color-foreground-subtle: #8f7f70;
+
+  --color-primary: #8c2f1f;
+  --color-primary-hover: #74261a;
+  --color-primary-foreground: #fffaf4;
+  --color-accent: #b7832f;
+
+  --color-success: #2f6b3a;
+  --color-success-subtle: #e6f1e7;
+  --color-danger: #a12a2a;
+  --color-danger-hover: #852222;
+  --color-danger-subtle: #f8e5e3;
+  --color-warning: #8a5a00;
+  --color-warning-subtle: #fbf0d9;
+  --color-info: #1f5a7a;
+  --color-info-subtle: #e3eff5;
+
+  --color-overlay: #1b130d;
+  --color-focus: #b7832f;
+
+  --font-sans:
+    var(--font-app-sans, ui-sans-serif), "Noto Sans Devanagari", "Noto Sans Limbu", system-ui,
+    sans-serif;
+  --font-display: var(--font-app-display, ui-serif), Georgia, serif;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+}
