@@ -8,6 +8,7 @@ import { AppointmentsService } from "./application/appointments.service.js";
 import { BoardService } from "./application/board.service.js";
 import { OrgScopeService } from "./application/org-scope.service.js";
 import { OrgUnitsService } from "./application/org-units.service.js";
+import { PersonOptionsService } from "./application/person-options.service.js";
 import { PositionsService } from "./application/positions.service.js";
 import { TermsService } from "./application/terms.service.js";
 import { AdminOrganizationController } from "./http/admin-organization.controller.js";
@@ -31,6 +32,7 @@ import { TermsRepository } from "./internal/terms.repository.js";
     TermsService,
     AppointmentsService,
     BoardService,
+    PersonOptionsService,
   ],
 })
 export class OrganizationModule {}

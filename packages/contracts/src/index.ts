@@ -40,6 +40,8 @@ export * from "./organization/org-unit-type-list.response.dto.js";
 export * from "./organization/org-unit-type.response.dto.js";
 export * from "./organization/org-unit.response.dto.js";
 export * from "./organization/organization.enums.js";
+export * from "./organization/person-option-list.response.dto.js";
+export * from "./organization/person-options.query.dto.js";
 export * from "./organization/position-fields.dto.js";
 export * from "./organization/position-list.response.dto.js";
 export * from "./organization/position.response.dto.js";

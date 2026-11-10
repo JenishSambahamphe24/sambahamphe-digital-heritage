@@ -9,6 +9,8 @@ import type {
   TIdParams,
   TOrgUnitChildParams,
   TOrgUnitResponse,
+  TPersonOptionListResponse,
+  TPersonOptionsQuery,
   TPositionResponse,
   TRetractAppointmentRequest,
   TTermResponse,
@@ -28,6 +30,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
 } from "@nestjs/common";
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
@@ -42,6 +45,8 @@ import {
   idParamsSchema,
   orgUnitChildParamsSchema,
   orgUnitResponseSchema,
+  personOptionListResponseSchema,
+  personOptionsQuerySchema,
   positionResponseSchema,
   retractAppointmentRequestSchema,
   termResponseSchema,
@@ -57,6 +62,7 @@ import { RequirePermission } from "../../access/guards/require-permission.decora
 import { CurrentAuth } from "../../auth/guards/current-auth.decorator.js";
 import { AppointmentsService } from "../application/appointments.service.js";
 import { OrgUnitsService } from "../application/org-units.service.js";
+import { PersonOptionsService } from "../application/person-options.service.js";
 import { PositionsService } from "../application/positions.service.js";
 import { TermsService } from "../application/terms.service.js";
 
@@ -72,6 +78,7 @@ export class AdminOrganizationController {
     private readonly positions: PositionsService,
     private readonly terms: TermsService,
     private readonly appointments: AppointmentsService,
+    private readonly personLookup: PersonOptionsService,
   ) {}
 
   @Post("units")
@@ -158,6 +165,15 @@ export class AdminOrganizationController {
     @Body({ schema: retractAppointmentRequestSchema }) body: TRetractAppointmentRequest,
   ): Promise<TAppointmentResponse> {
     return this.appointments.retract(request, auth.user.id, params.id, params.childId, body);
+  }
+
+  @Get("person-options")
+  @ApiOkResponse({ standardSchema: personOptionListResponseSchema })
+  personOptions(
+    @Req() request: Request,
+    @Query({ schema: personOptionsQuerySchema }) query: TPersonOptionsQuery,
+  ): Promise<TPersonOptionListResponse> {
+    return this.personLookup.search(request, query);
   }
 
   @Post("positions")

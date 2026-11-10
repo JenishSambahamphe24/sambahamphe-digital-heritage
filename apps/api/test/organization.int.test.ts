@@ -272,6 +272,20 @@ describe("a manager limited to one regional board", () => {
   });
 });
 
+describe("person lookup for appointments", () => {
+  it("returns only id and name, for managers of the board", async () => {
+    const response = await admin()
+      .get(`/admin/org/person-options?unitId=${centralId}&q=adult`)
+      .expect(200);
+    expect(response.body.data.length).toBeGreaterThan(0);
+    expect(Object.keys(response.body.data[0]).sort()).toEqual(["displayName", "id"]);
+    const visitor = await request(server).get(
+      `${API}/admin/org/person-options?unitId=${centralId}&q=adult`,
+    );
+    expect(visitor.status).toBe(401);
+  });
+});
+
 describe("audit", () => {
   it("records organization changes without names", async () => {
     const rows = await stack.database.query(
