@@ -22,6 +22,7 @@ import { AuthModule } from "./modules/auth/auth.module.js";
 import { CsrfGuard } from "./modules/auth/guards/csrf.guard.js";
 import { SessionGuard } from "./modules/auth/guards/session.guard.js";
 import { HealthModule } from "./modules/health/health.module.js";
+import { PeopleModule } from "./modules/people/people.module.js";
 import { PlacesModule } from "./modules/places/places.module.js";
 import { UsersModule } from "./modules/users/users.module.js";
 
@@ -48,6 +49,7 @@ export class AppModule implements NestModule {
         AuthModule,
         HealthModule,
         PlacesModule,
+        PeopleModule,
       ],
       providers: [
         { provide: APP_FILTER, useClass: ProblemDetailsFilter },

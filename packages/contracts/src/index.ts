@@ -29,6 +29,7 @@ export * from "./people/consent.response.dto.js";
 export * from "./people/create-person.request.dto.js";
 export * from "./people/field-visibility.dto.js";
 export * from "./people/list-persons.query.dto.js";
+export * from "./people/person-consent.params.dto.js";
 export * from "./people/person-fields.dto.js";
 export * from "./people/person-list.response.dto.js";
 export * from "./people/person-name.dto.js";

@@ -72,7 +72,7 @@ Decided 2026-11-07: Q-1 (access policy), Q-2 (male line), Q-3 (English + Nepali)
 
 **M2.1 Places & People core**
 - `places` + alt names; admin CRUD with hierarchy picker.
-- `persons`, `person_names`, consents, privacy policy module (table-driven tests), basic person CRUD for editors (direct, audited; change-request flow arrives in M3.2).
+- `persons`, `person_names`, consents, privacy policy module (table-driven tests), person CRUD for editors through **auto-approved change requests** (ADR-012; decided at M2.1 start instead of direct edits), with revisions and optimistic concurrency.
 - Person search (trigram on names, romanization).
 
 **M2.2 Organization & governance**
@@ -107,7 +107,7 @@ Decided 2026-11-07: Q-1 (access policy), Q-2 (male line), Q-3 (English + Nepali)
 - Generic `contributions` module, genealogy operation types, temp refs, base-version conflicts, auto-approve for editors, review inbox with diffs, comments, notifications.
 - Submission by any registered member (verified email, rate-limited); search-and-anchor submission form; **duplicate check at submission**.
 - Male-line rules (ADR-020) and branch inheritance on approval.
-- Migrate M2.1 direct person edits onto change requests.
+- Contributor submissions on the change-request path M2.1 started (pending → review → approve/reject), and a generic apply step for queued operations.
 
 **M3.3 Tree visualization**
 - Neighborhood endpoint, React Flow top-down descendant tree + father-chain lineage view, progressive expand/collapse, search-to-focus, profile panel, mobile list fallback, accessibility (keyboard navigation, screen-reader family list).
