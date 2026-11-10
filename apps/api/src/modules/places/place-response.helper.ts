@@ -31,9 +31,6 @@ export class PlaceResponseHelper {
       parentId: row.parentId,
       kind: row.kind,
       nameI18n: row.nameI18n,
-      // numeric comes back from Postgres as a string to keep its precision.
-      latitude: row.latitude === null ? null : Number(row.latitude),
-      longitude: row.longitude === null ? null : Number(row.longitude),
       notes: row.notes,
       altNames: altNames.map((alt) => ({
         name: alt.name,

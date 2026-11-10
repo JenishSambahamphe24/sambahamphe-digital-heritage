@@ -102,8 +102,6 @@
   "place_kind": "{kind, select, country {Country} province {Province} district {District} municipality {Municipality} ward {Ward} village {Village} locality {Locality} venue {Venue} other {Other}}",
   "place_parent": "Inside",
   "place_parent_hint": "The larger place this one belongs to. Leave empty for a country.",
-  "place_latitude": "Latitude",
-  "place_longitude": "Longitude",
   "place_notes": "Notes",
   "place_alt_names": "Other names",
   "place_alt_names_hint": "Old names (such as a VDC before 2017) and other spellings, so old records still find this place.",

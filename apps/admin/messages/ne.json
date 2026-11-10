@@ -102,8 +102,6 @@
   "place_kind": "{kind, select, country {देश} province {प्रदेश} district {जिल्ला} municipality {नगरपालिका / गाउँपालिका} ward {वडा} village {गाउँ} locality {टोल} venue {कार्यक्रम स्थल} other {अन्य}}",
   "place_parent": "भित्र पर्ने",
   "place_parent_hint": "यो स्थान पर्ने ठूलो स्थान। देशका लागि खाली छोड्नुहोस्।",
-  "place_latitude": "अक्षांश",
-  "place_longitude": "देशान्तर",
   "place_notes": "टिप्पणी",
   "place_alt_names": "अन्य नामहरू",
   "place_alt_names_hint": "पुराना नाम (जस्तै २०७४ अघिको गाविस) र अन्य हिज्जे, ताकि पुराना अभिलेखले पनि यो स्थान भेटाऊन्।",

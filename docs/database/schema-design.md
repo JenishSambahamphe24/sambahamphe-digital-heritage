@@ -152,8 +152,6 @@ create table places (
   parent_id   uuid references places,
   kind        place_kind not null,   -- country | province | district | municipality | ward | village | locality | venue | other
   name_i18n   jsonb not null,        -- current names per locale/script
-  latitude    numeric(9,6),
-  longitude   numeric(9,6),
   notes       text,
   created_at, updated_at, created_by, updated_by
 );

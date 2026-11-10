@@ -10,8 +10,6 @@ export const placeResponseSchema = z.object({
   parentId: z.uuid().nullable(),
   kind: z.enum(PLACE_KINDS),
   nameI18n: i18nTextSchema,
-  latitude: z.number().nullable(),
-  longitude: z.number().nullable(),
   notes: z.string().nullable(),
   altNames: z.array(placeAltNameSchema),
   // Root first, ending with the parent: "Nepal › Koshi › Panchthar".

@@ -130,14 +130,6 @@ export class PlacesService {
       parentId: request.parentId ?? null,
       kind: request.kind,
       nameI18n: request.nameI18n,
-      latitude:
-        request.latitude === null || request.latitude === undefined
-          ? null
-          : String(request.latitude),
-      longitude:
-        request.longitude === null || request.longitude === undefined
-          ? null
-          : String(request.longitude),
       notes: request.notes ?? null,
     };
   }

@@ -43,6 +43,13 @@
       "when": 1794295888090,
       "tag": "0005_add_person_presumed_living",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1794315409320,
+      "tag": "0006_drop_place_coordinates",
+      "breakpoints": true
     }
   ]
 }

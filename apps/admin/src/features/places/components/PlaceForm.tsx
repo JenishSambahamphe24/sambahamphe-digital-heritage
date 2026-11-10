@@ -41,8 +41,6 @@ export function PlaceForm({ place, initialParent = null }: PlaceFormProps) {
       ? { id: parentFromPlace.id, label: I18nTextHelper.pick(parentFromPlace.nameI18n, locale) }
       : initialParent,
   );
-  const [latitude, setLatitude] = useState(place?.latitude?.toString() ?? "");
-  const [longitude, setLongitude] = useState(place?.longitude?.toString() ?? "");
   const [notes, setNotes] = useState(place?.notes ?? "");
   const [altNames, setAltNames] = useState<IAltNameDraft[]>(
     (place?.altNames ?? []).map((alt, index) => ({
@@ -71,8 +69,6 @@ export function PlaceForm({ place, initialParent = null }: PlaceFormProps) {
               kind,
               parentId: parent?.id ?? null,
               nameI18n: { en: nameEn.trim() || undefined, ne: nameNe.trim() || undefined },
-              latitude: optionalNumber(latitude),
-              longitude: optionalNumber(longitude),
               notes: notes.trim() || null,
               altNames: altNames
                 .filter((alt) => alt.name.trim())
@@ -133,28 +129,6 @@ export function PlaceForm({ place, initialParent = null }: PlaceFormProps) {
       <FormField id="place-parent" label={t("place_parent")} hint={t("place_parent_hint")}>
         <PlacePicker id="place-parent" value={parent} onChange={setParent} excludeId={place?.id} />
       </FormField>
-      <div className="grid gap-x-4 sm:grid-cols-2">
-        <FormField id="place-latitude" label={t("place_latitude")} error={error("latitude")}>
-          <Input
-            id="place-latitude"
-            inputMode="decimal"
-            value={latitude}
-            invalid={errors.has("latitude")}
-            aria-describedby="place-latitude-message"
-            onChange={(event) => setLatitude(event.target.value)}
-          />
-        </FormField>
-        <FormField id="place-longitude" label={t("place_longitude")} error={error("longitude")}>
-          <Input
-            id="place-longitude"
-            inputMode="decimal"
-            value={longitude}
-            invalid={errors.has("longitude")}
-            aria-describedby="place-longitude-message"
-            onChange={(event) => setLongitude(event.target.value)}
-          />
-        </FormField>
-      </div>
       <FormField id="place-notes" label={t("place_notes")}>
         <Textarea
           id="place-notes"
