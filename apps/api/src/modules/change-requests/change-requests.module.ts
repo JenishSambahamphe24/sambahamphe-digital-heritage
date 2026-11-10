@@ -5,6 +5,6 @@ import { ChangeRequestsRepository } from "./internal/change-requests.repository.
 
 @Module({
   providers: [ChangeRequestsRepository, ChangeRequestsService],
-  exports: [ChangeRequestsService],
+  exports: [ChangeRequestsService, ChangeRequestsRepository],
 })
 export class ChangeRequestsModule {}
