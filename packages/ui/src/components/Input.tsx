@@ -12,8 +12,9 @@ export function Input({ invalid = false, className, ...props }: InputProps) {
       aria-invalid={invalid || undefined}
       className={cn(
         "border-border-strong bg-surface text-foreground h-10 w-full rounded-md border px-3 text-sm",
-        "placeholder:text-foreground-subtle focus-visible:outline-focus focus-visible:outline-2 focus-visible:outline-offset-1",
-        invalid && "border-danger",
+        // Border and outline share the focus colour with no gap, so focus reads as one ring.
+        "placeholder:text-foreground-subtle focus-visible:border-focus focus-visible:outline-focus focus-visible:outline-2 focus-visible:outline-offset-0",
+        invalid && "border-danger focus-visible:border-danger focus-visible:outline-danger",
         className,
       )}
       {...props}
