@@ -1,21 +1,18 @@
-import type { visibilityLevel } from "./persons.schema.js";
+import type { TFieldGroup, TVisibilityLevel } from "@repo/contracts";
 
 import { index, jsonb, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+
+import { CONSENT_RELATIONS } from "@repo/contracts";
 
 import { ColumnHelper } from "./column.helper.js";
 import { persons } from "./persons.schema.js";
 import { users } from "./users.schema.js";
 
-export const consentRelation = pgEnum("consent_relation", [
-  "self",
-  "parent_guardian",
-  "next_of_kin",
-  "estate",
-]);
+export const consentRelation = pgEnum("consent_relation", CONSENT_RELATIONS);
 
 export interface IConsentScope {
-  visibility: (typeof visibilityLevel.enumValues)[number];
-  fieldGroups: string[];
+  visibility: TVisibilityLevel;
+  fieldGroups: TFieldGroup[];
 }
 
 // Evidence documents (a signed form) link here once media exists (M2.3).

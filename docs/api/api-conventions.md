@@ -32,7 +32,7 @@ Applies to every endpoint of `apps/api`. Web, admin and mobile clients rely on t
 | `PUT` | full replacement of ordered sub-collections only (e.g., gallery item order) | `200` |
 | `DELETE` | soft delete / retract where allowed | `204` |
 
-Error codes: `400` malformed, `401` unauthenticated, `403` forbidden, `404` not found (also used when a resource exists but is hidden by privacy — never reveal existence), `409` version conflict / state conflict, `412` `If-Match` mismatch, `422` validation failed, `429` rate limited, `500` unexpected.
+Error codes: `400` malformed, `401` unauthenticated, `403` forbidden, `404` not found (also used when a resource exists but is hidden by privacy — never reveal existence), `409` version conflict / state conflict, `422` validation failed, `429` rate limited, `500` unexpected.
 
 ## 3. Errors — RFC 9457 Problem Details
 
@@ -91,8 +91,8 @@ Single resources are returned **unwrapped** (no `data` envelope); collections al
 
 ## 6. Concurrency & idempotency
 
-- Versioned resources return `ETag: "v<version>"` and a `version` field.
-- `PATCH`/`DELETE` on versioned resources **require** `If-Match: "v<version>"` (or `version` in body for mobile convenience). Mismatch → `412` with the current version in the problem body.
+- Versioned resources return a `version` field.
+- Writes to a versioned resource send the `version` the client last read, in the body. A mismatch is `409 version_conflict` with `currentVersion` in the problem body; the client reloads and shows the newer data instead of overwriting it. (Decided in M2.1: one mechanism for web, admin and mobile; `ETag`/`If-Match` can be added later for HTTP caches without changing this.)
 - `POST` endpoints that create submissions or start jobs accept `Idempotency-Key` (UUID); repeated keys within 24 h return the original response.
 
 ## 7. Authentication & authorization

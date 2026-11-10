@@ -1,14 +1,12 @@
 import { sql } from "drizzle-orm";
 import { check, index, integer, pgEnum, pgTable, text, uuid } from "drizzle-orm/pg-core";
 
+import { PLACE_ALT_NAME_KINDS } from "@repo/contracts";
+
 import { ColumnHelper } from "./column.helper.js";
 import { places } from "./places.schema.js";
 
-export const placeAltNameKind = pgEnum("place_alt_name_kind", [
-  "historical",
-  "variant",
-  "official",
-]);
+export const placeAltNameKind = pgEnum("place_alt_name_kind", PLACE_ALT_NAME_KINDS);
 
 // Historical and variant names (e.g. a VDC renamed into a municipality in 2017)
 // so old records and searches still find the place.

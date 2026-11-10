@@ -1,4 +1,4 @@
-import type { TI18nText } from "./i18n-text.type.js";
+import type { TI18nText } from "@repo/contracts";
 
 import { jsonb, pgTable, text } from "drizzle-orm/pg-core";
 

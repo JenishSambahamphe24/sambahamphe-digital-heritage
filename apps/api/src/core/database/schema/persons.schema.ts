@@ -1,3 +1,4 @@
+import type { TFieldVisibility } from "@repo/contracts";
 import type { TFuzzyDate } from "@repo/dates";
 import type { AnyPgColumn } from "drizzle-orm/pg-core";
 
@@ -15,34 +16,26 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
+import {
+  GENDERS,
+  LINEAGE_ROLES,
+  LIVING_STATUSES,
+  PERSON_RECORD_STATUSES,
+  VERIFICATION_STATUSES,
+  VISIBILITY_LEVELS,
+} from "@repo/contracts";
+
 import { clans } from "./clans.schema.js";
 import { ColumnHelper } from "./column.helper.js";
 import { places } from "./places.schema.js";
 import { users } from "./users.schema.js";
 
-export const personRecordStatus = pgEnum("person_record_status", ["active", "merged", "retracted"]);
-export const lineageRole = pgEnum("lineage_role", ["lineage", "spouse"]);
-export const gender = pgEnum("gender", ["female", "male", "other", "unknown"]);
-export const livingStatus = pgEnum("living_status", ["living", "deceased", "unknown"]);
-export const visibilityLevel = pgEnum("visibility_level", [
-  "public",
-  "members",
-  "branch",
-  "restricted",
-  "private",
-]);
-export const verificationStatus = pgEnum("verification_status", [
-  "unverified",
-  "verified",
-  "disputed",
-]);
-
-export type TFieldVisibility = Partial<
-  Record<
-    "names" | "vital_dates" | "places" | "biography" | "photos" | "contact" | "relationships",
-    (typeof visibilityLevel.enumValues)[number]
-  >
->;
+export const personRecordStatus = pgEnum("person_record_status", PERSON_RECORD_STATUSES);
+export const lineageRole = pgEnum("lineage_role", LINEAGE_ROLES);
+export const gender = pgEnum("gender", GENDERS);
+export const livingStatus = pgEnum("living_status", LIVING_STATUSES);
+export const visibilityLevel = pgEnum("visibility_level", VISIBILITY_LEVELS);
+export const verificationStatus = pgEnum("verification_status", VERIFICATION_STATUSES);
 
 // Profile photo, biography translations and residences arrive with media
 // (M2.3) and content (M2.4); relationships with genealogy (Phase 3).

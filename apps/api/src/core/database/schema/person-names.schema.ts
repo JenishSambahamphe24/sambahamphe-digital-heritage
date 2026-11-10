@@ -10,19 +10,12 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
+import { NAME_TYPES } from "@repo/contracts";
+
 import { ColumnHelper } from "./column.helper.js";
 import { persons } from "./persons.schema.js";
 
-export const nameType = pgEnum("name_type", [
-  "birth",
-  "given",
-  "married",
-  "alias",
-  "ritual",
-  "nickname",
-  "honorific",
-  "other",
-]);
+export const nameType = pgEnum("name_type", NAME_TYPES);
 
 export const personNames = pgTable(
   "person_names",
