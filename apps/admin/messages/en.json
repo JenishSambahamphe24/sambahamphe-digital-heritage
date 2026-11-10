@@ -215,5 +215,7 @@
   "error_version_conflict": "Someone else saved this first. The latest version is now loaded; make your change again.",
   "error_place_cycle": "A place can't sit inside itself or one of its own sub-places.",
   "error_unknown_parent": "The place it belongs to no longer exists.",
-  "error_person_not_active": "This record was retracted or merged and can't be edited."
+  "error_person_not_active": "This record was retracted or merged and can't be edited.",
+  "nav_label": "Main menu",
+  "nav_open_menu": "Open menu"
 }

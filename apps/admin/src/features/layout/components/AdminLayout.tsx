@@ -1,76 +1,41 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link, Outlet, useNavigate, useRouteContext } from "@tanstack/react-router";
-import { useTranslations } from "use-intl";
+import { Outlet } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
-import { Button } from "@repo/ui";
+import { MobileSidebar } from "./MobileSidebar";
+import { Navbar } from "./Navbar";
+import { Sidebar } from "./Sidebar";
 
-import { apiClient } from "#/lib/api-client";
-import { BRAND_LOGO } from "#/lib/brand";
-import { QUERY_KEYS } from "#/lib/query-keys";
-
-import { LanguageSwitch } from "./LanguageSwitch";
-
-const NAV_LINK = "rounded px-3 py-2 text-sm hover:bg-surface-muted";
-const NAV_LINK_ACTIVE = "bg-surface-muted font-medium text-primary";
-
+// The bars never move: the window is locked to the viewport and only the
+// content column scrolls (same shape as the Pathibhara admin).
 export function AdminLayout() {
-  const t = useTranslations();
-  const { me } = useRouteContext({ from: "/_authenticated" });
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
-  const logout = useMutation({
-    mutationFn: async () => {
-      await apiClient.POST("/api/v1/auth/logout");
-    },
-    onSuccess: async () => {
-      queryClient.setQueryData(QUERY_KEYS.me, null);
-      await navigate({ to: "/login" });
-    },
-  });
+  // A focused element or anchor jump can still scroll the window itself;
+  // put it back so the sidebar and navbar stay in place.
+  useEffect(() => {
+    function resetWindowScroll() {
+      if (window.scrollY !== 0 || window.scrollX !== 0) {
+        window.scrollTo(0, 0);
+      }
+    }
+    window.addEventListener("scroll", resetWindowScroll, { passive: true });
+    return () => window.removeEventListener("scroll", resetWindowScroll);
+  }, []);
 
   return (
-    <div className="bg-background flex min-h-screen">
-      <aside className="border-border bg-surface w-56 shrink-0 border-r p-4">
-        <div className="mb-6 flex items-center gap-3">
-          <img
-            src={BRAND_LOGO.src}
-            width={BRAND_LOGO.width}
-            height={BRAND_LOGO.height}
-            alt={t("logo_alt")}
-            className="h-10 w-auto"
-          />
-          <p className="font-display text-primary text-lg leading-tight font-semibold">
-            {t("admin_title")}
-          </p>
+    <div className="bg-background flex">
+      <div className="hidden shrink-0 lg:block">
+        <Sidebar />
+      </div>
+      <MobileSidebar open={isMobileSidebarOpen} onOpenChange={setIsMobileSidebarOpen} />
+      <div className="flex h-screen w-full min-w-0 flex-col overflow-hidden">
+        <div className="shrink-0">
+          <Navbar onOpenSidebar={() => setIsMobileSidebarOpen(true)} />
         </div>
-        <nav className="flex flex-col gap-1">
-          <Link to="/users" className={NAV_LINK} activeProps={{ className: NAV_LINK_ACTIVE }}>
-            {t("nav_users")}
-          </Link>
-          <Link to="/persons" className={NAV_LINK} activeProps={{ className: NAV_LINK_ACTIVE }}>
-            {t("nav_persons")}
-          </Link>
-          <Link to="/places" className={NAV_LINK} activeProps={{ className: NAV_LINK_ACTIVE }}>
-            {t("nav_places")}
-          </Link>
-          <Link to="/audit-log" className={NAV_LINK} activeProps={{ className: NAV_LINK_ACTIVE }}>
-            {t("nav_audit_log")}
-          </Link>
-        </nav>
-      </aside>
-      <div className="flex flex-1 flex-col">
-        <header className="border-border bg-surface flex items-center justify-end gap-4 border-b px-6 py-3">
-          <span className="text-foreground-muted text-sm">
-            {t("header_signed_in_as", { name: me.displayName })}
-          </span>
-          <LanguageSwitch />
-          <Button variant="secondary" loading={logout.isPending} onClick={() => logout.mutate()}>
-            {t("header_logout")}
-          </Button>
-        </header>
-        <main className="flex-1 p-6">
-          <Outlet />
+        <main className="scrollbar-slim grow overflow-y-auto px-3 md:px-6">
+          <div className="mx-auto max-w-7xl pt-4 pb-6 md:pt-6">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

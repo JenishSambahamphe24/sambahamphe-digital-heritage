@@ -2,3 +2,28 @@
 @import "@repo/ui/theme.css";
 
 @source "../../../packages/ui/dist";
+
+/* A thin scrollbar that follows the text colour, so it suits both the blue
+   sidebar and the light content area. */
+@utility scrollbar-slim {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, currentColor 22%, transparent) transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, currentColor 22%, transparent);
+    border-radius: 9999px;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, currentColor 38%, transparent);
+  }
+}
