@@ -5,4 +5,10 @@ export const QUERY_KEYS = {
   user: (id: string) => ["user", id] as const,
   userAssignments: (id: string) => ["user", id, "assignments"] as const,
   auditLog: ["audit-log"],
+  places: (q: string, parentId: string, page: number) => ["places", { q, parentId, page }] as const,
+  placesAll: ["places"],
+  place: (id: string) => ["place", id] as const,
+  persons: (q: string, page: number) => ["persons", { q, page }] as const,
+  personsAll: ["persons"],
+  person: (id: string) => ["person", id] as const,
 } as const;

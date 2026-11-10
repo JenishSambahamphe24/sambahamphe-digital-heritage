@@ -42,6 +42,12 @@ Small modules stay flat (`health/`). A module with real business logic uses the 
 - The admin CMS (`X-Client: admin`) requires at least one active role, checked at login and on every request.
 - First super admin: `pnpm --filter api build && pnpm --filter api admin:bootstrap --email <verified address>` (refuses once one exists).
 
+## Genealogy writes and person data
+
+- Every person write goes through `ChangeRequestsService.applyAsEditor(tx, …, apply)` (ADR-012): it records the approved change request and operation, then the revision and audit entry. Never insert or update `persons` outside it.
+- Person responses come only from `PersonResponseHelper.forViewer` (privacy-filtered) or `PersonResponseHelper.admin` (editor routes behind `genealogy:edit`). Public routes read the viewer with `@OptionalAuth()`; no viewer means the anonymous view.
+- List queries filter visibility in SQL (`PersonsRepository.searchVisible`, using `person_presumed_living`) so totals never count hidden people, and the policy still runs on every row.
+
 ## Audit
 
 - Record domain events with `audit.record({ action, entityType, entityId, changes }, tx)` **inside the transaction of the change**. Actor, request id, hashed IP and user agent are filled in from the request context.
@@ -69,6 +75,7 @@ Small modules stay flat (`health/`). A module with real business logic uses the 
 ## Errors
 
 - Throw `AppException(status, code, title, detail?, errors?)` for expected failures. `code` is a stable snake_case string clients may switch on (`docs/api/api-conventions.md` §3).
+- A stale `version` on a versioned record: `throw new VersionConflictException(current.version)` → `409 version_conflict` with `currentVersion`. Update with `WHERE id = $1 AND version = $2` and treat 0 rows as the conflict.
 - Everything is rendered as `application/problem+json` by `ProblemDetailsFilter`, with `type: urn:sambahamphe:problem:<code>` and the request id.
 - Unexpected errors become a generic `500 internal_error`. Their message is logged, never returned.
 

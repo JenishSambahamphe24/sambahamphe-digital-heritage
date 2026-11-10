@@ -152,8 +152,6 @@ create table places (
   parent_id   uuid references places,
   kind        place_kind not null,   -- country | province | district | municipality | ward | village | locality | venue | other
   name_i18n   jsonb not null,        -- current names per locale/script
-  latitude    numeric(9,6),
-  longitude   numeric(9,6),
   notes       text,
   created_at, updated_at, created_by, updated_by
 );
@@ -1045,6 +1043,8 @@ Enums that the organization may want to extend without a deploy (event categorie
 | No genealogy cycles; male-line rule; exactly one accepted father per lineage person; union partner consistency; org unit type nesting; `max_holders > 1` | Service layer, in transaction with advisory/row lock, covered by integration tests |
 | No silent overwrite | `version` column + change-request base version |
 | Append-only audit | Trigger rejecting UPDATE / DELETE / TRUNCATE (works whatever DB role connects) |
+| Persons are never hard-deleted; revisions never change | Triggers on `persons` (DELETE / TRUNCATE) and `entity_revisions` (UPDATE / DELETE / TRUNCATE), migration `0005` |
+| Presumed living | `person_presumed_living(persons)` SQL function, migration `0005` |
 | Privacy | `people/domain/privacy.ts` + response schemas + `person_presumed_living` SQL function for list queries |
 
 ## 14. Data volume & indexing notes
@@ -1053,7 +1053,7 @@ At 100k persons, ~250k relationship edges, the largest tables fit comfortably in
 
 ## 15. Deferred tables (later phases)
 
-`event_registrations`, `event_attendance`, `member_registry` (pending Q-6), `push_tokens`, `saved_searches`, `content_submissions` (reuses `change_requests` with `domain = 'content'`), `imports` (import batch tracking with row-level results).
+Built in M2.1: places, place alt names, clans, persons, person names, consents, person access grants, change requests and their operations, entity revisions. Still to come with their milestones: `person_translations`, `person_places` and `person_media` (M2.3/M2.4, with media and the rich-text editor), `change_request_comments` (M3.2), `user_person_links` and branches (Phase 3). Also deferred: `event_registrations`, `event_attendance`, `member_registry` (pending Q-6), `push_tokens`, `saved_searches`, `content_submissions` (reuses `change_requests` with `domain = 'content'`), `imports` (import batch tracking with row-level results).
 
 ## 16. Mapping to the genealogy access policy
 

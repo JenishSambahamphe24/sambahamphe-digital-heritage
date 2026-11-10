@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
 
-import { Button, FormField, ToastHelper } from "@repo/ui";
+import { Button, FormField, Select, ToastHelper } from "@repo/ui";
 
 import { apiClient } from "#/lib/api-client";
 import { ApiError } from "#/lib/api-error";
@@ -56,19 +56,14 @@ export function AssignRoleForm({ userId, roles }: AssignRoleFormProps) {
       <h2 className="font-display text-lg font-semibold">{t("roles_assign_title")}</h2>
       <div className="flex items-end gap-3">
         <FormField id="assign-role" label={t("roles_assign_role_label")} reserveMessage={false}>
-          <select
+          <Select
             id="assign-role"
             value={roleKey}
-            onChange={(event) => setRoleKey(event.target.value)}
-            className="border-border-strong bg-surface h-10 min-w-56 rounded-md border px-3 text-sm"
-          >
-            <option value="">{t("roles_assign_choose")}</option>
-            {roles.map((role) => (
-              <option key={role.key} value={role.key}>
-                {role.name}
-              </option>
-            ))}
-          </select>
+            onValueChange={setRoleKey}
+            placeholder={t("roles_assign_choose")}
+            className="min-w-56"
+            options={roles.map((role) => ({ value: role.key, label: role.name }))}
+          />
         </FormField>
         <Button type="submit" disabled={!roleKey} loading={assign.isPending}>
           {t("roles_assign_submit")}

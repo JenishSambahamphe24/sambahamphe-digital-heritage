@@ -71,6 +71,26 @@ You need a super admin first (once per database): register and confirm an accoun
 | D12 | **Audit log** | Newest first: role given / removed, sign-ins, failed sign-ins (no email addresses shown) |
 | D13 | Switch the admin to **नेपाली**, refresh the page | Stays Nepali (remembered in this browser) |
 
+## F. Admin — places and people (M2.1)
+
+Sign in to the admin as the super admin (or anyone with the Genealogy editor role). Then `pnpm db:migrate` once if you haven't since pulling M2.1.
+
+| # | Do | Expect |
+|---|---|---|
+| F1 | **Places** → **Add place**: "Nepal" (Country). Open it, add "Panchthar" (District) inside, then "Phidim" (Municipality) inside that with an other name "Phidim VDC", kind *Old name*, until 2017 | Each save shows a "Place saved." toast; the breadcrumb reads All places › Nepal › Panchthar |
+| F2 | Search places for `Phidim VDC` | Phidim appears with "Also known as Phidim VDC" and its path |
+| F3 | Edit Panchthar and pick Phidim as the place it is inside | Red toast: a place can't sit inside its own sub-place |
+| F4 | Open Phidim in two tabs, change and save in tab 1, then save in tab 2 | Tab 2: toast "Someone else saved this first…", and the form reloads with tab 1's change |
+| F5 | **People** → **Add person**: name "Sambahamphe Founder", add a second name in Devanagari (Also known as, Devanagari); Member of the line, Male, Deceased, Founding ancestor; Born: BS, About, 1900; place of birth Phidim | The date preview under Born reads in BS; after saving you land on the person's page, "Version 1" |
+| F6 | Add a person marked **Living** with no birth year | Error under Born: give at least an approximate birth year. The form doesn't change size |
+| F7 | Add a living adult (born AD 1985). Then under Privacy set Whole record and Names to *Everyone* and save | Errors under both: needs the person's recorded consent |
+| F8 | On that person, **Record a new consent**: given by them, The person themself, Everyone, Names only. Save the privacy change again | Saves. In a private window, `http://localhost:3001/api/v1/persons/<their id>` shows the name but no birth date |
+| F9 | Add a living person born AD 2015 without a reason | Error under Reason (who authorized adding the minor). With a reason it saves; setting Names to Everyone is refused |
+| F10 | Search people for `sambahamphe`, then for `सम्बाहाङ्फे` | Both find the founder |
+| F11 | On the founder, **Retract this record** with a reason | A confirmation dialog first; after confirming, the page says the record is retracted, and `…/api/v1/persons/<id>` answers 404 |
+| F12 | **Audit log** | Entries "change_request.auto_approved" and "place.created" — no names or dates in them |
+| F13 | Switch the admin to **नेपाली** and open a person | Labels, dates and choices are in Nepali |
+
 ## E. Look and feel (any page)
 
 | # | Check |

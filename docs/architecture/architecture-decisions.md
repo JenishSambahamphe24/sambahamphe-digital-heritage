@@ -113,6 +113,7 @@ The database code lives inside `apps/api` (`src/database/`). Bitsky keeps it in 
 **Decision.** All genealogy mutations are operations inside a change request; trusted editors' requests auto-approve. Records are versioned; update operations carry the base version; conflicts block application.
 **Why.** Uniform audit trail, no "silent overwrite", atomic multi-entity submissions, one code path to secure and test.
 **Consequences.** Slightly more ceremony for editors (mitigated by UI). Operation payloads are a versioned contract.
+**Implementation (M2.1).** Editors' person and consent writes already go through `ChangeRequestsService.applyAsEditor`: one approved, auto-approved change request per write, its operation marked applied, a revision snapshot and an audit entry, all in the write's transaction. M3.2 adds contributor submissions and review on the same tables.
 
 ## ADR-013 — Organizational positions are separate from application roles
 

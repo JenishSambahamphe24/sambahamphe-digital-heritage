@@ -1,4 +1,4 @@
-import { customType, timestamp, uuid } from "drizzle-orm/pg-core";
+import { customType, integer, timestamp, uuid } from "drizzle-orm/pg-core";
 import { v7 as uuidv7 } from "uuid";
 
 const citextType = customType<{ data: string }>({
@@ -16,6 +16,10 @@ export class ColumnHelper {
     return uuid("id")
       .primaryKey()
       .$defaultFn(() => uuidv7());
+  }
+
+  static version() {
+    return integer("version").notNull().default(1);
   }
 
   static createdAt() {

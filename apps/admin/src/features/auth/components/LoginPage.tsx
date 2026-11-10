@@ -8,7 +8,8 @@ import { Button, Card, FormField, Input, ToastHelper } from "@repo/ui";
 import { apiClient } from "#/lib/api-client";
 import { BRAND_LOGO } from "#/lib/brand";
 import { ProblemMessageHelper } from "#/lib/problem-message.helper";
-import { QUERY_KEYS } from "#/lib/query-keys";
+
+import { meQueryOptions } from "../me.query";
 
 export function LoginPage() {
   const t = useTranslations();
@@ -27,7 +28,10 @@ export function LoginPage() {
           });
           return;
         }
-        await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.me });
+        // The sign-in page already cached "not signed in"; nothing observes that
+        // query, so invalidating it wouldn't refetch and the gate would bounce
+        // back here. Fetch the signed-in user before navigating.
+        await queryClient.fetchQuery(meQueryOptions());
         await navigate({ to: "/users" });
       } catch {
         ToastHelper.show({ tone: "danger", description: t("error_network") });

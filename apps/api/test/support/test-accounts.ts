@@ -3,6 +3,7 @@ import type { App } from "supertest/types.js";
 
 import request from "supertest";
 
+import { RoleAssignmentsService } from "../../src/modules/access/application/role-assignments.service.js";
 import { TEST_ADMIN_ORIGIN, TEST_WEB_ORIGIN } from "./test-env.js";
 import { TestMailbox } from "./test-mailbox.js";
 
@@ -57,6 +58,21 @@ export class TestAccounts {
       .send({ email: account.email, password: TEST_PASSWORD });
   }
 
+  // A verified account holding one global role, signed in to the admin.
+  static async withRole(
+    stack: TestStack,
+    server: App,
+    label: string,
+    roleKey: string,
+  ): Promise<ITestAccount & { cookie: string }> {
+    const account = await TestAccounts.createVerified(stack, server, label);
+    await stack.app
+      .get(RoleAssignmentsService)
+      .assign(null, { userId: account.id, roleKey, scopeType: "global" });
+    const response = await TestAccounts.adminLogin(server, account);
+    return { ...account, cookie: TestAccounts.adminCookie(response) };
+  }
+
   static adminCookie(response: request.Response): string {
     const header = response.headers["set-cookie"] as unknown as string[] | undefined;
     const cookie = header?.find((value) => value.startsWith("admin_sid="))?.split(";")[0];
@@ -72,6 +88,7 @@ export class TestAccounts {
     return {
       get: (path: string) => withHeaders(request(server).get(`${API}${path}`)),
       post: (path: string) => withHeaders(request(server).post(`${API}${path}`)),
+      patch: (path: string) => withHeaders(request(server).patch(`${API}${path}`)),
       delete: (path: string) => withHeaders(request(server).delete(`${API}${path}`)),
     };
   }

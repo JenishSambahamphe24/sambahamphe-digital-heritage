@@ -16,6 +16,8 @@ export const problemDetailsSchema = z.object({
   instance: z.string(),
   requestId: z.string().nullable(),
   errors: z.array(problemFieldErrorSchema).optional(),
+  // On 409 version_conflict: the version the client should reload.
+  currentVersion: z.int().optional(),
 });
 
 export type TProblemFieldError = z.infer<typeof problemFieldErrorSchema>;

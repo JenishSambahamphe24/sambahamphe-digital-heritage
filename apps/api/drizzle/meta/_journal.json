@@ -29,6 +29,27 @@
       "when": 1794215310643,
       "tag": "0003_make_audit_log_append_only",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794295883684,
+      "tag": "0004_add_places_people_change_requests",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794295888090,
+      "tag": "0005_add_person_presumed_living",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1794315409320,
+      "tag": "0006_drop_place_coordinates",
+      "breakpoints": true
     }
   ]
 }

@@ -3,6 +3,7 @@ import type { IProblemDetails } from "./problem-details.types.js";
 import { HttpException, HttpStatus } from "@nestjs/common";
 
 import { AppException } from "./app.exception.js";
+import { VersionConflictException } from "./version-conflict.exception.js";
 
 export const MIN_SERVER_ERROR_STATUS = 500;
 
@@ -57,6 +58,8 @@ export class ProblemDetailsHelper {
         instance,
         requestId,
         errors: exception.errors,
+        currentVersion:
+          exception instanceof VersionConflictException ? exception.currentVersion : undefined,
       });
     }
 
@@ -100,6 +103,9 @@ export class ProblemDetailsHelper {
     };
     if (fields.errors?.length) {
       problem.errors = fields.errors;
+    }
+    if (fields.currentVersion !== undefined) {
+      problem.currentVersion = fields.currentVersion;
     }
     return problem;
   }

@@ -29,6 +29,7 @@
     "@nestjs/throttler": "catalog:be",
     "@node-rs/argon2": "catalog:be",
     "@repo/contracts": "workspace:*",
+    "@repo/dates": "workspace:*",
     "bullmq": "catalog:be",
     "cookie-parser": "catalog:be",
     "drizzle-orm": "catalog:be",

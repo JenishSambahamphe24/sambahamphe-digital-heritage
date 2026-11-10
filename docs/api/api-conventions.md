@@ -32,7 +32,7 @@ Applies to every endpoint of `apps/api`. Web, admin and mobile clients rely on t
 | `PUT` | full replacement of ordered sub-collections only (e.g., gallery item order) | `200` |
 | `DELETE` | soft delete / retract where allowed | `204` |
 
-Error codes: `400` malformed, `401` unauthenticated, `403` forbidden, `404` not found (also used when a resource exists but is hidden by privacy — never reveal existence), `409` version conflict / state conflict, `412` `If-Match` mismatch, `422` validation failed, `429` rate limited, `500` unexpected.
+Error codes: `400` malformed, `401` unauthenticated, `403` forbidden, `404` not found (also used when a resource exists but is hidden by privacy — never reveal existence), `409` version conflict / state conflict, `422` validation failed, `429` rate limited, `500` unexpected.
 
 ## 3. Errors — RFC 9457 Problem Details
 
@@ -91,8 +91,8 @@ Single resources are returned **unwrapped** (no `data` envelope); collections al
 
 ## 6. Concurrency & idempotency
 
-- Versioned resources return `ETag: "v<version>"` and a `version` field.
-- `PATCH`/`DELETE` on versioned resources **require** `If-Match: "v<version>"` (or `version` in body for mobile convenience). Mismatch → `412` with the current version in the problem body.
+- Versioned resources return a `version` field.
+- Writes to a versioned resource send the `version` the client last read, in the body. A mismatch is `409 version_conflict` with `currentVersion` in the problem body; the client reloads and shows the newer data instead of overwriting it. (Decided in M2.1: one mechanism for web, admin and mobile; `ETag`/`If-Match` can be added later for HTTP caches without changing this.)
 - `POST` endpoints that create submissions or start jobs accept `Idempotency-Key` (UUID); repeated keys within 24 h return the original response.
 
 ## 7. Authentication & authorization
@@ -151,7 +151,7 @@ Redis-backed. Default 300 req/min per IP for anonymous reads, 600/min per user; 
 |---|---|
 | Auth | `POST /auth/register` (email and/or phone), `/auth/verify-phone`, `/auth/resend-code`, `/auth/login` (email or phone), `/auth/logout`, `GET /me/sessions`, `DELETE /me/sessions/{id}`, `/auth/verify-email`, `/auth/password-reset`, `/auth/password-reset/confirm`; `GET /me` |
 | Users & access | `GET /admin/users?q=&page=&pageSize=` (offset paging), `GET /admin/users/{id}/role-assignments`, `GET /admin/roles` (system roles + permissions; synced from code), `POST /admin/role-assignments` (`{ userId, roleKey, scopeType, orgUnitId?, branchId?, expiresAt? }`), `DELETE /admin/role-assignments/{id}`. Verified family membership is branch access (ADR-021), not a user flag.
-| Persons | `GET /persons?q=&branchId=&clanId=`, `GET /persons/{id}`, `GET /persons/{id}/family` (parents, unions, children, siblings), `GET /persons/{id}/history` (revisions) |
+| Persons | `GET /persons?q=&page=&pageSize=` and `GET /persons/{id}` (public, privacy-filtered per viewer; hidden people answer 404 and are never counted). Admin (`genealogy:edit`): `GET /admin/persons?q=`, `GET /admin/persons/{id}`, `POST /admin/persons`, `PATCH /admin/persons/{id}` (full replacement with `version`), `POST /admin/persons/{id}/retract`, `POST /admin/persons/{id}/consents`, `DELETE /admin/persons/{id}/consents/{consentId}` — each write is an auto-approved change request. Later: `branchId`/`clanId` filters, `GET /persons/{id}/family` (parents, unions, children, siblings), `GET /persons/{id}/history` (revisions) |
 | Identity claims | `POST /identity-claims/lookup` (name + father's name + birth year → ≤3 masked matches, 10/day), `POST /identity-claims`, `GET /me/identity-claims`, `GET /admin/identity-claims?status=requested`, `POST /admin/identity-claims/{id}/approve` (option `grantBranchAccess`, default true), `/reject`, `/revoke` |
 | My family tree | `GET /me/family` (own record's family unit), `POST /me/family/members` (relationship + person data → creates a change request; returns duplicate candidates first if any) |
 | Genealogy tree | `GET /genealogy/persons/{id}/tree?up=2&down=2`, `GET /genealogy/persons/{id}/ancestors?depth=`, `GET /genealogy/persons/{id}/descendants?depth=`, `GET /genealogy/relationship?from=&to=` |
@@ -159,7 +159,7 @@ Redis-backed. Default 300 req/min per IP for anonymous reads, 600/min per user; 
 | Branch access | `POST /branches/{id}/access-requests` (registered member), `GET /me/branch-access`, `GET /admin/branch-access?status=requested`, `POST /admin/branch-access/{id}/approve`, `/reject`, `/revoke` |
 | Duplicate check | `POST /genealogy/duplicate-check` (name, birth year, father) → likely matches; also run automatically when a change request is submitted |
 | Contributions | `POST /change-requests`, `GET /change-requests?status=&mine=true`, `GET /change-requests/{id}`, `PATCH /change-requests/{id}` (revise while pending/needs_correction), `POST /change-requests/{id}/claim`, `/approve`, `/reject`, `/request-correction`, `/withdraw`, `POST /change-requests/{id}/comments` |
-| Places | `GET /places?q=`, `GET /places/{id}` |
+| Places | `GET /places?q=&parentId=&page=&pageSize=` (public; without `q`: children of `parentId` or the top level; with `q`: current and alternative names, best match first), `GET /places/{id}` (with alt names and the ancestor path). Admin: `POST /admin/places`, `PATCH /admin/places/{id}` (full replacement with `version`; `place:manage`) |
 | Organization | `GET /org-units` (tree), `GET /org-units/{slug}`, `GET /org-units/{id}/board?at=2026-11-07` or `?termId=`, `GET /org-units/{id}/terms`, `GET /positions?unitTypeId=`, `POST/PATCH /appointments`, `POST /appointments/{id}/end` |
 | Content | `GET /content?type=&categoryId=&tag=&q=`, `GET /content/by-slug/{locale}/{slug}`, `POST /content`, `PATCH /content/{id}`, `POST /content/{id}/submit`, `/publish`, `/schedule`, `/archive`, `GET /content/{id}/revisions`, `POST /content/{id}/revisions/{version}/restore`, `GET /categories`, `GET /tags` |
 | Events | `GET /events?when=upcoming|past&categoryId=&orgUnitId=`, `GET /events/by-slug/{locale}/{slug}`, `POST/PATCH /events`, `POST /events/{id}/cancel` |
