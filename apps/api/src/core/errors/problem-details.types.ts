@@ -13,4 +13,5 @@ export interface IProblemDetails {
   instance: string;
   requestId: string | null;
   errors?: IProblemFieldError[];
+  currentVersion?: number;
 }

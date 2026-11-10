@@ -69,6 +69,7 @@ Small modules stay flat (`health/`). A module with real business logic uses the 
 ## Errors
 
 - Throw `AppException(status, code, title, detail?, errors?)` for expected failures. `code` is a stable snake_case string clients may switch on (`docs/api/api-conventions.md` §3).
+- A stale `version` on a versioned record: `throw new VersionConflictException(current.version)` → `409 version_conflict` with `currentVersion`. Update with `WHERE id = $1 AND version = $2` and treat 0 rows as the conflict.
 - Everything is rendered as `application/problem+json` by `ProblemDetailsFilter`, with `type: urn:sambahamphe:problem:<code>` and the request id.
 - Unexpected errors become a generic `500 internal_error`. Their message is logged, never returned.
 

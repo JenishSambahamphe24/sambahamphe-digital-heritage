@@ -3,6 +3,8 @@ export const PERMISSION = {
   roleRead: "role:read",
   roleAssign: "role:assign",
   auditRead: "audit:read",
+  placeManage: "place:manage",
+  genealogyEdit: "genealogy:edit",
 } as const;
 
 export type TPermission = (typeof PERMISSION)[keyof typeof PERMISSION];
@@ -12,6 +14,8 @@ export const PERMISSION_DESCRIPTIONS: Record<TPermission, string> = {
   [PERMISSION.roleRead]: "View roles and role assignments",
   [PERMISSION.roleAssign]: "Assign and revoke roles",
   [PERMISSION.auditRead]: "Read the audit log",
+  [PERMISSION.placeManage]: "Create and edit places",
+  [PERMISSION.genealogyEdit]: "Create and edit people directly (auto-approved change requests)",
 };
 
 export const SUPER_ADMIN_ROLE = "super_admin";
@@ -59,7 +63,7 @@ export const SYSTEM_ROLES: ISystemRole[] = [
     key: "genealogy_editor",
     name: "Genealogy editor",
     description: "Reviews and approves genealogy submissions; manages branches.",
-    permissions: [],
+    permissions: [PERMISSION.genealogyEdit, PERMISSION.placeManage],
   },
   {
     key: "org_manager",
