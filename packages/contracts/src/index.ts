@@ -22,6 +22,7 @@ export * from "./common/id.params.dto.js";
 export * from "./common/pagination.dto.js";
 export * from "./common/problem-details.dto.js";
 export * from "./common/version.dto.js";
+export * from "./organization/organization.enums.js";
 export * from "./people/admin-person-list-item.response.dto.js";
 export * from "./people/admin-person-list.response.dto.js";
 export * from "./people/admin-person.response.dto.js";
