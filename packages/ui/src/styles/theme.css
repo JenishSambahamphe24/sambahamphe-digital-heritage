@@ -32,10 +32,15 @@
   --color-overlay: #1b130d;
   --color-focus: #b7832f;
 
+  /* Apps set these variables to their loaded fonts (next/font gives fonts
+     generated names, so they can't be referenced by family name). Unset
+     variables fall back to system fonts. Devanagari and Limbu follow Latin so
+     each script gets a font that has its glyphs. */
   --font-sans:
-    var(--font-app-sans, ui-sans-serif), "Noto Sans Devanagari", "Noto Sans Limbu", system-ui,
-    sans-serif;
-  --font-display: var(--font-app-display, ui-serif), Georgia, serif;
+    var(--font-app-sans, ui-sans-serif), var(--font-app-devanagari, ui-sans-serif),
+    var(--font-app-limbu, ui-sans-serif), system-ui, sans-serif;
+  --font-display:
+    var(--font-app-display, ui-serif), var(--font-app-devanagari, ui-serif), Georgia, serif;
 }
 
 @layer base {
