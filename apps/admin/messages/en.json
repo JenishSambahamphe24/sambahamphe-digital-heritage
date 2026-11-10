@@ -71,5 +71,6 @@
   "error_validation": "Some fields need attention.",
   "error_generic": "Something went wrong. Please try again.",
   "error_network": "Can't reach the server. Check your connection and try again.",
-  "logo_alt": "Sambahamphe Utthan Sangh logo"
+  "logo_alt": "Sambahamphe Utthan Sangh logo",
+  "toast_close": "Close"
 }

@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
 
-import { Alert, Button, FormField } from "@repo/ui";
+import { Button, FormField, ToastHelper } from "@repo/ui";
 
 import { apiClient } from "#/lib/api-client";
 import { ApiError } from "#/lib/api-error";
@@ -22,7 +22,6 @@ export function AssignRoleForm({ userId, roles }: AssignRoleFormProps) {
   const t = useTranslations();
   const queryClient = useQueryClient();
   const [roleKey, setRoleKey] = useState("");
-  const [error, setError] = useState<string | null>(null);
 
   const assign = useMutation({
     mutationFn: async () => {
@@ -34,11 +33,14 @@ export function AssignRoleForm({ userId, roles }: AssignRoleFormProps) {
       }
     },
     onSuccess: async () => {
-      setError(null);
       setRoleKey("");
       await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.userAssignments(userId) });
     },
-    onError: (problem: ApiError) => setError(t(ProblemMessageHelper.keyFor(problem.code))),
+    onError: (problem: ApiError) =>
+      ToastHelper.show({
+        tone: "danger",
+        description: t(ProblemMessageHelper.keyFor(problem.code)),
+      }),
   });
 
   return (
@@ -52,9 +54,8 @@ export function AssignRoleForm({ userId, roles }: AssignRoleFormProps) {
       }}
     >
       <h2 className="font-display text-lg font-semibold">{t("roles_assign_title")}</h2>
-      {error ? <Alert tone="danger">{error}</Alert> : null}
       <div className="flex items-end gap-3">
-        <FormField id="assign-role" label={t("roles_assign_role_label")}>
+        <FormField id="assign-role" label={t("roles_assign_role_label")} reserveMessage={false}>
           <select
             id="assign-role"
             value={roleKey}

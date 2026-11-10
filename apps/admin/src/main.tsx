@@ -6,6 +6,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { LocaleProvider } from "./features/i18n/LocaleProvider";
+import { AppToaster } from "./features/layout/components/AppToaster";
 import { QUERY_KEYS } from "./lib/query-keys";
 import { SessionLossHelper } from "./lib/session-loss.helper";
 import { routeTree } from "./routeTree.gen";
@@ -39,6 +40,7 @@ createRoot(rootElement).render(
     <LocaleProvider>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
+        <AppToaster />
       </QueryClientProvider>
     </LocaleProvider>
   </StrictMode>,

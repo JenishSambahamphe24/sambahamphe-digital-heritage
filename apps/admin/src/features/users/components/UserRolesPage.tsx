@@ -5,7 +5,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
 
-import { Alert, Card, ConfirmDialog, Spinner } from "@repo/ui";
+import { Card, ConfirmDialog, Spinner, ToastHelper } from "@repo/ui";
 
 import { apiClient } from "#/lib/api-client";
 import { ApiError } from "#/lib/api-error";
@@ -29,7 +29,6 @@ export function UserRolesPage() {
   const assignments = useUserAssignments(userId);
   const roles = useRoles();
   const [pending, setPending] = useState<TRoleAssignmentResponse | null>(null);
-  const [revokeError, setRevokeError] = useState<string | null>(null);
 
   const roleName = (key: string) => roles.data?.find((role) => role.key === key)?.name ?? key;
 
@@ -44,12 +43,14 @@ export function UserRolesPage() {
     },
     onSuccess: async () => {
       setPending(null);
-      setRevokeError(null);
       await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.userAssignments(userId) });
     },
     onError: (problem: ApiError) => {
       setPending(null);
-      setRevokeError(t(ProblemMessageHelper.keyFor(problem.code)));
+      ToastHelper.show({
+        tone: "danger",
+        description: t(ProblemMessageHelper.keyFor(problem.code)),
+      });
     },
   });
 
@@ -68,7 +69,6 @@ export function UserRolesPage() {
       <h1 className="font-display text-2xl font-semibold">
         {t("roles_title", { name: user.data.displayName })}
       </h1>
-      {revokeError ? <Alert tone="danger">{revokeError}</Alert> : null}
       <Card className="p-0">
         {assignments.isPending ? (
           <div className="p-4">

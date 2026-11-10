@@ -135,6 +135,7 @@ Detailed rules go in each app's `CLAUDE.md` when it is created. The core shape:
 - **Conditional classes through `cn()`** (clsx + tailwind-merge), never template literals.
 - **No hardcoded user-visible strings.** All copy goes through the i18n messages (`en`, `ne`), with keys in `snake_case` prefixed by feature.
 - **React-first:** refs, state and hooks instead of `document.querySelector` or manual DOM mutation.
+- **Messages never resize their container.** A form, card or modal that can show a success or error message reserves that space up front: `FormField` always keeps its message line; a failed action is a toast (`ToastHelper.show`), which floats over the page. Don't insert an `Alert` into an open form or dialog; use one only for a state that replaces the content (a missing link, "email confirmed").
 - **Destructive actions require a confirmation dialog** (admin especially: retracting relationships, revoking access).
 - **Public pages fetch first-paint data on the server**, so the SSR HTML is complete (SEO).
 

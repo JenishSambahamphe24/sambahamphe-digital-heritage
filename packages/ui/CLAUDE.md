@@ -7,4 +7,5 @@ Design tokens and shared React components for `apps/web` and `apps/admin`.
 - One component per file, named `interface <Component>Props`, function declarations (root CLAUDE.md).
 - `cn()` is the one helper kept as a plain function: it is called in nearly every component.
 - Components that use hooks or Radix start with `"use client"` so they work inside Next.js server components.
+- `FormField` always renders its message line (`min-h-5`), so an error appearing doesn't move the layout (root `CLAUDE.md`: messages never resize their container). Pass `reserveMessage={false}` only for a control that can never show a message.
 - Only promote something here when both apps need it; app-specific components stay in the app.

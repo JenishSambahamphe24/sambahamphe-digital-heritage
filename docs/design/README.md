@@ -9,6 +9,12 @@ Two artifacts in Claude hold the design. This folder mirrors the canvas so code 
 
 The canvas is the source of truth for screens. Don't edit `canvas/` by hand; change the canvas and sync.
 
+## Design rules
+
+These apply to every board and to the code built from it.
+
+- **Messages never resize their container.** A form, card or modal that can show a success or error message has that space from the start: every field keeps one line under it for its hint or error, and a failed action shows a toast (bottom-right; full width on phones), which floats over the page. A state that replaces the content (a missing link, "email confirmed") may use an Alert.
+
 ## Canvas boards
 
 | File | Page | What it shows |

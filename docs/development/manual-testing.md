@@ -58,16 +58,16 @@ You need a super admin first (once per database): register and confirm an accoun
 | # | Do | Expect |
 |---|---|---|
 | D1 | Open http://localhost:3002 | Redirects to the admin sign-in page |
-| D2 | Sign in as a **member without a role** (from section A) | "This account has no role in the admin site." |
+| D2 | Sign in as a **member without a role** (from section A) | A toast: "This account has no role in the admin site." The sign-in card keeps its size |
 | D3 | Sign in as the super admin | Goes to **Users**: a table with your test accounts |
 | D4 | Search for part of an email, press Enter | Table filters; the URL contains `?q=…` (refreshing keeps the search) |
 | D5 | Click **Roles** on the member from section A | "Roles for <name>", "No roles yet." |
 | D6 | Choose **Contributor** → **Give role** | Appears in the list as Active, Everywhere |
-| D7 | Give the same role again | "They already have this role." |
+| D7 | Give the same role again | A toast: "They already have this role." The form doesn't move |
 | D8 | In the incognito window, sign in to the admin as that member | Now allowed in (they have a role) |
 | D9 | As super admin, click **Remove** on their Contributor role | Confirmation dialog first; confirm → status becomes "Revoked <date>" |
 | D10 | In the incognito admin window, click any menu item | Signed out to the login page: losing the last role takes effect immediately |
-| D11 | As super admin, open your **own** roles and try to remove **Super administrator** | "Appoint another super administrator before removing the last one." |
+| D11 | As super admin, open your **own** roles and try to remove **Super administrator** | A toast: "Appoint another super administrator before removing the last one." |
 | D12 | **Audit log** | Newest first: role given / removed, sign-ins, failed sign-ins (no email addresses shown) |
 | D13 | Switch the admin to **नेपाली**, refresh the page | Stays Nepali (remembered in this browser) |
 
@@ -80,3 +80,4 @@ You need a super admin first (once per database): register and confirm an accoun
 | E3 | Nepali text renders in a proper Devanagari font (no boxes or mixed fonts) |
 | E4 | Open the browser console (F12): no red errors while using the pages |
 | E5 | Sign in / Create account / forgot / reset / confirm email pages: the painting is on the right on desktop and a banner on top on a phone, as on the design canvas (`docs/design/canvas/Main.dc.html`, `Mobile.dc.html`). The **Sign in** / **Create account** tabs switch pages and keep the language |
+| E6 | Leave a field with a wrong value so its error appears: the fields below stay where they were |
