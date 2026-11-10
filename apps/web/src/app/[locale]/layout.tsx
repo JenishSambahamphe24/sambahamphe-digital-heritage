@@ -8,11 +8,9 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Noto_Sans, Noto_Sans_Devanagari, Noto_Sans_Limbu, Noto_Serif } from "next/font/google";
 import { notFound } from "next/navigation";
 
-import { cn } from "@repo/ui";
+import { cn, Toaster } from "@repo/ui";
 
 import { Providers } from "#/features/site/components/Providers";
-import { SiteFooter } from "#/features/site/components/SiteFooter";
-import { SiteHeader } from "#/features/site/components/SiteHeader";
 import { routing } from "#/i18n/routing";
 
 const sans = Noto_Sans({ subsets: ["latin"], variable: "--font-app-sans", display: "swap" });
@@ -54,6 +52,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     notFound();
   }
   setRequestLocale(locale);
+  const t = await getTranslations({ locale });
   return (
     <html
       lang={locale}
@@ -62,9 +61,8 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       <body className="flex min-h-screen flex-col">
         <NextIntlClientProvider>
           <Providers>
-            <SiteHeader />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
+            {children}
+            <Toaster closeLabel={t("toast_close")} />
           </Providers>
         </NextIntlClientProvider>
       </body>

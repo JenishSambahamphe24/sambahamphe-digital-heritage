@@ -14,10 +14,11 @@ Bug fixes, copy changes and small tweaks to an existing page don't need a new bo
 
 ## Shape
 
-- Pages live under `src/app/[locale]/`; route files are **thin**: metadata + `setRequestLocale` + render the feature component. The real UI is in `src/features/<feature>/components/`.
+- Pages live under `src/app/[locale]/`, in two route groups: `(site)` (header + footer) and `(auth)` (the auth shell: painting panel, no site header). Each group layout calls `setRequestLocale`, or the pages stop pre-rendering. Route files are **thin**: metadata + `setRequestLocale` + render the feature component. The real UI is in `src/features/<feature>/components/`.
 - Locales `en`, `ne` (`src/i18n/routing.ts`). `src/proxy.ts` (Next 16's renamed middleware) redirects `/` by browser language. Use `Link`, `useRouter` from `#/i18n/navigation`, never `next/link`, so URLs keep their locale.
 - All copy in `messages/en.json` and `messages/ne.json` (same keys in both; snake_case, feature prefix). Nepali text needs review by the organization.
 - `/api/*` is forwarded to the API (`next.config.ts` rewrite locally, Caddy in production) so the `sid` cookie is same-origin. Browser code uses `apiClient` from `#/lib/api-client`; server code must create a client with an absolute URL.
+- Feedback: a failed action (API error, network) is a toast (`ToastHelper.show`, `Toaster` mounted in the locale layout); a state that must stay on the page (missing link, email confirmed) is an `Alert`. Field errors stay under the field.
 - Forms: TanStack Form; field rules from `@repo/contracts` via `AuthValidationHelper`, messages translated. Show API errors with `ProblemMessageHelper.keyFor(code)`, never the server's English text.
 - Personal pages (auth, account) set `robots: noindex`. Public content pages fetch first-paint data on the server.
 - Fonts: Noto Sans / Devanagari / Limbu / Serif via `next/font`, exposed as `--font-app-*` for the `@repo/ui` theme.

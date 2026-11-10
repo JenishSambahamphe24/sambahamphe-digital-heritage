@@ -21,7 +21,7 @@ pnpm infra:up && pnpm db:migrate && pnpm dev
 | A3 | **Create an account** → click the button with every field empty | Nothing is sent; errors appear under the fields after you leave them |
 | A4 | Type an invalid email (`abc`) and leave the field | "Enter a valid email address." under Email |
 | A5 | Type a 5-character password and leave the field | "Use at least 10 characters." |
-| A6 | Fill name, a new email, a 10+ character password → **Create account** | Button shows a spinner, then "Check your email" |
+| A6 | Fill name, a new email, a 10+ character password → **Create account** | Button shows a spinner, then the "Check your email" card with the drummer-and-dancer illustration |
 | A7 | Open Mailpit → the "Confirm your email address" message | Greeting uses your name; link looks like `http://localhost:3000/en/verify-email#token=…` |
 | A8 | Click the link in the email | "Your email is confirmed. You can now sign in." |
 | A9 | Click the same link again | "This link is invalid, already used or expired." |
@@ -31,7 +31,7 @@ pnpm infra:up && pnpm db:migrate && pnpm dev
 
 | # | Do | Expect |
 |---|---|---|
-| B1 | **Sign in** with a wrong password | "The email or password is incorrect." |
+| B1 | **Sign in** with a wrong password | A red toast bottom-right: "The email or password is incorrect." It leaves after 5 seconds or on ×; the typed email stays |
 | B2 | Sign in with an email that doesn't exist | The exact same message as B1 |
 | B3 | Sign in correctly | Goes to **My account**: your name, email, "Email confirmed". Header now shows **My account** instead of Sign in |
 | B4 | In a second browser (or incognito), sign in as the same member | Back in the first browser, refresh **My account**: two devices listed, one marked **This device** |
@@ -79,3 +79,4 @@ You need a super admin first (once per database): register and confirm an accoun
 | E2 | Press **Tab** through a form: every field and button gets a visible focus ring, in order |
 | E3 | Nepali text renders in a proper Devanagari font (no boxes or mixed fonts) |
 | E4 | Open the browser console (F12): no red errors while using the pages |
+| E5 | Sign in / Create account / forgot / reset / confirm email pages: the painting is on the right on desktop and a banner on top on a phone, as on the design canvas (`docs/design/canvas/Main.dc.html`, `Mobile.dc.html`). The **Sign in** / **Create account** tabs switch pages and keep the language |

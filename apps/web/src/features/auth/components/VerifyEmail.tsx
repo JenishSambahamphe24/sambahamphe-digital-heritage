@@ -10,7 +10,7 @@ import { apiClient } from "#/lib/api-client";
 import { ROUTES } from "#/lib/routes";
 
 import { useHashToken } from "../hooks/useHashToken";
-import { AuthCard } from "./AuthCard";
+import { AuthTitle } from "./AuthTitle";
 
 type TVerifyState = "pending" | "success" | "failed";
 
@@ -34,7 +34,8 @@ export function VerifyEmail() {
   }, [hashToken]);
 
   return (
-    <AuthCard title={t("auth_verify_title")}>
+    <>
+      <AuthTitle>{t("auth_verify_title")}</AuthTitle>
       {hashToken.status === "missing" ? (
         <Alert tone="warning">{t("auth_missing_token")}</Alert>
       ) : state === "pending" ? (
@@ -46,9 +47,12 @@ export function VerifyEmail() {
       ) : (
         <Alert tone="danger">{t("auth_verify_failed")}</Alert>
       )}
-      <Link href={ROUTES.login} className="text-primary text-sm hover:underline">
+      <Link
+        href={ROUTES.login}
+        className="text-primary hover:text-primary-hover text-sm font-medium"
+      >
         {t("auth_go_login")}
       </Link>
-    </AuthCard>
+    </>
   );
 }

@@ -7,7 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { PASSWORD_MIN_LENGTH } from "@repo/contracts";
-import { Alert, Button, FormField, Input } from "@repo/ui";
+import { Button, FormField, Input, ToastHelper } from "@repo/ui";
 
 import { Link } from "#/i18n/navigation";
 import { apiClient } from "#/lib/api-client";
@@ -15,44 +15,43 @@ import { ProblemMessageHelper } from "#/lib/problem-message.helper";
 import { ROUTES } from "#/lib/routes";
 
 import { AuthValidationHelper } from "../auth-validation.helper";
-import { AuthCard } from "./AuthCard";
+import { AuthTabs } from "./AuthTabs";
 import { CheckEmailNotice } from "./CheckEmailNotice";
 
 export function RegisterForm() {
   const t = useTranslations();
   const locale = useLocale() as TLocale;
-  const [formError, setFormError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
   const form = useForm({
     defaultValues: { displayName: "", email: "", password: "" },
     onSubmit: async ({ value }) => {
-      setFormError(null);
       try {
         const { error } = await apiClient.POST("/api/v1/auth/register", {
           body: { ...value, locale },
         });
         if (error) {
-          setFormError(t(ProblemMessageHelper.keyFor(error.code)));
+          ToastHelper.show({
+            tone: "danger",
+            description: t(ProblemMessageHelper.keyFor(error.code)),
+          });
           return;
         }
         setSubmitted(true);
       } catch {
-        setFormError(t("error_network"));
+        ToastHelper.show({ tone: "danger", description: t("error_network") });
       }
     },
   });
 
   if (submitted) {
-    return (
-      <AuthCard title={t("auth_register_title")}>
-        <CheckEmailNotice />
-      </AuthCard>
-    );
+    return <CheckEmailNotice />;
   }
 
   return (
-    <AuthCard title={t("auth_register_title")}>
+    <>
+      <AuthTabs active="register" />
+      <h1 className="sr-only">{t("auth_register_title")}</h1>
       <form
         noValidate
         className="flex flex-col gap-4"
@@ -61,7 +60,6 @@ export function RegisterForm() {
           void form.handleSubmit();
         }}
       >
-        {formError ? <Alert tone="danger">{formError}</Alert> : null}
         <form.Field
           name="displayName"
           validators={{ onBlur: ({ value }) => AuthValidationHelper.displayName(value, t) }}
@@ -134,18 +132,18 @@ export function RegisterForm() {
         </form.Field>
         <form.Subscribe selector={(state) => state.isSubmitting}>
           {(isSubmitting) => (
-            <Button type="submit" loading={isSubmitting}>
+            <Button type="submit" loading={isSubmitting} className="w-full">
               {t("auth_register_submit")}
             </Button>
           )}
         </form.Subscribe>
       </form>
-      <p className="text-foreground-muted text-sm">
+      <p className="text-foreground-muted text-center text-sm lg:text-left">
         {t("auth_register_have_account")}{" "}
-        <Link href={ROUTES.login} className="text-primary hover:underline">
+        <Link href={ROUTES.login} className="text-primary hover:text-primary-hover font-medium">
           {t("auth_register_login_link")}
         </Link>
       </p>
-    </AuthCard>
+    </>
   );
 }
