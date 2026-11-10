@@ -46,7 +46,7 @@ export function LoginForm() {
       <h1 className="sr-only">{t("auth_login_title")}</h1>
       <form
         noValidate
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-1"
         onSubmit={(event) => {
           event.preventDefault();
           void form.handleSubmit();
@@ -106,13 +106,13 @@ export function LoginForm() {
         </div>
         <form.Subscribe selector={(state) => state.isSubmitting}>
           {(isSubmitting) => (
-            <Button type="submit" loading={isSubmitting} className="w-full">
+            <Button type="submit" loading={isSubmitting} className="mt-3 w-full">
               {t("auth_login_submit")}
             </Button>
           )}
         </form.Subscribe>
       </form>
-      <p className="text-foreground-muted text-center text-sm lg:text-left">
+      <p className="text-foreground-muted text-center text-sm">
         {t("auth_login_no_account")}{" "}
         <Link href={ROUTES.register} className="text-primary hover:text-primary-hover font-medium">
           {t("auth_login_register_link")}

@@ -54,7 +54,7 @@ export function RegisterForm() {
       <h1 className="sr-only">{t("auth_register_title")}</h1>
       <form
         noValidate
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-1"
         onSubmit={(event) => {
           event.preventDefault();
           void form.handleSubmit();
@@ -132,13 +132,13 @@ export function RegisterForm() {
         </form.Field>
         <form.Subscribe selector={(state) => state.isSubmitting}>
           {(isSubmitting) => (
-            <Button type="submit" loading={isSubmitting} className="w-full">
+            <Button type="submit" loading={isSubmitting} className="mt-3 w-full">
               {t("auth_register_submit")}
             </Button>
           )}
         </form.Subscribe>
       </form>
-      <p className="text-foreground-muted text-center text-sm lg:text-left">
+      <p className="text-foreground-muted text-center text-sm">
         {t("auth_register_have_account")}{" "}
         <Link href={ROUTES.login} className="text-primary hover:text-primary-hover font-medium">
           {t("auth_register_login_link")}

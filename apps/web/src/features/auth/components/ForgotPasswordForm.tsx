@@ -48,7 +48,7 @@ export function ForgotPasswordForm() {
       <p className="text-foreground-muted text-sm">{t("auth_forgot_intro")}</p>
       <form
         noValidate
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-1"
         onSubmit={(event) => {
           event.preventDefault();
           void form.handleSubmit();
@@ -78,7 +78,7 @@ export function ForgotPasswordForm() {
         </form.Field>
         <form.Subscribe selector={(state) => state.isSubmitting}>
           {(isSubmitting) => (
-            <Button type="submit" loading={isSubmitting} className="w-full">
+            <Button type="submit" loading={isSubmitting} className="mt-3 w-full">
               {t("auth_forgot_submit")}
             </Button>
           )}

@@ -15,6 +15,14 @@ These apply to every board and to the code built from it.
 
 - **Messages never resize their container.** A form, card or modal that can show a success or error message has that space from the start: every field keeps one line under it for its hint or error, and a failed action shows a toast (bottom-right; full width on phones), which floats over the page. A state that replaces the content (a missing link, "email confirmed") may use an Alert.
 
+## Approved changes not yet on the canvas
+
+The maintainer approved these in code review; update the canvas so the next sync doesn't bring the old version back.
+
+| Board | Change |
+|---|---|
+| Main, Mobile, MobileNepali | No Silam Sakma motif above the tabs; tabs and the "New here? / Already have an account?" line are centred on desktop too; tighter space between fields (each field still reserves its message line) |
+
 ## Canvas boards
 
 | File | Page | What it shows |

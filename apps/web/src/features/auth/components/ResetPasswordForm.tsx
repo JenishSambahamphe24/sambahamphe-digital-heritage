@@ -87,7 +87,7 @@ export function ResetPasswordForm() {
       <AuthTitle>{t("auth_reset_title")}</AuthTitle>
       <form
         noValidate
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-1"
         onSubmit={(event) => {
           event.preventDefault();
           void form.handleSubmit();
@@ -122,7 +122,7 @@ export function ResetPasswordForm() {
         </form.Field>
         <form.Subscribe selector={(state) => state.isSubmitting}>
           {(isSubmitting) => (
-            <Button type="submit" loading={isSubmitting} className="w-full">
+            <Button type="submit" loading={isSubmitting} className="mt-3 w-full">
               {t("auth_reset_submit")}
             </Button>
           )}

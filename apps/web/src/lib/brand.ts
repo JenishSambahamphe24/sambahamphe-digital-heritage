@@ -6,5 +6,4 @@ export const BRAND_LOGO = { src: "/brand/logo.jpg", width: 960, height: 856 } as
 export const HERITAGE_IMAGES = {
   painting: { src: "/images/heritage/yakthung-cheli-painting.jpg", width: 1920, height: 2561 },
   illustration: { src: "/images/heritage/yakthung-pair-illustration.jpg", width: 447, height: 447 },
-  motif: { src: "/images/heritage/silam-sakma.png", width: 600, height: 600 },
 } as const;

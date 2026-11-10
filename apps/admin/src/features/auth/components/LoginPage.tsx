@@ -52,7 +52,7 @@ export function LoginPage() {
         </div>
         <form
           noValidate
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-1"
           onSubmit={(event) => {
             event.preventDefault();
             void form.handleSubmit();
@@ -88,7 +88,7 @@ export function LoginPage() {
           </form.Field>
           <form.Subscribe selector={(state) => state.isSubmitting}>
             {(isSubmitting) => (
-              <Button type="submit" loading={isSubmitting}>
+              <Button type="submit" loading={isSubmitting} className="mt-3">
                 {t("login_submit")}
               </Button>
             )}
