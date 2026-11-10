@@ -70,7 +70,7 @@ Decided 2026-11-07: Q-1 (access policy), Q-2 (male line), Q-3 (English + Nepali)
 
 ## Phase 2 — Places, People core, Organization, CMS, Media, Events
 
-**M2.1 Places & People core**
+**M2.1 Places & People core** — 🔄 built, awaiting manual test (2026-11-10)
 - `places` + alt names; admin CRUD with hierarchy picker.
 - `persons`, `person_names`, consents, privacy policy module (table-driven tests), person CRUD for editors through **auto-approved change requests** (ADR-012; decided at M2.1 start instead of direct edits), with revisions and optimistic concurrency.
 - Person search (trigram on names, romanization).
