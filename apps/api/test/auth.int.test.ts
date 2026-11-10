@@ -95,6 +95,7 @@ describe("registration and email verification", () => {
 
     const mail = await stack.mailbox.waitFor(email, "Confirm your email");
     expect(mail.text).toContain("Namaste Ram Sambahamphe,");
+    expect(mail.text).toMatch(/http:\/\/localhost:3000\/en\/verify-email#token=[\w-]+/);
     await web(ip)
       .post("/auth/verify-email")
       .send({ token: TestMailbox.tokenFrom(mail) })
@@ -277,6 +278,7 @@ describe("password reset", () => {
 
     await web(ip).post("/auth/password-reset").send({ email }).expect(202);
     const mail = await stack.mailbox.waitFor(email, "Reset your password");
+    expect(mail.text).toMatch(/\/en\/reset-password#token=[\w-]+/);
     await web(ip)
       .post("/auth/password-reset/confirm")
       .send({ token: TestMailbox.tokenFrom(mail), newPassword: NEW_PASSWORD })

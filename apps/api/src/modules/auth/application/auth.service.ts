@@ -231,7 +231,9 @@ export class AuthService {
     const path = purpose === "email_verification" ? VERIFY_EMAIL_PATH : RESET_PASSWORD_PATH;
     // The token goes after "#": browsers never send the fragment to a server,
     // so it can't end up in web-server or proxy logs.
-    const link = `${this.config.publicWebUrl}${path}#token=${token}`;
+    // The web app's pages live under a locale prefix; use the language the
+    // member chose, not whatever their browser happens to report.
+    const link = `${this.config.publicWebUrl}/${user.preferredLocale}${path}#token=${token}`;
     await this.sendEmail(
       tx,
       user,
