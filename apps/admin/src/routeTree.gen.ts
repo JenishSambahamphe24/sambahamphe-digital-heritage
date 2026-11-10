@@ -13,6 +13,12 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedAuditLogRouteImport } from './routes/_authenticated/audit-log'
+import { Route as AuthenticatedPersonsIndexRouteImport } from './routes/_authenticated/persons/index'
+import { Route as AuthenticatedPersonsPersonIdRouteImport } from './routes/_authenticated/persons/$personId'
+import { Route as AuthenticatedPersonsNewRouteImport } from './routes/_authenticated/persons/new'
+import { Route as AuthenticatedPlacesIndexRouteImport } from './routes/_authenticated/places/index'
+import { Route as AuthenticatedPlacesPlaceIdRouteImport } from './routes/_authenticated/places/$placeId'
+import { Route as AuthenticatedPlacesNewRouteImport } from './routes/_authenticated/places/new'
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
 import { Route as AuthenticatedUsersUserIdRouteImport } from './routes/_authenticated/users/$userId'
 
@@ -35,6 +41,40 @@ const AuthenticatedAuditLogRoute = AuthenticatedAuditLogRouteImport.update({
   path: '/audit-log',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedPersonsIndexRoute =
+  AuthenticatedPersonsIndexRouteImport.update({
+    id: '/persons/',
+    path: '/persons/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPersonsPersonIdRoute =
+  AuthenticatedPersonsPersonIdRouteImport.update({
+    id: '/persons/$personId',
+    path: '/persons/$personId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPersonsNewRoute = AuthenticatedPersonsNewRouteImport.update({
+  id: '/persons/new',
+  path: '/persons/new',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedPlacesIndexRoute =
+  AuthenticatedPlacesIndexRouteImport.update({
+    id: '/places/',
+    path: '/places/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPlacesPlaceIdRoute =
+  AuthenticatedPlacesPlaceIdRouteImport.update({
+    id: '/places/$placeId',
+    path: '/places/$placeId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPlacesNewRoute = AuthenticatedPlacesNewRouteImport.update({
+  id: '/places/new',
+  path: '/places/new',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedUsersIndexRoute = AuthenticatedUsersIndexRouteImport.update({
   id: '/users/',
   path: '/users/',
@@ -51,14 +91,26 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/login': typeof LoginRoute
   '/audit-log': typeof AuthenticatedAuditLogRoute
+  '/persons/$personId': typeof AuthenticatedPersonsPersonIdRoute
+  '/persons/new': typeof AuthenticatedPersonsNewRoute
+  '/places/$placeId': typeof AuthenticatedPlacesPlaceIdRoute
+  '/places/new': typeof AuthenticatedPlacesNewRoute
   '/users/$userId': typeof AuthenticatedUsersUserIdRoute
+  '/persons/': typeof AuthenticatedPersonsIndexRoute
+  '/places/': typeof AuthenticatedPlacesIndexRoute
   '/users/': typeof AuthenticatedUsersIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/audit-log': typeof AuthenticatedAuditLogRoute
   '/': typeof AuthenticatedIndexRoute
+  '/persons/$personId': typeof AuthenticatedPersonsPersonIdRoute
+  '/persons/new': typeof AuthenticatedPersonsNewRoute
+  '/places/$placeId': typeof AuthenticatedPlacesPlaceIdRoute
+  '/places/new': typeof AuthenticatedPlacesNewRoute
   '/users/$userId': typeof AuthenticatedUsersUserIdRoute
+  '/persons': typeof AuthenticatedPersonsIndexRoute
+  '/places': typeof AuthenticatedPlacesIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
 }
 export interface FileRoutesById {
@@ -67,21 +119,55 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/_authenticated/audit-log': typeof AuthenticatedAuditLogRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/persons/$personId': typeof AuthenticatedPersonsPersonIdRoute
+  '/_authenticated/persons/new': typeof AuthenticatedPersonsNewRoute
+  '/_authenticated/places/$placeId': typeof AuthenticatedPlacesPlaceIdRoute
+  '/_authenticated/places/new': typeof AuthenticatedPlacesNewRoute
   '/_authenticated/users/$userId': typeof AuthenticatedUsersUserIdRoute
+  '/_authenticated/persons/': typeof AuthenticatedPersonsIndexRoute
+  '/_authenticated/places/': typeof AuthenticatedPlacesIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/audit-log' | '/users/$userId' | '/users/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/audit-log'
+    | '/persons/$personId'
+    | '/persons/new'
+    | '/places/$placeId'
+    | '/places/new'
+    | '/users/$userId'
+    | '/persons/'
+    | '/places/'
+    | '/users/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/audit-log' | '/' | '/users/$userId' | '/users'
+  to:
+    | '/login'
+    | '/audit-log'
+    | '/'
+    | '/persons/$personId'
+    | '/persons/new'
+    | '/places/$placeId'
+    | '/places/new'
+    | '/users/$userId'
+    | '/persons'
+    | '/places'
+    | '/users'
   id:
     | '__root__'
     | '/_authenticated'
     | '/login'
     | '/_authenticated/audit-log'
     | '/_authenticated/'
+    | '/_authenticated/persons/$personId'
+    | '/_authenticated/persons/new'
+    | '/_authenticated/places/$placeId'
+    | '/_authenticated/places/new'
     | '/_authenticated/users/$userId'
+    | '/_authenticated/persons/'
+    | '/_authenticated/places/'
     | '/_authenticated/users/'
   fileRoutesById: FileRoutesById
 }
@@ -120,6 +206,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAuditLogRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/persons/': {
+      id: '/_authenticated/persons/'
+      path: '/persons'
+      fullPath: '/persons/'
+      preLoaderRoute: typeof AuthenticatedPersonsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/persons/$personId': {
+      id: '/_authenticated/persons/$personId'
+      path: '/persons/$personId'
+      fullPath: '/persons/$personId'
+      preLoaderRoute: typeof AuthenticatedPersonsPersonIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/persons/new': {
+      id: '/_authenticated/persons/new'
+      path: '/persons/new'
+      fullPath: '/persons/new'
+      preLoaderRoute: typeof AuthenticatedPersonsNewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/places/': {
+      id: '/_authenticated/places/'
+      path: '/places'
+      fullPath: '/places/'
+      preLoaderRoute: typeof AuthenticatedPlacesIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/places/$placeId': {
+      id: '/_authenticated/places/$placeId'
+      path: '/places/$placeId'
+      fullPath: '/places/$placeId'
+      preLoaderRoute: typeof AuthenticatedPlacesPlaceIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/places/new': {
+      id: '/_authenticated/places/new'
+      path: '/places/new'
+      fullPath: '/places/new'
+      preLoaderRoute: typeof AuthenticatedPlacesNewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/users/': {
       id: '/_authenticated/users/'
       path: '/users'
@@ -140,14 +268,26 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteChildren {
   AuthenticatedAuditLogRoute: typeof AuthenticatedAuditLogRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedPersonsPersonIdRoute: typeof AuthenticatedPersonsPersonIdRoute
+  AuthenticatedPersonsNewRoute: typeof AuthenticatedPersonsNewRoute
+  AuthenticatedPlacesPlaceIdRoute: typeof AuthenticatedPlacesPlaceIdRoute
+  AuthenticatedPlacesNewRoute: typeof AuthenticatedPlacesNewRoute
   AuthenticatedUsersUserIdRoute: typeof AuthenticatedUsersUserIdRoute
+  AuthenticatedPersonsIndexRoute: typeof AuthenticatedPersonsIndexRoute
+  AuthenticatedPlacesIndexRoute: typeof AuthenticatedPlacesIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAuditLogRoute: AuthenticatedAuditLogRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedPersonsPersonIdRoute: AuthenticatedPersonsPersonIdRoute,
+  AuthenticatedPersonsNewRoute: AuthenticatedPersonsNewRoute,
+  AuthenticatedPlacesPlaceIdRoute: AuthenticatedPlacesPlaceIdRoute,
+  AuthenticatedPlacesNewRoute: AuthenticatedPlacesNewRoute,
   AuthenticatedUsersUserIdRoute: AuthenticatedUsersUserIdRoute,
+  AuthenticatedPersonsIndexRoute: AuthenticatedPersonsIndexRoute,
+  AuthenticatedPlacesIndexRoute: AuthenticatedPlacesIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
 }
 

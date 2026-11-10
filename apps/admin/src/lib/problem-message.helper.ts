@@ -10,6 +10,10 @@ const KNOWN_CODES = [
   "unknown_role",
   "not_found",
   "validation_error",
+  "version_conflict",
+  "place_cycle",
+  "unknown_parent",
+  "person_not_active",
 ] as const;
 
 type TKnownCode = (typeof KNOWN_CODES)[number];

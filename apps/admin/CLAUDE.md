@@ -10,6 +10,8 @@ Admin CMS: React + Vite single-page app (ADR-007). No SEO, no server rendering. 
 - Data: TanStack Query hooks in `features/<feature>/hooks/`, query keys from `#/lib/query-keys`. On an API error, **throw `new ApiError(error)`** (lint rejects throwing plain objects); `QueryError` shows "no permission" for `forbidden`.
 - Messages: `use-intl` with `messages/en.json` / `ne.json` (same keys in both). The chosen language is remembered per browser (`localStorage`, with try/catch).
 - Destructive actions (removing a role) go through `ConfirmDialog` from `@repo/ui`.
+- Form fields shared by 2+ features (`Select`, `Textarea`) live in `src/components/`. Show a 422's field errors with `FieldErrorsHelper.byPath(error)`, which maps the API's stable codes to `field_error_*` messages; never show the server's text.
+- On `409 version_conflict`, show the toast and let the query refetch; edit forms are keyed by `version` so they restart from the saved data.
 - A failed action is a toast (`ToastHelper.show`; `AppToaster` is mounted in `main.tsx`), never an `Alert` inserted into the form: messages must not resize their container (root `CLAUDE.md`).
 - Vite forwards `/api` with `X-Client: admin` in development; Caddy does the same in production. The API then uses the `admin_sid` cookie and the admin-only rules.
 - The one lint exception: `throw redirect(...)` (TanStack Router's documented control flow) is allowed; nothing else may throw non-Errors.

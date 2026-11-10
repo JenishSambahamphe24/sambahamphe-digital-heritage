@@ -48,6 +48,12 @@ export function AdminLayout() {
           <Link to="/users" className={NAV_LINK} activeProps={{ className: NAV_LINK_ACTIVE }}>
             {t("nav_users")}
           </Link>
+          <Link to="/persons" className={NAV_LINK} activeProps={{ className: NAV_LINK_ACTIVE }}>
+            {t("nav_persons")}
+          </Link>
+          <Link to="/places" className={NAV_LINK} activeProps={{ className: NAV_LINK_ACTIVE }}>
+            {t("nav_places")}
+          </Link>
           <Link to="/audit-log" className={NAV_LINK} activeProps={{ className: NAV_LINK_ACTIVE }}>
             {t("nav_audit_log")}
           </Link>
