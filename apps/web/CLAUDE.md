@@ -2,6 +2,16 @@
 
 Public site, Next.js 16 App Router (ADR-007). SEO-critical. Read the root `CLAUDE.md` first.
 
+## Design first (blocking)
+
+Every new page or screen is designed in Claude Design before it is built ([docs/design/README.md](../../docs/design/README.md)).
+
+1. Run `/sync-design` to pull the latest canvas into `docs/design/canvas/`.
+2. Find the board for the page. If one exists, build from it: its layout, copy and components, mapped onto `@repo/ui` tokens. Name any gap (a missing token or component) instead of improvising.
+3. If no board exists, **stop and tell the maintainer** which page needs a design. Don't invent a layout.
+
+Bug fixes, copy changes and small tweaks to an existing page don't need a new board. `apps/admin` and `apps/api` don't need designs.
+
 ## Shape
 
 - Pages live under `src/app/[locale]/`; route files are **thin**: metadata + `setRequestLocale` + render the feature component. The real UI is in `src/features/<feature>/components/`.
