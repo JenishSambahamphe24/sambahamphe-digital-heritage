@@ -1,14 +1,26 @@
 import "./styles.css";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { LocaleProvider } from "./features/i18n/LocaleProvider";
+import { QUERY_KEYS } from "./lib/query-keys";
+import { SessionLossHelper } from "./lib/session-loss.helper";
 import { routeTree } from "./routeTree.gen";
 
-const queryClient = new QueryClient();
+function handleError(error: unknown) {
+  if (SessionLossHelper.isSessionLost(error)) {
+    queryClient.setQueryData(QUERY_KEYS.me, null);
+    void router.navigate({ to: "/login" });
+  }
+}
+
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({ onError: handleError }),
+  mutationCache: new MutationCache({ onError: handleError }),
+});
 const router = createRouter({ routeTree, context: { queryClient } });
 
 declare module "@tanstack/react-router" {
