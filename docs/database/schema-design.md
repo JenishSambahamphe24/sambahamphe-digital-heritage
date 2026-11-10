@@ -40,7 +40,9 @@ Used wherever a historical date may be approximate. Stored as three columns per 
 -- CHECK (<x>_sort_from <= <x>_sort_to)
 ```
 
-`before`/`after` use a 25-year window for bounds (configurable in `packages/dates`). Sort/filter queries use the normalized columns only.
+`about` widens by ±5 years; `before`/`after` use a 25-year window, excluding the date itself (constants in `@repo/dates`). Sort/filter queries use the normalized columns only.
+
+Exact BS ↔ AD conversion covers **1970–2090 BS**. Older BS dates normalize to an approximate range (`approximate: true`), and the original stays authoritative. The month-length table must be refreshed from upstream yearly (`packages/dates/NOTICE.md`).
 
 ---
 

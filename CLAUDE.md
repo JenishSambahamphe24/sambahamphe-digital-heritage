@@ -27,6 +27,8 @@ infrastructure/  # Dockerfiles, compose.prod, Caddy, backup scripts, runbooks
 docs/
 ```
 
+Packages under `packages/` are compiled to `dist/` (ESM) and consumed from there; Turborepo builds them before anything that depends on them (`dependsOn: ["^build"]`). After changing an endpoint or contract, run `pnpm openapi:generate` and commit the spec.
+
 Run workspace commands with `pnpm --filter <name> <script>`. Root scripts (`pnpm dev`, `build`, `lint`, `typecheck`, `test`, `format`, `check`) run through Turborepo.
 
 ## Repo-wide rules (blocking)

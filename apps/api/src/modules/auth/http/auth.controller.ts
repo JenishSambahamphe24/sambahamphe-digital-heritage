@@ -1,16 +1,36 @@
 import type { IAuthContext, IRequestMeta } from "../auth.types.js";
-import type { TConfirmPasswordResetRequest } from "./dto/confirm-password-reset.request.dto.js";
-import type { TEmailRequest } from "./dto/email.request.dto.js";
-import type { TLoginRequest } from "./dto/login.request.dto.js";
-import type { TLoginResponse } from "./dto/login.response.dto.js";
-import type { TRegisterRequest } from "./dto/register.request.dto.js";
-import type { TTokenRequest } from "./dto/token.request.dto.js";
+import type {
+  TConfirmPasswordResetRequest,
+  TEmailRequest,
+  TLoginRequest,
+  TLoginResponse,
+  TRegisterRequest,
+  TTokenRequest,
+} from "@repo/contracts";
 import type { Request, Response } from "express";
 
 import { Body, Controller, HttpCode, HttpStatus, Post, Req, Res } from "@nestjs/common";
+import {
+  ApiAcceptedResponse,
+  ApiHeader,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiTags,
+} from "@nestjs/swagger";
 import { Throttle } from "@nestjs/throttler";
 
+import {
+  checkEmailResponseSchema,
+  confirmPasswordResetRequestSchema,
+  emailRequestSchema,
+  loginRequestSchema,
+  loginResponseSchema,
+  registerRequestSchema,
+  tokenRequestSchema,
+} from "@repo/contracts";
+
 import { AppConfig } from "../../../core/config/app-config.js";
+import { ApiProblemResponse } from "../../../core/openapi/api-problem-response.decorator.js";
 import { AuthService } from "../application/auth.service.js";
 import { SessionService } from "../application/session.service.js";
 import { AUTH_RATE_LIMIT } from "../auth.constants.js";
@@ -18,16 +38,18 @@ import { AuthClientHelper } from "../domain/auth-client.helper.js";
 import { SessionCookieHelper } from "../domain/session-cookie.helper.js";
 import { CurrentAuth } from "../guards/current-auth.decorator.js";
 import { Public } from "../guards/public.decorator.js";
-import { confirmPasswordResetRequestSchema } from "./dto/confirm-password-reset.request.dto.js";
-import { emailRequestSchema } from "./dto/email.request.dto.js";
-import { loginRequestSchema } from "./dto/login.request.dto.js";
-import { loginResponseSchema } from "./dto/login.response.dto.js";
-import { registerRequestSchema } from "./dto/register.request.dto.js";
-import { tokenRequestSchema } from "./dto/token.request.dto.js";
 
 const CHECK_EMAIL = { status: "check_email" } as const;
 const STRICT_LIMIT = { default: AUTH_RATE_LIMIT };
 
+@ApiTags("auth")
+@ApiHeader({
+  name: "X-Client",
+  required: false,
+  description: "web (default), admin or mobile; picks the session cookie or Bearer token",
+  enum: ["web", "admin", "mobile"],
+})
+@ApiProblemResponse()
 @Controller("auth")
 export class AuthController {
   constructor(
@@ -39,6 +61,10 @@ export class AuthController {
   @Public()
   @Throttle(STRICT_LIMIT)
   @Post("register")
+  @ApiAcceptedResponse({
+    standardSchema: checkEmailResponseSchema,
+    description: "Same answer whether or not the email is registered",
+  })
   @HttpCode(HttpStatus.ACCEPTED)
   async register(@Body({ schema: registerRequestSchema }) body: TRegisterRequest) {
     await this.auth.register(body);
@@ -48,6 +74,7 @@ export class AuthController {
   @Public()
   @Throttle(STRICT_LIMIT)
   @Post("verify-email")
+  @ApiNoContentResponse({ description: "Email verified" })
   @HttpCode(HttpStatus.NO_CONTENT)
   async verifyEmail(@Body({ schema: tokenRequestSchema }) body: TTokenRequest): Promise<void> {
     await this.auth.verifyEmail(body.token);
@@ -56,6 +83,7 @@ export class AuthController {
   @Public()
   @Throttle(STRICT_LIMIT)
   @Post("resend-verification")
+  @ApiAcceptedResponse({ standardSchema: checkEmailResponseSchema })
   @HttpCode(HttpStatus.ACCEPTED)
   async resendVerification(@Body({ schema: emailRequestSchema }) body: TEmailRequest) {
     await this.auth.resendVerification(body.email);
@@ -65,6 +93,10 @@ export class AuthController {
   @Public()
   @Throttle(STRICT_LIMIT)
   @Post("login")
+  @ApiOkResponse({
+    standardSchema: loginResponseSchema,
+    description: "Browsers get an HttpOnly sid / admin_sid cookie; mobile gets sessionToken",
+  })
   @HttpCode(HttpStatus.OK)
   async login(
     @Body({ schema: loginRequestSchema }) body: TLoginRequest,
@@ -87,6 +119,7 @@ export class AuthController {
   }
 
   @Post("logout")
+  @ApiNoContentResponse({ description: "Session revoked" })
   @HttpCode(HttpStatus.NO_CONTENT)
   async logout(
     @CurrentAuth() auth: IAuthContext,
@@ -101,6 +134,7 @@ export class AuthController {
   @Public()
   @Throttle(STRICT_LIMIT)
   @Post("password-reset")
+  @ApiAcceptedResponse({ standardSchema: checkEmailResponseSchema })
   @HttpCode(HttpStatus.ACCEPTED)
   async requestPasswordReset(@Body({ schema: emailRequestSchema }) body: TEmailRequest) {
     await this.auth.requestPasswordReset(body.email);
@@ -110,6 +144,7 @@ export class AuthController {
   @Public()
   @Throttle(STRICT_LIMIT)
   @Post("password-reset/confirm")
+  @ApiNoContentResponse({ description: "Password changed; every session signed out" })
   @HttpCode(HttpStatus.NO_CONTENT)
   async confirmPasswordReset(
     @Body({ schema: confirmPasswordResetRequestSchema }) body: TConfirmPasswordResetRequest,

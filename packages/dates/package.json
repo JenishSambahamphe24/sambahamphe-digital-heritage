@@ -1,0 +1,41 @@
+{
+  "name": "@repo/dates",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
+    "lint": "eslint .",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "check": "prettier --write . && eslint --fix .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "zod": "catalog:generic"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:generic",
+    "@ianvs/prettier-plugin-sort-imports": "catalog:generic",
+    "@repo/config": "workspace:*",
+    "@types/node": "catalog:generic",
+    "eslint": "catalog:generic",
+    "globals": "catalog:generic",
+    "prettier": "catalog:generic",
+    "typescript": "catalog:generic",
+    "typescript-eslint": "catalog:generic",
+    "vite": "catalog:generic",
+    "vitest": "catalog:generic",
+    "zod": "catalog:generic"
+  }
+}

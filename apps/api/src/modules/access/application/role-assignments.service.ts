@@ -1,5 +1,5 @@
-import type { TAssignRoleRequest } from "../http/dto/assign-role.request.dto.js";
 import type { TAssignmentRow } from "../internal/access.repository.js";
+import type { TAssignRoleRequest } from "@repo/contracts";
 
 import { HttpStatus, Injectable } from "@nestjs/common";
 

@@ -1,34 +1,37 @@
-import type { TAdminUserResponse } from "./dto/admin-user.response.dto.js";
-import type { TListUsersQuery } from "./dto/list-users.query.dto.js";
+import type { TAdminUserListResponse, TListUsersQuery } from "@repo/contracts";
 
 import { Controller, Get, Query } from "@nestjs/common";
+import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 
+import {
+  adminUserListResponseSchema,
+  adminUserResponseSchema,
+  listUsersQuerySchema,
+} from "@repo/contracts";
+
+import { ApiProblemResponse } from "../../../core/openapi/api-problem-response.decorator.js";
 import { PERMISSION } from "../../access/access.catalog.js";
 import { RequirePermission } from "../../access/guards/require-permission.decorator.js";
 import { UsersRepository } from "../users.repository.js";
-import { adminUserResponseSchema } from "./dto/admin-user.response.dto.js";
-import { listUsersQuerySchema } from "./dto/list-users.query.dto.js";
 
-interface IOffsetPage<T> {
-  data: T[];
-  page: { page: number; pageSize: number; total: number };
-}
-
+@ApiTags("admin")
+@ApiProblemResponse()
 @Controller("admin/users")
 export class AdminUsersController {
   constructor(private readonly users: UsersRepository) {}
 
   @Get()
+  @ApiOkResponse({ standardSchema: adminUserListResponseSchema })
   @RequirePermission(PERMISSION.userRead)
   async list(
     @Query({ schema: listUsersQuerySchema }) query: TListUsersQuery,
-  ): Promise<IOffsetPage<TAdminUserResponse>> {
+  ): Promise<TAdminUserListResponse> {
     const { rows, total } = await this.users.list({
       q: query.q,
       offset: (query.page - 1) * query.pageSize,
       limit: query.pageSize,
     });
-    return {
+    return adminUserListResponseSchema.parse({
       data: rows.map((row) =>
         adminUserResponseSchema.parse({
           id: row.id,
@@ -41,6 +44,6 @@ export class AdminUsersController {
         }),
       ),
       page: { page: query.page, pageSize: query.pageSize, total },
-    };
+    });
   }
 }

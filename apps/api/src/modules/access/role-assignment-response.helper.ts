@@ -1,7 +1,7 @@
-import type { TRoleAssignmentResponse } from "./http/dto/role-assignment.response.dto.js";
 import type { TAssignmentRow } from "./internal/access.repository.js";
+import type { TRoleAssignmentResponse } from "@repo/contracts";
 
-import { roleAssignmentResponseSchema } from "./http/dto/role-assignment.response.dto.js";
+import { roleAssignmentResponseSchema } from "@repo/contracts";
 
 export class RoleAssignmentResponseHelper {
   static fromRow(row: TAssignmentRow, roleKey: string): TRoleAssignmentResponse {

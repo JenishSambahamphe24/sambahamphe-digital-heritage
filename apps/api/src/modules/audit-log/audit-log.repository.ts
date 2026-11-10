@@ -1,4 +1,4 @@
-import type { TListAuditLogQuery } from "./http/dto/list-audit-log.query.dto.js";
+import type { TListAuditLogQuery } from "@repo/contracts";
 
 import { Injectable } from "@nestjs/common";
 import { and, desc, eq, lt } from "drizzle-orm";

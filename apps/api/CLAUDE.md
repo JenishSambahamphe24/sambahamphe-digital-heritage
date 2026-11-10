@@ -54,9 +54,12 @@ Small modules stay flat (`health/`). A module with real business logic uses the 
 - To trigger async work, write to the outbox **inside the same transaction** as the data change: `outbox.enqueue(tx, OUTBOX_TOPIC.sendEmail, job)`. Never add BullMQ jobs directly from a request.
 - Job processors live in `src/workers/`. Never log email recipients or job payloads.
 
-## Request/response schemas
+## Request/response schemas and OpenAPI
 
-Until `@repo/contracts` exists (M1.4), Zod schemas live in `modules/<domain>/http/dto/` (`<action>-<resource>.request.dto.ts`, `<resource>.response.dto.ts`). Validate with `@Body({ schema })` / `@Param({ schema })`; failures become `422 validation_error` with per-field `errors`. Parse responses through their schema before returning.
+- Zod schemas come from `@repo/contracts` (see its CLAUDE.md). Validate with `@Body({ schema })` / `@Query({ schema })` / `@Param({ schema })`; failures become `422 validation_error` with per-field `errors`.
+- Return data **parsed through the response schema** (for lists, the list schema), and document it on the route: `@ApiOkResponse({ standardSchema: xResponseSchema })` (`ApiCreatedResponse`, `ApiAcceptedResponse`, `ApiNoContentResponse` likewise). Every controller also gets `@ApiTags(...)` and `@ApiProblemResponse()`.
+- After changing an endpoint or a contract: `pnpm openapi:generate` from the root, and commit `packages/api-client/openapi.json`. `test/openapi.test.ts` fails if you forget.
+- Interactive docs: `http://localhost:3001/api/docs` (not in production).
 
 ## Config
 

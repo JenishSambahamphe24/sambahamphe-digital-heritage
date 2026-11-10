@@ -140,7 +140,8 @@ Redis-backed. Default 300 req/min per IP for anonymous reads, 600/min per user; 
 
 ## 10. Documentation
 
-- OpenAPI 3.1 generated from `packages/contracts` at build time → `docs/api/openapi.json`, served at `/api/docs` in non-production.
+- OpenAPI 3.0, generated from the `@repo/contracts` schemas by `pnpm openapi:generate`, committed at `packages/api-client/openapi.json`. A test fails when it is stale. Interactive docs at `/api/docs` outside production.
+- Clients use `@repo/api-client` (typed from the committed spec), never hand-written `fetch` calls.
 - Each endpoint documents: permission required, privacy behavior, error codes, pagination style.
 - Breaking changes require a new major path (`/api/v2`) and a deprecation window with `Deprecation`/`Sunset` headers on v1.
 

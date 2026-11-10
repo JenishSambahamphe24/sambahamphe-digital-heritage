@@ -1,20 +1,28 @@
-import type { TUserResponse } from "../../users/dto/user.response.dto.js";
 import type { IAuthContext } from "../auth.types.js";
-import type { TSessionIdParams } from "./dto/session-id.params.dto.js";
-import type { TSessionResponse } from "./dto/session.response.dto.js";
+import type { TIdParams, TSessionListResponse, TUserResponse } from "@repo/contracts";
 import type { Response } from "express";
 
 import { Controller, Delete, Get, HttpCode, HttpStatus, Param, Res } from "@nestjs/common";
+import { ApiHeader, ApiNoContentResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
+
+import { idParamsSchema, sessionListResponseSchema, userResponseSchema } from "@repo/contracts";
 
 import { AppConfig } from "../../../core/config/app-config.js";
 import { AppException } from "../../../core/errors/app.exception.js";
+import { ApiProblemResponse } from "../../../core/openapi/api-problem-response.decorator.js";
 import { UserResponseHelper } from "../../users/user-response.helper.js";
 import { SessionService } from "../application/session.service.js";
 import { SessionCookieHelper } from "../domain/session-cookie.helper.js";
 import { CurrentAuth } from "../guards/current-auth.decorator.js";
-import { sessionIdParamsSchema } from "./dto/session-id.params.dto.js";
-import { sessionResponseSchema } from "./dto/session.response.dto.js";
 
+@ApiTags("me")
+@ApiHeader({
+  name: "X-Client",
+  required: false,
+  description: "web (default), admin or mobile; picks the session cookie or Bearer token",
+  enum: ["web", "admin", "mobile"],
+})
+@ApiProblemResponse()
 @Controller("me")
 export class MeController {
   constructor(
@@ -23,32 +31,33 @@ export class MeController {
   ) {}
 
   @Get()
+  @ApiOkResponse({ standardSchema: userResponseSchema })
   me(@CurrentAuth() auth: IAuthContext): TUserResponse {
     return UserResponseHelper.fromRow(auth.user);
   }
 
   @Get("sessions")
-  async listSessions(@CurrentAuth() auth: IAuthContext): Promise<{ data: TSessionResponse[] }> {
+  @ApiOkResponse({ standardSchema: sessionListResponseSchema })
+  async listSessions(@CurrentAuth() auth: IAuthContext): Promise<TSessionListResponse> {
     const rows = await this.sessions.listActive(auth.user.id);
-    return {
-      data: rows.map((row) =>
-        sessionResponseSchema.parse({
-          id: row.id,
-          client: row.client,
-          userAgent: row.userAgent,
-          createdAt: row.createdAt.toISOString(),
-          lastSeenAt: row.lastSeenAt.toISOString(),
-          current: row.id === auth.session.id,
-        }),
-      ),
-    };
+    return sessionListResponseSchema.parse({
+      data: rows.map((row) => ({
+        id: row.id,
+        client: row.client,
+        userAgent: row.userAgent,
+        createdAt: row.createdAt.toISOString(),
+        lastSeenAt: row.lastSeenAt.toISOString(),
+        current: row.id === auth.session.id,
+      })),
+    });
   }
 
   @Delete("sessions/:id")
+  @ApiNoContentResponse({ description: "Session revoked" })
   @HttpCode(HttpStatus.NO_CONTENT)
   async revokeSession(
     @CurrentAuth() auth: IAuthContext,
-    @Param({ schema: sessionIdParamsSchema }) params: TSessionIdParams,
+    @Param({ schema: idParamsSchema }) params: TIdParams,
     @Res({ passthrough: true }) response: Response,
   ): Promise<void> {
     const revoked = await this.sessions.revoke(params.id, auth.user.id, "logout");
