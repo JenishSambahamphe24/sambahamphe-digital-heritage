@@ -3,8 +3,7 @@ packages:
   - "packages/*"
 
 # Every dependency version lives here. Reference with "catalog:<name>" in a
-# package.json; never write a literal version (CLAUDE.md). Add an `fe` catalog
-# when the first frontend workspace needs it.
+# package.json; never write a literal version (CLAUDE.md).
 catalogs:
   
   be:
@@ -41,6 +40,34 @@ catalogs:
     supertest: ^7.3.1
     testcontainers: ^12.2.1
     unplugin-swc: ^2.0.0
+  fe:
+    "@next/eslint-plugin-next": ^16.4.3
+    "@playwright/test": ^1.64.1
+    "@radix-ui/react-dialog": ^1.3.1
+    "@radix-ui/react-slot": ^1.5.0
+    "@radix-ui/react-toast": ^1.3.1
+    "@tailwindcss/postcss": ^4.3.3
+    "@tailwindcss/vite": ^4.3.3
+    "@tanstack/react-form": ^1.33.5
+    "@tanstack/react-query": ^5.105.0
+    "@tanstack/react-router": ^1.170.46
+    "@tanstack/router-plugin": ^1.168.48
+    "@types/react": ^19.3.0
+    "@types/react-dom": ^19.3.0
+    "@vitejs/plugin-react": ^6.1.2
+    clsx: ^2.1.1
+    eslint-plugin-react-hooks: ^7.1.1
+    eslint-plugin-react-refresh: ^0.5.7
+    lucide-react: ^0.545.0
+    next: ^16.4.3
+    next-intl: ^4.14.9
+    prettier-plugin-tailwindcss: ^0.8.1
+    react: ^19.3.1
+    react-dom: ^19.3.1
+    tailwind-merge: ^3.7.0
+    tailwindcss: ^4.3.3
+    use-intl: ^4.14.9
+
   generic:
     "@commitlint/cli": ^21.2.0
     "@commitlint/config-conventional": ^21.2.0
@@ -61,10 +88,13 @@ catalogs:
     vitest: ^5.0.5
     zod: ^4.6.0
 
-# Install scripts deliberately skipped: esbuild ships its binary as a platform
-# package anyway; ssh2/cpu-features are optional native add-ons for Docker over
-# SSH (unused); protobufjs only runs a version check.
+# Install scripts deliberately skipped: esbuild and @parcel/watcher ship their
+# binaries as platform packages anyway; ssh2/cpu-features are optional native
+# add-ons for Docker over SSH (unused); protobufjs only runs a version check;
+# @scarf/scarf is install telemetry.
 ignoredBuiltDependencies:
+  - "@parcel/watcher"
+  - "@scarf/scarf"
   - cpu-features
   - esbuild
   - protobufjs

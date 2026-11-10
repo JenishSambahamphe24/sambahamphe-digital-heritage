@@ -8,7 +8,7 @@ Every milestone ends with: lint + typecheck + unit + integration tests green in 
 
 ---
 
-## Phase 0 — Discovery & architecture *(current)*
+## Phase 0 — Discovery & architecture *(organization review still open)*
 
 | Deliverable | Status |
 |---|---|
@@ -57,11 +57,12 @@ Decided 2026-11-07: Q-1 (access policy), Q-2 (male line), Q-3 (English + Nepali)
 - OpenAPI from the same schemas, committed spec with a freshness test, `/api/docs` outside production; `@repo/api-client` typed client.
 - `ui` moved to M1.5, where the first frontend uses it.
 
-**M1.5 Web & admin shells**
-- `@repo/ui`: tokens, typography (Latin/Devanagari/Limbu fonts), buttons, forms, layout primitives — built alongside the first screens that use them.
-- `web`: App Router, locales (`en`, `ne`), layout, header/footer, home/about placeholders driven by real API health only (no fake content), SEO basics.
-- `admin`: login, session handling, navigation shell, user list & role assignment screens.
-- Playwright: login journey.
+**M1.5 Web & admin shells** — ✅ done (2026-11-10)
+- `@repo/ui`: theme tokens (palette derived from the logo), Latin/Devanagari/Limbu fonts, Button, Input, FormField, Card, Alert, Spinner, ConfirmDialog.
+- `web` (Next.js 16, next-intl en/ne): home, register, login, verify email, forgot/reset password, my account (devices, sign out); SEO basics, noindex on account pages.
+- `admin` (React + Vite, TanStack Router/Query/Form): login gate, users list with search and paging, a user's roles (assign / confirmed removal), audit log.
+- API additions found while building the screens: `GET /admin/users/{id}`; email links carry the member's language.
+- Playwright E2E dropped by decision (ADR-018 update): journeys are checked manually with `docs/development/manual-testing.md`.
 
 **Exit:** a developer can clone, `docker compose up`, `pnpm dev`, log in to admin, assign a role; CI green.
 

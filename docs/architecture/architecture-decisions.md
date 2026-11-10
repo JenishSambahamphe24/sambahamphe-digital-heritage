@@ -72,9 +72,11 @@ The database code lives inside `apps/api` (`src/database/`). Bitsky keeps it in 
 
 ## ADR-007 — Separate admin app
 
-**Decision.** `apps/admin` is a separate Next.js app (not `/admin` inside the public site).
+**Decision.** `apps/admin` is a separate app (not `/admin` inside the public site).
 **Why.** Different needs (no SEO, heavy client interactivity, larger bundles), separate deploy and attack surface, can sit behind stricter headers/IP rules. Shared UI comes from `packages/ui`.
-**Consequences.** Two Next.js apps to maintain; mitigated by shared config packages.
+
+**Update (2026-11-10) — framework.** The public site is **Next.js** (SEO and server rendering are essential). The admin is a **React + Vite single-page app** with TanStack Router, Query and Form, and `use-intl` for messages (the same message format as `next-intl` on the public site). The admin needs neither SEO nor server rendering. As static files served by Caddy, it costs no extra Node process on the small production server, and its stack matches the maintainer's daily work (Bitsky's admin uses TanStack Router/Query/Form). TanStack Start for both apps (exactly Bitsky's setup) was considered and declined in favor of learning Next.js for the public site.
+**Consequences.** Two frontend setups (Next.js and Vite) instead of one; shared code lives in `@repo/ui`, `@repo/contracts` and `@repo/api-client`. In production, Caddy serves the admin's `dist/` and forwards `/api` with `X-Client: admin`, as Vite's dev proxy does.
 
 ## ADR-008 — S3-compatible object storage with pre-signed uploads
 
@@ -144,6 +146,8 @@ Short labels on taxonomy/reference data (category names, position titles, unit a
 
 **Decision.** Vitest for unit tests (packages, domain logic, React components); Vitest + Testcontainers (real Postgres & Redis) for API integration tests via Supertest; Playwright for end-to-end journeys. No mocking of the database in integration tests.
 **Consequences.** Constraints and SQL (CTEs, exclusion constraints) are tested against real Postgres. CI needs Docker.
+
+**Update (2026-11-10) — no end-to-end tests for now.** The maintainer chose to verify the web and admin journeys **manually in a browser**, using the checklist in `docs/development/manual-testing.md`, instead of Playwright. Accepted trade-off: UI journeys aren't re-checked automatically when code changes; the API and packages remain fully covered by automated tests. Revisit when the genealogy UI arrives (Phase 3), where a silent UI regression would be costlier.
 
 ## ADR-019 — NestJS as the backend framework
 

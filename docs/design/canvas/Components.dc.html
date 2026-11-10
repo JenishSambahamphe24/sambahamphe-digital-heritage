@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Components</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="position: relative; width: 1200px; height: 1460px; box-sizing: border-box; padding: 56px 64px; display: flex; flex-direction: column; gap: 40px; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans)">
+  <h1 style="margin: 0; font-family: var(--font-display); font-size: 30px; line-height: 36px; font-weight: 600">Components</h1>
+
+  <section style="display: flex; flex-direction: column; gap: 16px">
+    <h2 style="margin: 0; font-family: var(--font-display); font-size: 18px; line-height: 28px; font-weight: 600">Button</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+      <x-import component-from-global-scope="SambahampheUI.Button">Create account</x-import>
+      <x-import component-from-global-scope="SambahampheUI.Button" variant="secondary">Cancel</x-import>
+      <x-import component-from-global-scope="SambahampheUI.Button" variant="danger">Sign out device</x-import>
+      <x-import component-from-global-scope="SambahampheUI.Button" variant="ghost">Sign in</x-import>
+      <x-import component-from-global-scope="SambahampheUI.Button" loading="{{yes}}">Signing in…</x-import>
+      <x-import component-from-global-scope="SambahampheUI.Button" disabled="{{yes}}">Save new password</x-import>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 16px">
+    <h2 style="margin: 0; font-family: var(--font-display); font-size: 18px; line-height: 28px; font-weight: 600">Alert · a state that stays on the page</h2>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+      <x-import component-from-global-scope="SambahampheUI.Alert" tone="info">The archive is being built. The family tree, boards and articles follow soon.</x-import>
+      <x-import component-from-global-scope="SambahampheUI.Alert" tone="success">Your email is confirmed. You can now sign in.</x-import>
+      <x-import component-from-global-scope="SambahampheUI.Alert" tone="warning">This page needs the link from your email. Open the link again, or request a new one.</x-import>
+      <x-import component-from-global-scope="SambahampheUI.Alert" tone="danger">The email or password is incorrect.</x-import>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px">
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <h2 style="margin: 0; font-family: var(--font-display); font-size: 18px; line-height: 28px; font-weight: 600">Input &amp; FormField</h2>
+      <x-import component-from-global-scope="SambahampheUI.FormField" id="c-email" label="Email">
+        <x-import component-from-global-scope="SambahampheUI.Input" id="c-email" type="email" placeholder="you@example.com"></x-import>
+      </x-import>
+      <x-import component-from-global-scope="SambahampheUI.FormField" id="c-password" label="Password" hint="At least 12 characters.">
+        <x-import component-from-global-scope="SambahampheUI.Input" id="c-password" type="password"></x-import>
+      </x-import>
+      <x-import component-from-global-scope="SambahampheUI.FormField" id="c-bad" label="Email" error="Enter a valid email address.">
+        <x-import component-from-global-scope="SambahampheUI.Input" id="c-bad" invalid="{{yes}}" default-value="maya@"></x-import>
+      </x-import>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <h2 style="margin: 0; font-family: var(--font-display); font-size: 18px; line-height: 28px; font-weight: 600">Card &amp; Spinner</h2>
+      <x-import component-from-global-scope="SambahampheUI.Card">
+        <p style="margin: 0; font-family: var(--font-display); font-size: 18px; line-height: 28px; font-weight: 600">Signed-in devices</p>
+        <p style="margin: 8px 0 0; font-size: 14px; line-height: 20px; color: var(--color-foreground-muted)">Website · Last active 2 hours ago</p>
+      </x-import>
+      <div style="display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--color-foreground-muted)">
+        <x-import component-from-global-scope="SambahampheUI.Spinner"></x-import>
+        <span>Loading…</span>
+      </div>
+      <p style="margin: 0; font-size: 14px; line-height: 20px; color: var(--color-foreground-muted)">ConfirmDialog guards every destructive action; see its live preview in the design system.</p>
+    </div>
+  </section>
+
+  <section style="display: flex; gap: 32px; min-height: 320px">
+    <div style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+      <h2 style="margin: 0; font-family: var(--font-display); font-size: 18px; line-height: 28px; font-weight: 600">Toast · feedback on an action</h2>
+      <p style="margin: 0; max-width: 520px; font-size: 14px; line-height: 20px; color: var(--color-foreground-muted)">Slides in bottom-right (full width on phones), leaves after 5 seconds or on close. Use it for "Saved", "Signed out", a failed sign-in or a network error. A page state that must stay visible uses Alert.</p>
+    </div>
+    <div style="flex: 0 0 384px"></div>
+  </section>
+  <x-import component-from-global-scope="SambahampheUI.Toaster" close-label="Close" duration="{{forever}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":1460}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    const toasts = window.SambahampheUI && window.SambahampheUI.ToastHelper;
+    if (!toasts) return;
+    toasts.snapshot().forEach((t) => toasts.dismiss(t.id));
+    toasts.show({ tone: 'info', description: 'The archive is being built. The family tree follows soon.' });
+    toasts.show({ tone: 'success', description: 'Your password is saved.' });
+    toasts.show({ tone: 'warning', description: 'You have unsaved changes.' });
+    toasts.show({ tone: 'danger', title: 'Couldn’t sign in', description: 'The email or password is incorrect.' });
+  }
+  renderVals() {
+    return { yes: true, forever: Infinity };
+  }
+}
+</script>
+</body>
+</html>

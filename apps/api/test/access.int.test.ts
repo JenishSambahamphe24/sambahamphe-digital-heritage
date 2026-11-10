@@ -121,6 +121,18 @@ describe("assigning and revoking roles", () => {
     expect(response.body.data[0]).not.toHaveProperty("passwordHash");
   });
 
+  it("lets an admin open one user, and answers 404 for an unknown id", async () => {
+    const found = await TestAccounts.admin(server, adminCookie)
+      .get(`/admin/users/${admin.id}`)
+      .expect(200);
+    expect(found.body).toMatchObject({ id: admin.id, email: admin.email, status: "active" });
+
+    const missing = await TestAccounts.admin(server, adminCookie)
+      .get("/admin/users/00000000-0000-4000-8000-000000000000")
+      .expect(404);
+    expect(missing.body.code).toBe("not_found");
+  });
+
   it("only a super admin can grant super admin", async () => {
     const target = await TestAccounts.createVerified(stack, server, "target");
     const response = await assign(adminCookie, {

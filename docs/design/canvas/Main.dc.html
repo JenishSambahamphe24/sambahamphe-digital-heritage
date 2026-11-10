@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sign in — desktop</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; display: flex; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans); overflow: hidden">
+  <div style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; padding: 32px 64px">
+    <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px">
+      <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--color-foreground)">
+        <img src="/_blob/74d1d53640bbc4c25d8e208c90d53ca4" alt="Sambahamphe Utthan Sangh seal" style="width: 48px; height: 43px; object-fit: contain">
+        <span style="font-family: var(--font-display); font-size: 18px; font-weight: 600">Sambahamphe Utthan Sangh</span>
+      </a>
+      <nav aria-label="Language" style="display: flex; gap: 4px; font-size: 14px">
+        <a href="#" aria-current="true" style="padding: 8px 12px; border-radius: 6px; background: var(--color-surface-muted); color: var(--color-foreground); font-weight: 500; text-decoration: none">English</a>
+        <a href="#" style="padding: 8px 12px; border-radius: 6px; color: var(--color-foreground-muted); text-decoration: none">नेपाली</a>
+      </nav>
+    </header>
+
+    <main style="flex: 1 1 auto; display: flex; align-items: center; justify-content: center">
+      <div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 24px">
+        <img src="/_blob/72ac33c727f15acdcad8b8577fe86042" alt="" aria-hidden="true" style="width: 40px; height: 40px">
+        <div role="tablist" aria-label="Account" style="display: flex; gap: 24px; border-bottom: 1px solid var(--color-border)">
+          <button type="button" role="tab" aria-selected="{{isLogin}}" onClick="{{showLogin}}" style="{{loginTabStyle}}">Sign in</button>
+          <button type="button" role="tab" aria-selected="{{isSignup}}" onClick="{{showSignup}}" style="{{signupTabStyle}}">Create account</button>
+        </div>
+
+        <sc-if value="{{isLogin}}" hint-placeholder-val="{{ true }}">
+          <form style="display: flex; flex-direction: column; gap: 16px">
+            <x-import component-from-global-scope="SambahampheUI.FormField" id="email" label="Email">
+              <x-import component-from-global-scope="SambahampheUI.Input" id="email" type="email" placeholder="you@example.com"></x-import>
+            </x-import>
+            <x-import component-from-global-scope="SambahampheUI.FormField" id="password" label="Password">
+              <x-import component-from-global-scope="SambahampheUI.Input" id="password" type="password"></x-import>
+            </x-import>
+            <div style="display: flex; justify-content: flex-end">
+              <a href="#" style="font-size: 14px; font-weight: 500">Forgot your password?</a>
+            </div>
+            <x-import component-from-global-scope="SambahampheUI.Button" type="button" class-name="w-full" on-click="{{signIn}}">Sign in</x-import>
+          </form>
+          <p style="margin: 0; font-size: 14px; color: var(--color-foreground-muted)">New here? <a href="#" onClick="{{showSignup}}" style="font-weight: 500">Create an account</a></p>
+        </sc-if>
+
+        <sc-if value="{{isSignup}}" hint-placeholder-val="{{ false }}">
+          <form style="display: flex; flex-direction: column; gap: 16px">
+            <x-import component-from-global-scope="SambahampheUI.FormField" id="name" label="Your name">
+              <x-import component-from-global-scope="SambahampheUI.Input" id="name" type="text" autocomplete="name"></x-import>
+            </x-import>
+            <x-import component-from-global-scope="SambahampheUI.FormField" id="new-email" label="Email">
+              <x-import component-from-global-scope="SambahampheUI.Input" id="new-email" type="email" placeholder="you@example.com"></x-import>
+            </x-import>
+            <x-import component-from-global-scope="SambahampheUI.FormField" id="new-password" label="Password" hint="At least 12 characters.">
+              <x-import component-from-global-scope="SambahampheUI.Input" id="new-password" type="password"></x-import>
+            </x-import>
+            <x-import component-from-global-scope="SambahampheUI.Button" type="button" class-name="w-full">Create account</x-import>
+          </form>
+          <p style="margin: 0; font-size: 14px; color: var(--color-foreground-muted)">Already have an account? <a href="#" onClick="{{showLogin}}" style="font-weight: 500">Sign in</a></p>
+        </sc-if>
+      </div>
+    </main>
+
+    <footer style="font-size: 12px; color: var(--color-foreground-muted)">Sambahamphe Utthan Sangh — a community heritage archive.</footer>
+  </div>
+
+  <aside style="position: relative; flex: 0 0 640px; height: 900px; overflow: hidden; background: #bcb6a6">
+    <img src="/_blob/a7168cfe4f6cf50d4b9dd3fb80c1aede" alt="Painting of a Yakthung woman in traditional dress and gold ornaments" style="width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block">
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 120px 48px 48px; background: linear-gradient(to top, rgba(18, 19, 43, 0.88), rgba(18, 19, 43, 0)); display: flex; flex-direction: column; gap: 8px">
+      <p style="margin: 0; font-family: var(--font-display); font-size: 30px; line-height: 36px; font-weight: 600; color: #ffffff">Our history, our families, our heritage</p>
+      <p style="margin: 0; font-size: 14px; line-height: 20px; color: #e8e9f7">Preserving the history, heritage and family lines of the Sambahamphe community</p>
+    </div>
+  </aside>
+  <x-import component-from-global-scope="SambahampheUI.Toaster" close-label="Close"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'login' };
+  }
+  renderVals() {
+    const base = 'margin: 0 0 -1px; padding: 0 4px 12px; background: none; border: 0; border-bottom: 2px solid transparent; font: inherit; font-size: 16px; cursor: pointer;';
+    const active = base + ' border-bottom-color: var(--color-primary); color: var(--color-foreground); font-weight: 600;';
+    const idle = base + ' color: var(--color-foreground-muted); font-weight: 500;';
+    const isLogin = this.state.tab === 'login';
+    return {
+      isLogin,
+      isSignup: !isLogin,
+      loginTabStyle: isLogin ? active : idle,
+      signupTabStyle: isLogin ? idle : active,
+      showLogin: (e) => { if (e) e.preventDefault(); this.setState({ tab: 'login' }); },
+      showSignup: (e) => { if (e) e.preventDefault(); this.setState({ tab: 'signup' }); },
+      // Play demo: a failed sign-in raises the danger toast.
+      signIn: () => {
+        const toasts = window.SambahampheUI && window.SambahampheUI.ToastHelper;
+        if (toasts) toasts.show({ tone: 'danger', description: 'The email or password is incorrect.' });
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

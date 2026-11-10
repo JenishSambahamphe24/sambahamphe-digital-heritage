@@ -1,17 +1,25 @@
-import type { TAdminUserListResponse, TListUsersQuery } from "@repo/contracts";
+import type {
+  TAdminUserListResponse,
+  TAdminUserResponse,
+  TIdParams,
+  TListUsersQuery,
+} from "@repo/contracts";
 
-import { Controller, Get, Query } from "@nestjs/common";
+import { Controller, Get, HttpStatus, Param, Query } from "@nestjs/common";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 
 import {
   adminUserListResponseSchema,
   adminUserResponseSchema,
+  idParamsSchema,
   listUsersQuerySchema,
 } from "@repo/contracts";
 
+import { AppException } from "../../../core/errors/app.exception.js";
 import { ApiProblemResponse } from "../../../core/openapi/api-problem-response.decorator.js";
 import { PERMISSION } from "../../access/access.catalog.js";
 import { RequirePermission } from "../../access/guards/require-permission.decorator.js";
+import { AdminUserResponseHelper } from "../admin-user-response.helper.js";
 import { UsersRepository } from "../users.repository.js";
 
 @ApiTags("admin")
@@ -32,18 +40,19 @@ export class AdminUsersController {
       limit: query.pageSize,
     });
     return adminUserListResponseSchema.parse({
-      data: rows.map((row) =>
-        adminUserResponseSchema.parse({
-          id: row.id,
-          email: row.email,
-          emailVerified: row.emailVerifiedAt !== null,
-          displayName: row.displayName,
-          status: row.status,
-          createdAt: row.createdAt.toISOString(),
-          lastLoginAt: row.lastLoginAt?.toISOString() ?? null,
-        }),
-      ),
+      data: rows.map((row) => AdminUserResponseHelper.fromRow(row)),
       page: { page: query.page, pageSize: query.pageSize, total },
     });
+  }
+
+  @Get(":id")
+  @ApiOkResponse({ standardSchema: adminUserResponseSchema })
+  @RequirePermission(PERMISSION.userRead)
+  async get(@Param({ schema: idParamsSchema }) params: TIdParams): Promise<TAdminUserResponse> {
+    const row = await this.users.findById(params.id);
+    if (!row) {
+      throw new AppException(HttpStatus.NOT_FOUND, "not_found", "Not found", "User not found.");
+    }
+    return AdminUserResponseHelper.fromRow(row);
   }
 }

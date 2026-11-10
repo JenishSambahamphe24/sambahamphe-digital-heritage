@@ -594,7 +594,7 @@ Approval applies operations in `seq` order in one transaction; temp refs are res
 create table organizations (
   id               uuid primary key,
   slug             text not null unique,
-  name_i18n        jsonb not null,            -- Sambahamphe Utthan Sangh / सम्बाहाम्फे उत्थान संघ
+  name_i18n        jsonb not null,            -- Sambahamphe Utthan Sangh / सम्बाहाङ्फे उत्थान संघ
   short_name       text,
   founded_date jsonb, founded_sort date,
   registration_info jsonb,                    -- registration body, number, date (if public)

@@ -3,14 +3,17 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./eslint/api": "./eslint/api.js",
     "./eslint/base": "./eslint/base.js",
     "./eslint/node": "./eslint/node.js",
-    "./eslint/api": "./eslint/api.js",
+    "./eslint/react": "./eslint/react.js",
+    "./prettier/api": "./prettier/api.js",
     "./prettier/base": "./prettier/base.js",
     "./prettier/node": "./prettier/node.js",
-    "./prettier/api": "./prettier/api.js",
+    "./prettier/react": "./prettier/react.js",
     "./tsconfig/base.json": "./tsconfig/base.json",
-    "./tsconfig/node.json": "./tsconfig/node.json"
+    "./tsconfig/node.json": "./tsconfig/node.json",
+    "./tsconfig/react.json": "./tsconfig/react.json"
   },
   "scripts": {
     "lint": "eslint .",
@@ -22,8 +25,10 @@
     "@eslint/js": "catalog:generic",
     "@ianvs/prettier-plugin-sort-imports": "catalog:generic",
     "eslint": "catalog:generic",
+    "eslint-plugin-react-hooks": "catalog:fe",
     "globals": "catalog:generic",
     "prettier": "catalog:generic",
+    "prettier-plugin-tailwindcss": "catalog:fe",
     "typescript": "catalog:generic",
     "typescript-eslint": "catalog:generic"
   },
@@ -32,6 +37,12 @@
       "optional": true
     },
     "typescript-eslint": {
+      "optional": true
+    },
+    "eslint-plugin-react-hooks": {
+      "optional": true
+    },
+    "prettier-plugin-tailwindcss": {
       "optional": true
     }
   }

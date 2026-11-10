@@ -7,6 +7,9 @@ import { describe, expect, it } from "vitest";
 import { BikramSambatHelper } from "../src/bikram-sambat.helper.js";
 import { DateOutOfRangeError } from "../src/date-out-of-range.error.js";
 
+// ~44,000 days converted both ways; shared CI runners need more than Vitest's 5s default.
+const FULL_TABLE_TIMEOUT_MS = 30_000;
+
 const REFERENCE_PAIRS = Object.entries(
   JSON.parse(
     readFileSync(new URL("./fixtures/bs-ad-reference.json", import.meta.url), "utf8"),
@@ -41,25 +44,33 @@ describe("BikramSambatHelper against Medic's reference conversions", () => {
 });
 
 describe("BikramSambatHelper across the whole table", () => {
-  it("round-trips every day from 1970 to 2090 BS, with AD dates one day apart", () => {
-    let previous: number | null = null;
-    let days = 0;
-    for (let year = BikramSambatHelper.firstYear; year <= BikramSambatHelper.lastYear; year += 1) {
-      for (let month = 1; month <= 12; month += 1) {
-        for (let day = 1; day <= BikramSambatHelper.daysInMonth(year, month); day += 1) {
-          const ad = BikramSambatHelper.toAd({ year, month, day });
-          expect(BikramSambatHelper.fromAd(ad)).toEqual({ year, month, day });
-          const time = Date.UTC(ad.year, ad.month - 1, ad.day);
-          if (previous !== null) {
-            expect(time - previous).toBe(86_400_000);
+  it(
+    "round-trips every day from 1970 to 2090 BS, with AD dates one day apart",
+    { timeout: FULL_TABLE_TIMEOUT_MS },
+    () => {
+      let previous: number | null = null;
+      let days = 0;
+      for (
+        let year = BikramSambatHelper.firstYear;
+        year <= BikramSambatHelper.lastYear;
+        year += 1
+      ) {
+        for (let month = 1; month <= 12; month += 1) {
+          for (let day = 1; day <= BikramSambatHelper.daysInMonth(year, month); day += 1) {
+            const ad = BikramSambatHelper.toAd({ year, month, day });
+            expect(BikramSambatHelper.fromAd(ad)).toEqual({ year, month, day });
+            const time = Date.UTC(ad.year, ad.month - 1, ad.day);
+            if (previous !== null) {
+              expect(time - previous).toBe(86_400_000);
+            }
+            previous = time;
+            days += 1;
           }
-          previous = time;
-          days += 1;
         }
       }
-    }
-    expect(days).toBeGreaterThan(44_000);
-  });
+      expect(days).toBeGreaterThan(44_000);
+    },
+  );
 
   it("matches independently known Nepali New Year dates", () => {
     expect(BikramSambatHelper.toAd({ year: 2080, month: 1, day: 1 })).toEqual({
