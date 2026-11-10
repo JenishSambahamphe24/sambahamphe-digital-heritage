@@ -289,7 +289,7 @@ Originals are never modified (archival). Derivatives can be regenerated.
 
 ### 5.8 Search
 
-Postgres full-text search (`tsvector` with `simple` config — no stemming dictionary exists for Nepali/Limbu) plus `pg_trgm` for fuzzy name matching and `unaccent` for romanized names. A romanization column stores a normalized Latin transliteration of Devanagari names to allow "Sambahamphe" ≈ "सम्बाहाम्फे" ≈ "Sambahangphe" style matching. A dedicated engine (Meilisearch) is a later option only if needed.
+Postgres full-text search (`tsvector` with `simple` config — no stemming dictionary exists for Nepali/Limbu) plus `pg_trgm` for fuzzy name matching and `unaccent` for romanized names. A romanization column stores a normalized Latin transliteration of Devanagari names to allow "Sambahamphe" ≈ "सम्बाहाङ्फे" ≈ "Sambahangphe" style matching. A dedicated engine (Meilisearch) is a later option only if needed.
 
 ## 6. Frontend architecture
 
