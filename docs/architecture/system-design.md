@@ -295,14 +295,14 @@ Postgres full-text search (`tsvector` with `simple` config — no stemming dicti
 
 ### 6.1 Public website (`apps/web`)
 
-- Next.js App Router, React Server Components, Tailwind. Server-side data fetching from the API using the generated client.
+- Next.js 16 App Router, React Server Components, Tailwind v4, `next-intl` (`/en`, `/ne`; `src/proxy.ts` redirects `/` by browser language). `/api/*` is forwarded to the API (Caddy in production, a Next rewrite locally), so the session cookie is same-origin. Forms use TanStack Form with the `@repo/contracts` rules and translated messages; client data via TanStack Query and `@repo/api-client`.
 - **Caching:** content pages statically generated with on-demand revalidation (API sends a signed revalidate webhook on publish). Genealogy pages are dynamic and viewer-dependent (privacy), so not cached publicly when a session exists.
 - SEO: metadata API, `sitemap.xml` per locale, JSON-LD (`Article`, `Event`, `Person` for public deceased records, `Organization`).
 - Family tree page: client component using **React Flow (@xyflow/react)**. Because the lineage is a true tree (ADR-020), the main view is a classic **top-down descendant tree** (vamshawali style) laid out with `d3-hierarchy`, with wives shown beside their husbands. A "my lineage" view shows the single father-chain from a person up to the founding ancestor. Branch navigation jumps to a branch founder. Each expand fetches a bounded neighborhood (`/genealogy/persons/{id}/tree?up=2&down=2`). Virtualized rendering is built into React Flow. Mobile: pan/zoom gestures, a list-based "family card" fallback view for small screens and screen readers.
 
 ### 6.2 Admin CMS (`apps/admin`)
 
-- Next.js (client-heavy), TanStack Query for server state, TanStack Table for data grids, React Hook Form + the same Zod schemas for forms.
+- React + Vite single-page app (ADR-007): TanStack Router (file-based, a signed-in gate on every page), TanStack Query for server state, TanStack Form, `use-intl` messages (en/ne). Vite's dev proxy forwards `/api` with `X-Client: admin`; Caddy does the same in production.
 - Rich-text editor: **Tiptap** (ProseMirror), content stored as JSON (ADR-009).
 - Genealogy editor: profile forms plus a relationship editor that lets editors add parents/partners/children from the tree, and a review inbox with side-by-side diff of proposed vs current values.
 

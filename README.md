@@ -29,11 +29,26 @@ If a port is already taken on your machine (e.g. a local Redis on 6379), copy `.
 
 `pnpm infra:down` stops the services; data persists in Docker volumes.
 
+Then:
+
+```bash
+cp apps/api/.env.example apps/api/.env   # set IP_HASH_SECRET (openssl rand -hex 32)
+pnpm db:migrate
+pnpm dev
+```
+
+| App | Address |
+|---|---|
+| Public site | http://localhost:3000 |
+| Admin CMS | http://localhost:3002 (needs an account with a role; the first one via `pnpm --filter api admin:bootstrap --email …`) |
+| API + docs | http://localhost:3001, http://localhost:3001/api/docs |
+| Emails sent in development | http://localhost:8025 (Mailpit) |
+
 ## Everyday commands
 
 | Command | What it does |
 |---|---|
-| `pnpm dev` | Run all apps in watch mode |
+| `pnpm dev` | Run everything in watch mode: API (:3001), worker, public site (:3000), admin (:3002) |
 | `pnpm lint` | ESLint across workspaces |
 | `pnpm format` / `pnpm format:write` | Check / fix formatting (Prettier) |
 | `pnpm check` | Auto-fix formatting and lint issues |
