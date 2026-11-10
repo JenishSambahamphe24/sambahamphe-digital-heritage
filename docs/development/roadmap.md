@@ -75,7 +75,7 @@ Decided 2026-11-07: Q-1 (access policy), Q-2 (male line), Q-3 (English + Nepali)
 - `persons`, `person_names`, consents, privacy policy module (table-driven tests), person CRUD for editors through **auto-approved change requests** (ADR-012; decided at M2.1 start instead of direct edits), with revisions and optimistic concurrency.
 - Person search (trigram on names, romanization).
 
-**M2.2 Organization & governance**
+**M2.2 Organization & governance** — 🔄 backend and admin built, awaiting manual test and the statute (2026-11-10); public pages wait for designs
 - Org unit types, units (tree), terms, positions, appointments; exclusion constraints; scoped `org_manager`.
 - Admin: org tree editor, term management, "board for term" editor (assign people to positions quickly, create person inline).
 - Public: organization page, current central board, regional boards and gaau committees, past boards by term.
