@@ -75,10 +75,10 @@ Decided 2026-11-07: Q-1 (access policy), Q-2 (male line), Q-3 (English + Nepali)
 - `persons`, `person_names`, consents, privacy policy module (table-driven tests), person CRUD for editors through **auto-approved change requests** (ADR-012; decided at M2.1 start instead of direct edits), with revisions and optimistic concurrency.
 - Person search (trigram on names, romanization).
 
-**M2.2 Organization & governance** — 🔄 backend and admin built, awaiting manual test and the statute (2026-11-10); public pages wait for designs
+**M2.2 Organization & governance** — 🔄 backend, admin and public pages built, awaiting manual test and the statute (2026-11-11)
 - Org unit types, units (tree), terms, positions, appointments; exclusion constraints; scoped `org_manager`.
 - Admin: org tree editor, term management, "board for term" editor (assign people to positions quickly, create person inline).
-- Public: organization page, current central board, regional boards and gaau committees, past boards by term.
+- Public (from the Claude Design boards): `/boards` (top board, regional boards and their gaau committees), `/boards/[slug]` (term tabs, office-bearers, members, boards below), `/about`, and the new site header, footer and home page with a board teaser. Board pages render per request from the API and show a "couldn't load" state when it is down.
 - Seed: Central Board, unit types, standard positions (pending confirmation of the statute).
 
 **M2.3 Media**
