@@ -1,6 +1,6 @@
 import type { TDatePrecision } from "@repo/contracts";
 
-import { BikramSambatHelper, FuzzyDateFormatHelper } from "@repo/dates";
+import { BikramSambatHelper, IsoDateFormatHelper } from "@repo/dates";
 
 export interface IOrgDateDraft {
   calendar: "BS" | "AD";
@@ -75,16 +75,6 @@ export class OrgDateDraftHelper {
 
   // "Baisakh 2079 BS" for a month-precision date; AD when outside the BS table.
   static label(iso: string, precision: TDatePrecision, locale: "en" | "ne"): string {
-    const draft = OrgDateDraftHelper.fromDate(iso, precision);
-    return FuzzyDateFormatHelper.format(
-      {
-        calendar: draft.calendar,
-        qualifier: "exact",
-        year: Number(draft.year),
-        month: draft.month ? Number(draft.month) : undefined,
-        day: draft.day ? Number(draft.day) : undefined,
-      },
-      locale,
-    );
+    return IsoDateFormatHelper.format(iso, precision, locale);
   }
 }
