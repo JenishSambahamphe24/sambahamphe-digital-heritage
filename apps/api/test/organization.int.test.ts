@@ -218,6 +218,7 @@ describe("terms, positions and appointments", () => {
       "Adult B",
     ]);
     expect(board.body.members[0]).not.toHaveProperty("birthDate");
+    expect(board.body.members[0].datePrecision).toBe("day");
     expect(board.body.term.ordinal).toBe(5);
   });
 

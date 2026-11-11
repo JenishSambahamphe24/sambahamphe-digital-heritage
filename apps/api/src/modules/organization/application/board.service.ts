@@ -79,6 +79,7 @@ export class BoardService {
           appointmentType: appointment.appointmentType,
           startsOn: appointment.startsOn,
           endsOn: appointment.endsOn,
+          datePrecision: appointment.datePrecision,
         },
       ];
     });

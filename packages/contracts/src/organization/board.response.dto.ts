@@ -3,7 +3,7 @@ import { z } from "zod";
 import { i18nTextSchema } from "../common/i18n-text.dto.js";
 import { isoDateField } from "../common/iso-date.dto.js";
 import { orgUnitNodeResponseSchema } from "./org-unit-node.response.dto.js";
-import { APPOINTMENT_TYPES } from "./organization.enums.js";
+import { APPOINTMENT_TYPES, DATE_PRECISIONS } from "./organization.enums.js";
 import { termResponseSchema } from "./term.response.dto.js";
 
 // Who held which position, ordered by the position's rank. A holder whose
@@ -26,6 +26,8 @@ export const boardResponseSchema = z.object({
       appointmentType: z.enum(APPOINTMENT_TYPES),
       startsOn: isoDateField,
       endsOn: isoDateField.nullable(),
+      // How exact the dates are, so a date known to the year is not shown as a day.
+      datePrecision: z.enum(DATE_PRECISIONS),
     }),
   ),
 });
