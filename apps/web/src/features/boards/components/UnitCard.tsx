@@ -14,10 +14,9 @@ export interface UnitCardProps {
   unit: IOrgTreeNode;
   typeName: string;
   board: TBoardResponse | null;
-  childTypeName: (typeKey: string) => string;
 }
 
-export function UnitCard({ unit, typeName, board, childTypeName }: UnitCardProps) {
+export function UnitCard({ unit, typeName, board }: UnitCardProps) {
   const t = useTranslations();
   const locale = BoardTermHelper.locale(useLocale());
   return (
@@ -46,10 +45,7 @@ export function UnitCard({ unit, typeName, board, childTypeName }: UnitCardProps
                 href={`${ROUTES.boards}/${child.slug}`}
                 className="hover:bg-surface-muted flex items-center justify-between gap-3 px-5 py-2.5 text-sm"
               >
-                <span>
-                  <span className="font-medium">{I18nTextHelper.pick(child.nameI18n, locale)}</span>
-                  <span className="text-foreground-muted"> · {childTypeName(child.typeKey)}</span>
-                </span>
+                <span className="font-medium">{I18nTextHelper.pick(child.nameI18n, locale)}</span>
                 <ChevronRight aria-hidden="true" className="text-foreground-muted size-4" />
               </Link>
             </li>

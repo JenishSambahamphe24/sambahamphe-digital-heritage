@@ -24,6 +24,9 @@ export function BoardHighlight({ unit, typeName, board }: BoardHighlightProps) {
   const officers = (board?.members ?? [])
     .filter((member) => member.position.isOfficeBearer)
     .slice(0, HIGHLIGHT_OFFICERS);
+  const name = I18nTextHelper.pick(unit.nameI18n, locale);
+  // "Central Board" is both a type and a name; don't print it twice.
+  const typeLabel = typeName === name ? "" : typeName;
   return (
     <Link
       href={`${ROUTES.boards}/${unit.slug}`}
@@ -32,15 +35,15 @@ export function BoardHighlight({ unit, typeName, board }: BoardHighlightProps) {
       <span className="flex min-w-0 flex-1 basis-80 flex-col gap-1.5">
         <span className="text-inverse-accent text-xs font-semibold tracking-wider uppercase">
           {board?.term
-            ? t("boards_type_and_term", {
-                type: typeName,
-                term: BoardTermHelper.label(board.term, locale),
-              })
-            : typeName}
+            ? typeLabel
+              ? t("boards_type_and_term", {
+                  type: typeLabel,
+                  term: BoardTermHelper.label(board.term, locale),
+                })
+              : BoardTermHelper.label(board.term, locale)
+            : typeLabel}
         </span>
-        <span className="font-display text-3xl font-semibold">
-          {I18nTextHelper.pick(unit.nameI18n, locale)}
-        </span>
+        <span className="font-display text-3xl font-semibold">{name}</span>
         <span className="text-inverse-muted text-sm">
           {board?.term
             ? t("boards_member_count", { count: board.members.length })

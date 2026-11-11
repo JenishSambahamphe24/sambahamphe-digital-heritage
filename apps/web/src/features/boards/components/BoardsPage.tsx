@@ -61,7 +61,6 @@ export async function BoardsPage() {
                     unit={child}
                     typeName={typeName(child.typeKey)}
                     board={boards.get(child.id) ?? null}
-                    childTypeName={typeName}
                   />
                 ))}
               </div>

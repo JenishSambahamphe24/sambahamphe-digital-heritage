@@ -75,7 +75,9 @@ export async function BoardDetailPage({ slug, termId }: BoardDetailPageProps) {
               {I18nTextHelper.pick(node.nameI18n, locale)}
             </span>
           </nav>
-          {type ? (
+          {type &&
+          I18nTextHelper.pick(type.nameI18n, locale) !==
+            I18nTextHelper.pick(node.nameI18n, locale) ? (
             <p className="text-accent text-xs font-semibold tracking-wider uppercase">
               {I18nTextHelper.pick(type.nameI18n, locale)}
             </p>
