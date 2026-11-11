@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chasok Tangnam celebration</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="width: 100%; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans)">
+  <dc-import name="SiteHeader" active="events" hint-size="100%,84px"></dc-import>
+
+  <section style="position: relative; overflow: hidden; background: #fbf6ee">
+    <img src="/_blob/cd11962e7d1b5da2ea5327e82bf85c9f" alt="" aria-hidden="true" style="position: absolute; right: 0; top: 0; height: 100%; width: 58%; object-fit: cover; object-position: center 40%">
+    <div style="position: absolute; inset: 0; background: linear-gradient(90deg, #fbf6ee 0%, #fbf6ee 42%, rgba(251, 246, 238, 0) 62%)"></div>
+    <div style="position: relative; max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 32px 48px 56px; display: flex; flex-direction: column; gap: 16px; min-height: 380px">
+      <nav aria-label="Breadcrumb" style="display: flex; gap: 6px; font-size: 14px; color: var(--color-foreground-muted)">
+        <a href="Events.dc.html" style="text-decoration: none">Events</a><span aria-hidden="true">›</span><span>Cultural programme</span>
+      </nav>
+      <span style="align-self: flex-start; padding: 3px 10px; border-radius: 4px; background: var(--color-info-subtle); color: var(--color-info); font-size: 13px; font-weight: 600">Upcoming · in 3 weeks</span>
+      <h1 style="margin: 0; max-width: 560px; font-family: var(--font-display); font-size: 44px; line-height: 52px; font-weight: 600">Chasok Tangnam celebration 2083</h1>
+      <p style="margin: 0; max-width: 520px; font-size: 18px; line-height: 28px; color: var(--color-foreground-muted)">The harvest offering, with chyabrung, songs and a shared meal. Families from every gaau committee are welcome.</p>
+    </div>
+  </section>
+
+  <main style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 40px 48px 88px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+    <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 36px">
+      <section aria-labelledby="about-event" style="display: flex; flex-direction: column; gap: 14px; max-width: 720px">
+        <h2 id="about-event" style="margin: 0; font-family: var(--font-display); font-size: 24px; line-height: 32px; font-weight: 600">About the day</h2>
+        <p style="margin: 0; font-size: 17px; line-height: 28px">Chasok Tangnam is when Limbu families offer the first of the harvest. This year the central board and the Dharan gaau committee host it together at the community hall.</p>
+        <p style="margin: 0; font-size: 17px; line-height: 28px">Wear traditional dress if you can. Bring a dish to share; rice and tea are provided.</p>
+      </section>
+      <section aria-labelledby="programme" style="display: flex; flex-direction: column; gap: 14px">
+        <h2 id="programme" style="margin: 0; font-family: var(--font-display); font-size: 24px; line-height: 32px; font-weight: 600">Programme</h2>
+        <ol style="list-style: none; margin: 0; padding: 0; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px">
+          <sc-for list="{{programme}}" as="p" hint-placeholder-count="5">
+            <li style="display: flex; gap: 20px; padding: 14px 20px; border-bottom: 1px solid var(--color-border); font-size: 15px">
+              <span style="flex: 0 0 64px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--color-primary)">{{p.time}}</span>
+              <span>{{p.what}}</span>
+            </li>
+          </sc-for>
+        </ol>
+      </section>
+      <a href="Album.dc.html" style="display: flex; align-items: center; gap: 20px; padding: 16px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; text-decoration: none; color: var(--color-foreground)">
+        <img src="/_blob/cd11962e7d1b5da2ea5327e82bf85c9f" alt="" style="width: 120px; height: 80px; object-fit: cover; border-radius: 6px">
+        <span style="display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 13px; color: var(--color-foreground-muted)">From last year</span>
+          <span style="font-size: 17px; font-weight: 600">Chasok Tangnam 2082 · 64 photos</span>
+        </span>
+      </a>
+    </div>
+
+    <aside aria-label="Event details" style="flex: 1 1 340px; min-width: 0; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 20px">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-foreground-muted)">When</span>
+        <span style="font-size: 17px; font-weight: 600">Saturday, 19 Mangsir 2083</span>
+        <span style="font-size: 14px; color: var(--color-foreground-muted)">5 December 2026 · 10:00–16:00 Nepal time</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-foreground-muted)">Where</span>
+        <span style="font-size: 17px; font-weight: 600">[Venue], Dharan</span>
+        <a href="#" style="font-size: 14px; font-weight: 500">Open in maps</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-foreground-muted)">Organised by</span>
+        <a href="BoardDetail.dc.html" style="font-size: 15px; font-weight: 500">Central Board</a>
+        <a href="BoardDetail.dc.html" style="font-size: 15px; font-weight: 500">Dharan gaau committee</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 4px">
+        <x-import component-from-global-scope="SambahampheUI.Button" class-name="w-full">Add to calendar</x-import>
+        <x-import component-from-global-scope="SambahampheUI.Button" variant="secondary" class-name="w-full">Share</x-import>
+      </div>
+      <p style="margin: 0; font-size: 13px; line-height: 19px; color: var(--color-foreground-muted)">Questions: contact the Dharan gaau committee at [PHONE].</p>
+    </aside>
+  </main>
+
+  <dc-import name="SiteFooter" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2160}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      programme: [
+        { time: '10:00', what: 'Welcome and lighting of the diyo' },
+        { time: '10:30', what: 'Harvest offering led by the elders' },
+        { time: '12:00', what: 'Shared meal' },
+        { time: '13:30', what: 'Chyabrung and dance by the youth group' },
+        { time: '15:30', what: 'Thanks and closing' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -34,14 +34,18 @@ a{color:#2d3192}a:hover{color:#22256f}
       <button type="button" role="tab" aria-selected="true" style="margin: 0 0 -1px; padding: 8px 4px 12px; background: none; border: 0; border-bottom: 2px solid var(--color-primary); font: inherit; font-size: 16px; font-weight: 600; color: var(--color-foreground)">Sign in</button>
       <button type="button" role="tab" aria-selected="false" style="margin: 0 0 -1px; padding: 8px 4px 12px; background: none; border: 0; border-bottom: 2px solid transparent; font: inherit; font-size: 16px; font-weight: 500; color: var(--color-foreground-muted)">Create account</button>
     </div>
-    <form style="display: flex; flex-direction: column; gap: 16px">
-      <x-import component-from-global-scope="SambahampheUI.FormField" id="m-email" label="Email">
+    <form style="display: flex; flex-direction: column; gap: 4px">
+      <div style="min-height: 92px">
+        <x-import component-from-global-scope="SambahampheUI.FormField" id="m-email" label="Email">
         <x-import component-from-global-scope="SambahampheUI.Input" id="m-email" type="email" placeholder="you@example.com"></x-import>
       </x-import>
-      <x-import component-from-global-scope="SambahampheUI.FormField" id="m-password" label="Password">
+      </div>
+      <div style="min-height: 92px">
+        <x-import component-from-global-scope="SambahampheUI.FormField" id="m-password" label="Password">
         <x-import component-from-global-scope="SambahampheUI.Input" id="m-password" type="password"></x-import>
       </x-import>
-      <div style="display: flex; justify-content: flex-end">
+      </div>
+      <div style="display: flex; justify-content: flex-end; margin: -8px 0 8px">
         <a href="#" style="font-size: 14px; font-weight: 500; padding: 12px 0">Forgot your password?</a>
       </div>
       <x-import component-from-global-scope="SambahampheUI.Button" type="button" class-name="w-full">Sign in</x-import>

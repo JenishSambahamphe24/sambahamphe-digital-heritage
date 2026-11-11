@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <pattern id="dhaka" width="24" height="24" patternUnits="userSpaceOnUse">
+      <rect width="24" height="24" fill="#f4efe6"/>
+      <path d="M0 0 L12 12 L0 24 Z" fill="#c8323a"/>
+      <path d="M24 0 L12 12 L24 24 Z" fill="#2d6a4f"/>
+      <path d="M0 0 L12 12 L24 0 Z" fill="#2d3192"/>
+      <path d="M8 12 L12 8 L16 12 L12 16 Z" fill="#f2b630"/>
+    </pattern>
+    <pattern id="topi" width="12" height="12" patternUnits="userSpaceOnUse">
+      <rect width="12" height="12" fill="#f4efe6"/>
+      <path d="M0 0 L6 6 L0 12 Z" fill="#c8323a"/>
+      <path d="M12 0 L6 6 L12 12 Z" fill="#2d6a4f"/>
+      <path d="M0 12 L6 6 L12 12 Z" fill="#2d3192"/>
+    </pattern>
+    <pattern id="drumband" width="20" height="64" patternUnits="userSpaceOnUse">
+      <rect width="20" height="64" fill="#f7f3ea"/>
+      <path d="M0 0 L10 18 L20 0 Z M0 64 L10 46 L20 64 Z" fill="#2d6cc4"/>
+    </pattern>
+
+    <g id="face">
+      <path d="M-20 -6 q6 -6 12 0 M8 -6 q6 -6 12 0" stroke="#3a2418" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M-9 12 q9 8 18 0" stroke="#7a2e22" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="-22" cy="6" r="6" fill="#e8968a" opacity="0.7"/><circle cx="22" cy="6" r="6" fill="#e8968a" opacity="0.7"/>
+    </g>
+
+    <g id="drummer">
+      <ellipse cx="0" cy="2" rx="72" ry="10" fill="#1b1c3a" opacity="0.15"/>
+      <rect x="-34" y="-175" width="28" height="168" fill="#f4efe6"/>
+      <rect x="6" y="-175" width="28" height="168" fill="#f4efe6"/>
+      <rect x="-40" y="-12" width="38" height="13" rx="6" fill="#2b1d14"/>
+      <rect x="2" y="-12" width="38" height="13" rx="6" fill="#2b1d14"/>
+      <path d="M-60 -330 L60 -330 L72 -150 L-72 -150 Z" fill="#f7f3ea" stroke="#e1d8c4" stroke-width="2"/>
+      <path d="M-60 -330 L-20 -330 L-12 -205 L-64 -205 Z" fill="#2b2d55"/>
+      <path d="M60 -330 L20 -330 L12 -205 L64 -205 Z" fill="#2b2d55"/>
+      <path d="M-58 -332 L-32 -332 L70 -198 L52 -180 Z" fill="url(#dhaka)"/>
+      <rect x="-12" y="-352" width="24" height="26" fill="#c98f68"/>
+      <circle cx="-40" cy="-388" r="8" fill="#c98f68"/><circle cx="40" cy="-388" r="8" fill="#c98f68"/>
+      <circle cx="0" cy="-388" r="40" fill="#d39a72"/>
+      <path d="M-40 -392 q0 -30 40 -32 q40 2 40 32 l-6 -4 q-6 -16 -34 -18 q-28 2 -34 18 Z" fill="#1b1c3a"/>
+      <path d="M-40 -408 L-30 -456 L32 -462 L42 -410 Q0 -420 -40 -408 Z" fill="url(#topi)" stroke="#8a5a2b" stroke-width="2"/>
+      <use href="#face" xlink:href="#face" transform="translate(0 -384)"/>
+      <path d="M-58 -322 L-96 -246 L-80 -236 L-44 -296 Z" fill="#f7f3ea" stroke="#e1d8c4" stroke-width="2"/>
+      <path d="M58 -322 L98 -256 L84 -244 L46 -298 Z" fill="#f7f3ea" stroke="#e1d8c4" stroke-width="2"/>
+      <g>
+        <path d="M-40 -330 L60 -262" stroke="#8a5a2b" stroke-width="5"/>
+        <rect x="-100" y="-262" width="200" height="64" rx="8" fill="#c98a4b"/>
+        <rect x="-62" y="-262" width="124" height="64" fill="url(#drumband)"/>
+        <rect x="-68" y="-262" width="6" height="64" fill="#b8322a"/><rect x="62" y="-262" width="6" height="64" fill="#b8322a"/>
+        <ellipse cx="-100" cy="-230" rx="14" ry="34" fill="#ead7ad" stroke="#8a5a2b" stroke-width="3"/>
+        <ellipse cx="100" cy="-230" rx="14" ry="34" fill="#ead7ad" stroke="#8a5a2b" stroke-width="3"/>
+        <path d="M-90 -262 L90 -198 M-90 -198 L90 -262" stroke="#8a5a2b" stroke-width="2" opacity="0.45"/>
+      </g>
+      <circle cx="-92" cy="-238" r="13" fill="#d39a72"/>
+      <line x1="96" y1="-250" x2="138" y2="-312" stroke="#6b3f22" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="96" cy="-250" r="13" fill="#d39a72"/>
+    </g>
+
+    <g id="dancer">
+      <ellipse cx="0" cy="2" rx="80" ry="10" fill="#1b1c3a" opacity="0.15"/>
+      <path d="M-56 -236 L56 -236 L84 -8 L-84 -8 Z" fill="#8e1f3a"/>
+      <g fill="#b8325a" opacity="0.8">
+        <path d="M-40 -236 L-30 -236 L-46 -8 L-58 -8 Z"/><path d="M-5 -236 L5 -236 L6 -8 L-6 -8 Z"/><path d="M30 -236 L40 -236 L58 -8 L46 -8 Z"/>
+      </g>
+      <rect x="-82" y="-40" width="164" height="14" fill="#f2b630"/>
+      <path d="M-82 -26 L82 -26 L84 -8 L-84 -8 Z" fill="url(#topi)"/>
+      <ellipse cx="-24" cy="-4" rx="20" ry="8" fill="#5a1a12"/><ellipse cx="24" cy="-4" rx="20" ry="8" fill="#5a1a12"/>
+      <path d="M-50 -340 L50 -340 L58 -232 L-58 -232 Z" fill="#d9577a"/>
+      <rect x="-60" y="-248" width="120" height="20" fill="#f2c94c"/>
+      <path d="M-50 -342 L-26 -342 L62 -236 L42 -228 Z" fill="url(#dhaka)"/>
+      <path d="M-48 -332 L-66 -270 L-14 -258 L-12 -276 L-44 -286 Z" fill="#d9577a"/>
+      <path d="M48 -332 L66 -270 L14 -258 L12 -276 L44 -286 Z" fill="#d9577a"/>
+      <circle cx="0" cy="-262" r="15" fill="#c98f68"/>
+      <rect x="-11" y="-358" width="22" height="22" fill="#c98f68"/>
+      <path d="M-34 -344 q34 58 68 0" stroke="#c8323a" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="0.1 13"/>
+      <path d="M-28 -344 q28 40 56 0" stroke="#f2b630" stroke-width="6" fill="none"/>
+      <path d="M-40 -344 q40 76 80 0" stroke="#c8323a" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="0.1 13"/>
+      <circle cx="0" cy="-394" r="38" fill="#d39a72"/>
+      <path d="M-40 -394 q0 -40 40 -42 q40 2 40 42 q-6 -24 -40 -28 q-34 4 -40 28 Z" fill="#1b1c3a"/>
+      <circle cx="0" cy="-442" r="18" fill="#1b1c3a"/>
+      <path d="M-34 -420 q34 -16 68 0" stroke="#e6b422" stroke-width="5" fill="none"/>
+      <circle cx="0" cy="-446" r="24" fill="#e6b422" stroke="#b8860b" stroke-width="3"/>
+      <circle cx="0" cy="-446" r="14" fill="none" stroke="#b8860b" stroke-width="2"/>
+      <circle cx="0" cy="-446" r="6" fill="#c8323a"/>
+      <circle cx="-40" cy="-380" r="9" fill="#e6b422" stroke="#b8860b" stroke-width="2"/>
+      <circle cx="40" cy="-380" r="9" fill="#e6b422" stroke="#b8860b" stroke-width="2"/>
+      <use href="#face" xlink:href="#face" transform="translate(0 -390)"/>
+      <circle cx="0" cy="-376" r="3" fill="#e6b422"/>
+    </g>
+  </defs>
+
+  <rect width="1200" height="800" fill="#fbf6ee"/>
+  <circle cx="600" cy="430" r="340" fill="#e8e9f7"/>
+  <g opacity="0.9">
+    <path d="M150 170 l12 12 l-12 12 l-12 -12 Z" fill="#f2b630"/>
+    <path d="M1050 200 l14 14 l-14 14 l-14 -14 Z" fill="#e07a2e"/>
+    <path d="M1080 520 l10 10 l-10 10 l-10 -10 Z" fill="#6c8fd6"/>
+    <path d="M110 520 l10 10 l-10 10 l-10 -10 Z" fill="#e07a2e"/>
+  </g>
+  <ellipse cx="600" cy="726" rx="520" ry="26" fill="#d9dbef"/>
+
+  <use href="#drummer" xlink:href="#drummer" transform="translate(240 722)"/>
+  <use href="#dancer" xlink:href="#dancer" transform="translate(480 722)"/>
+  <use href="#drummer" xlink:href="#drummer" transform="translate(720 722) scale(-1 1)"/>
+  <use href="#dancer" xlink:href="#dancer" transform="translate(960 722)"/>
+</svg>

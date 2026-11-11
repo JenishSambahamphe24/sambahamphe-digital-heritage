@@ -7,7 +7,7 @@
   "title": "Sambahamphe Utthan Sangh — Website",
   "launch": {
     "view": "canvas",
-    "page": "auth"
+    "page": "home"
   },
   "pages": [
     {
@@ -17,6 +17,26 @@
     {
       "id": "auth",
       "name": "Auth"
+    },
+    {
+      "id": "home",
+      "name": "Home"
+    },
+    {
+      "id": "family-tree",
+      "name": "Family tree"
+    },
+    {
+      "id": "community",
+      "name": "About & boards"
+    },
+    {
+      "id": "content",
+      "name": "News, events & gallery"
+    },
+    {
+      "id": "account",
+      "name": "Account & system"
     }
   ],
   "boards": {
@@ -69,6 +89,182 @@
       "h": 640,
       "title": "Check your email",
       "page": "auth"
+    },
+    "HomeDesktop.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 4180,
+      "title": "Home · desktop",
+      "page": "home",
+      "expand": "fill"
+    },
+    "HomeMobile.dc.html": {
+      "x": 1520,
+      "y": 0,
+      "w": 390,
+      "h": 4060,
+      "title": "Home · mobile",
+      "page": "home"
+    },
+    "SignInModal.dc.html": {
+      "x": 1990,
+      "y": 0,
+      "w": 1440,
+      "h": 900,
+      "title": "Modal · Sign in over the home page",
+      "page": "home",
+      "is_interactive": true
+    },
+    "SiteHeader.dc.html": {
+      "x": 0,
+      "y": 1580,
+      "w": 1440,
+      "h": 84,
+      "title": "Shared · Site header (light pages)",
+      "page": "foundations"
+    },
+    "SiteFooter.dc.html": {
+      "x": 0,
+      "y": 1784,
+      "w": 1440,
+      "h": 320,
+      "title": "Shared · Site footer",
+      "page": "foundations"
+    },
+    "FamilyTree.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 2060,
+      "title": "Family tree · search and branches",
+      "page": "family-tree",
+      "expand": "fill"
+    },
+    "TreeView.dc.html": {
+      "x": 1520,
+      "y": 0,
+      "w": 1440,
+      "h": 960,
+      "title": "Family tree · tree view",
+      "page": "family-tree",
+      "is_interactive": true
+    },
+    "PersonProfile.dc.html": {
+      "x": 3040,
+      "y": 0,
+      "w": 1440,
+      "h": 2280,
+      "title": "Family tree · ancestor profile",
+      "page": "family-tree",
+      "expand": "fill"
+    },
+    "About.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 2480,
+      "title": "About us",
+      "page": "community",
+      "expand": "fill"
+    },
+    "Boards.dc.html": {
+      "x": 1520,
+      "y": 0,
+      "w": 1440,
+      "h": 1780,
+      "title": "Boards · all units",
+      "page": "community",
+      "expand": "fill"
+    },
+    "BoardDetail.dc.html": {
+      "x": 3040,
+      "y": 0,
+      "w": 1440,
+      "h": 2040,
+      "title": "Boards · one board and its terms",
+      "page": "community",
+      "expand": "fill"
+    },
+    "News.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 2240,
+      "title": "News & articles · list",
+      "page": "content",
+      "expand": "fill"
+    },
+    "Article.dc.html": {
+      "x": 1520,
+      "y": 0,
+      "w": 1440,
+      "h": 2700,
+      "title": "News & articles · article",
+      "page": "content",
+      "expand": "fill"
+    },
+    "Events.dc.html": {
+      "x": 3040,
+      "y": 0,
+      "w": 1440,
+      "h": 1820,
+      "title": "Events · list",
+      "page": "content",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "EventDetail.dc.html": {
+      "x": 4560,
+      "y": 0,
+      "w": 1440,
+      "h": 2160,
+      "title": "Events · event",
+      "page": "content",
+      "expand": "fill"
+    },
+    "Gallery.dc.html": {
+      "x": 0,
+      "y": 2820,
+      "w": 1440,
+      "h": 1840,
+      "title": "Gallery · all albums",
+      "page": "content",
+      "expand": "fill"
+    },
+    "Album.dc.html": {
+      "x": 1520,
+      "y": 2820,
+      "w": 1440,
+      "h": 2000,
+      "title": "Gallery · album",
+      "page": "content",
+      "expand": "fill"
+    },
+    "PhotoViewer.dc.html": {
+      "x": 3040,
+      "y": 2820,
+      "w": 1440,
+      "h": 900,
+      "title": "Gallery · photo viewer",
+      "page": "content"
+    },
+    "Account.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 2120,
+      "title": "My account",
+      "page": "account",
+      "expand": "fill"
+    },
+    "NotFound.dc.html": {
+      "x": 1520,
+      "y": 0,
+      "w": 1440,
+      "h": 820,
+      "title": "Page not found",
+      "page": "account"
     }
   },
   "order": [
@@ -77,7 +273,27 @@
     "Main.dc.html",
     "Mobile.dc.html",
     "MobileNepali.dc.html",
-    "CheckEmail.dc.html"
+    "CheckEmail.dc.html",
+    "HomeDesktop.dc.html",
+    "HomeMobile.dc.html",
+    "SignInModal.dc.html",
+    "SiteHeader.dc.html",
+    "SiteFooter.dc.html",
+    "FamilyTree.dc.html",
+    "TreeView.dc.html",
+    "PersonProfile.dc.html",
+    "About.dc.html",
+    "Boards.dc.html",
+    "BoardDetail.dc.html",
+    "News.dc.html",
+    "Article.dc.html",
+    "Events.dc.html",
+    "EventDetail.dc.html",
+    "Gallery.dc.html",
+    "Album.dc.html",
+    "PhotoViewer.dc.html",
+    "Account.dc.html",
+    "NotFound.dc.html"
   ],
   "notes": {
     "foundations-title": {
@@ -103,6 +319,78 @@
       "text": "Bitsky-style split layout. Painting panel on the right (desktop) or a top banner (mobile); tabs switch Sign in / Create account (press Play). Only cleared images are used. New copy, such as the panel caption, still needs Nepali review.",
       "fill": "blue",
       "page": "auth"
+    },
+    "home-title": {
+      "x": 0,
+      "y": -300,
+      "text": "Home page",
+      "kind": "title1",
+      "maxW": 3430,
+      "page": "home"
+    },
+    "home-content": {
+      "x": 1990,
+      "y": 1000,
+      "w": 460,
+      "fill": "orange",
+      "page": "home",
+      "text": "Example content: the news headlines, event dates, album names and photo counts are placeholders for the layout. Dates are Bikram Sambat (today ≈ 25 Kartik 2083) and will come from @repo/dates."
+    },
+    "home-images": {
+      "x": 2510,
+      "y": 1000,
+      "w": 460,
+      "fill": "blue",
+      "page": "home",
+      "text": "Imagery: the hero, the dance and the three-generations scenes are original flat illustrations drawn from your photos (no real person is depicted). The Faktanglung photo is used raw only as the modal background, under a light layer, as in Bitsky's modals."
+    },
+    "ft-title": {
+      "x": 0,
+      "y": -300,
+      "text": "Family tree",
+      "kind": "title1",
+      "maxW": 4480,
+      "page": "family-tree"
+    },
+    "ft-privacy": {
+      "x": 1520,
+      "y": 1080,
+      "w": 520,
+      "fill": "green",
+      "page": "family-tree",
+      "text": "Privacy (genealogy access policy): visitors see approved records of deceased ancestors only. A living person appears to visitors as 'Private' with no name, dates or photo; verified branch members see what that person's privacy settings allow. Names and dates are example data."
+    },
+    "co-title": {
+      "x": 0,
+      "y": -300,
+      "text": "About us & boards",
+      "kind": "title1",
+      "maxW": 4480,
+      "page": "community"
+    },
+    "ct-title": {
+      "x": 0,
+      "y": -300,
+      "text": "News, events & gallery",
+      "kind": "title1",
+      "maxW": 6000,
+      "page": "content"
+    },
+    "ct-note": {
+      "x": 4560,
+      "y": 2820,
+      "w": 520,
+      "fill": "orange",
+      "page": "content",
+      "text": "Every photo slot uses an illustration as a stand-in. Real gallery photos will be members' uploads, shown as full media objects (width, height, blurhash, alt). Headlines, dates and counts are example content."
+    },
+    "ac-title": {
+      "x": 0,
+      "y": -300,
+      "text": "Account & system pages",
+      "kind": "title1",
+      "maxW": 2960,
+      "page": "account"
     }
   },
   "designSystems": [

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Page not found</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="width: 1440px; height: 820px; display: flex; flex-direction: column; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans)">
+  <dc-import name="SiteHeader" active="none" hint-size="100%,84px"></dc-import>
+  <main style="flex: 1 1 auto; display: flex; align-items: center; justify-content: center; padding: 40px 24px">
+    <div style="max-width: 520px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center">
+      <img src="/_blob/e43ef7d099b4aae609414fa54186664b" alt="" aria-hidden="true" style="width: 360px; height: 200px; object-fit: cover; object-position: right bottom; border-radius: 12px">
+      <p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent)">Page not found</p>
+      <h1 style="margin: 0; font-family: var(--font-display); font-size: 32px; line-height: 40px; font-weight: 600">This path doesn't lead anywhere</h1>
+      <p style="margin: 0; font-size: 16px; line-height: 25px; color: var(--color-foreground-muted)">The page may have moved, or the link may be mistyped. Search the archive or go back to the home page.</p>
+      <div style="display: flex; gap: 8px; width: 100%; max-width: 420px">
+        <label for="nf-search" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Search the archive</label>
+        <x-import component-from-global-scope="SambahampheUI.Input" id="nf-search" type="search" placeholder="Search people, articles, events"></x-import>
+        <x-import component-from-global-scope="SambahampheUI.Button">Search</x-import>
+      </div>
+      <a href="HomeDesktop.dc.html" style="font-size: 15px; font-weight: 500">Go to the home page</a>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":820}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

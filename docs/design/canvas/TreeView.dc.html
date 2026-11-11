@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Family tree — tree view</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="width: 1440px; height: 960px; display: flex; flex-direction: column; overflow: hidden; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans)">
+  <dc-import name="SiteHeader" active="tree" hint-size="100%,84px"></dc-import>
+
+  <div style="flex: 0 0 auto; display: flex; align-items: center; gap: 16px; padding: 12px 24px; background: var(--color-surface); border-bottom: 1px solid var(--color-border)">
+    <nav aria-label="Lineage" style="flex: 1 1 auto; display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--color-foreground-muted)">
+      <a href="FamilyTree.dc.html" style="text-decoration: none">Family tree</a>
+      <span aria-hidden="true">›</span>
+      <span>Tehrathum branch</span>
+      <span aria-hidden="true">›</span>
+      <span style="color: var(--color-foreground); font-weight: 500">From Hangrup Sambahamphe</span>
+    </nav>
+    <label for="tv-search" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Find in tree</label>
+    <div style="width: 260px"><x-import component-from-global-scope="SambahampheUI.Input" id="tv-search" type="search" placeholder="Find in this tree"></x-import></div>
+    <div role="group" aria-label="Generations shown" style="display: flex; border: 1px solid var(--color-border-strong); border-radius: 6px; overflow: hidden; font-size: 13px">
+      <span style="padding: 9px 12px; color: var(--color-foreground-muted)">Generations</span>
+      <button type="button" style="padding: 0 12px; border: 0; border-left: 1px solid var(--color-border); background: var(--color-surface); font: inherit">3</button>
+      <button type="button" aria-pressed="true" style="padding: 0 12px; border: 0; border-left: 1px solid var(--color-border); background: var(--color-primary); color: #ffffff; font: inherit">4</button>
+      <button type="button" style="padding: 0 12px; border: 0; border-left: 1px solid var(--color-border); background: var(--color-surface); font: inherit">5</button>
+    </div>
+    <div role="group" aria-label="Zoom" style="display: flex; gap: 4px">
+      <button type="button" aria-label="Zoom out" style="width: 40px; height: 40px; border: 1px solid var(--color-border-strong); border-radius: 6px; background: var(--color-surface); font-size: 18px">−</button>
+      <button type="button" aria-label="Zoom in" style="width: 40px; height: 40px; border: 1px solid var(--color-border-strong); border-radius: 6px; background: var(--color-surface); font-size: 18px">+</button>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 auto; min-height: 0; display: flex">
+    <div style="position: relative; flex: 1 1 auto; overflow: hidden; background-color: var(--color-background); background-image: radial-gradient(#dcdcee 1px, transparent 1px); background-size: 20px 20px">
+      <sc-for list="{{lines}}" as="l" hint-placeholder-count="14">
+        <div aria-hidden="true" style="{{l.style}}"></div>
+      </sc-for>
+      <sc-for list="{{nodes}}" as="n" hint-placeholder-count="10">
+        <button type="button" onClick="{{n.pick}}" aria-pressed="{{n.selected}}" style="{{n.style}}">
+          <span style="display: block; font-size: 14px; line-height: 18px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{n.label}}</span>
+          <span style="display: block; font-size: 12px; line-height: 16px; opacity: 0.8">{{n.sub}}</span>
+        </button>
+      </sc-for>
+      <p style="position: absolute; left: 24px; bottom: 16px; margin: 0; display: flex; gap: 16px; font-size: 12px; color: var(--color-foreground-muted)">
+        <span>Generation 1 at the top · sons below their father</span>
+        <span>Dashed card = living person, details private</span>
+      </p>
+    </div>
+
+    <aside aria-labelledby="sel-name" style="flex: 0 0 360px; box-sizing: border-box; padding: 24px; background: var(--color-surface); border-left: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 16px">
+      <sc-if value="{{selPrivate}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <span aria-hidden="true" style="width: 56px; height: 56px; border-radius: 9999px; background: var(--color-surface-muted); display: flex; align-items: center; justify-content: center; color: var(--color-foreground-muted)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          </span>
+          <h2 id="sel-name" style="margin: 0; font-family: var(--font-display); font-size: 20px; font-weight: 600">A living family member</h2>
+          <p style="margin: 0; font-size: 14px; line-height: 21px; color: var(--color-foreground-muted)">Details of living people are private. Verified members of the Tehrathum branch can see what this person has agreed to share.</p>
+          <x-import component-from-global-scope="SambahampheUI.Button" variant="secondary">Request branch access</x-import>
+        </div>
+      </sc-if>
+      <sc-if value="{{selPublic}}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <span aria-hidden="true" style="width: 56px; height: 56px; border-radius: 9999px; background: var(--color-info-subtle); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 20px; font-weight: 600">{{sel.initials}}</span>
+          <div>
+            <h2 id="sel-name" style="margin: 0; font-family: var(--font-display); font-size: 22px; line-height: 28px; font-weight: 600">{{sel.name}}</h2>
+            <p lang="ne" style="margin: 2px 0 0; font-size: 15px; color: var(--color-foreground-muted)">{{sel.ne}}</p>
+          </div>
+          <dl style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 14px">
+            <dt style="color: var(--color-foreground-muted)">Lived</dt><dd style="margin: 0">{{sel.dates}}</dd>
+            <dt style="color: var(--color-foreground-muted)">Village</dt><dd style="margin: 0">{{sel.village}}</dd>
+            <dt style="color: var(--color-foreground-muted)">Father</dt><dd style="margin: 0">{{sel.father}}</dd>
+            <dt style="color: var(--color-foreground-muted)">Sons</dt><dd style="margin: 0">{{sel.sons}}</dd>
+          </dl>
+          <p style="margin: 0; font-size: 14px; line-height: 21px; color: var(--color-foreground-muted)">{{sel.bio}}</p>
+          <x-import component-from-global-scope="SambahampheUI.Button" class-name="w-full">Open full profile</x-import>
+          <a href="SignInModal.dc.html" style="font-size: 14px; font-weight: 500; text-align: center">Suggest a correction</a>
+        </div>
+      </sc-if>
+    </aside>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":960}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { selected: 'jit' };
+  }
+  renderVals() {
+    const W = 180, H = 64, ROW = 168, TOP = 48;
+    const people = [
+      { id: 'hangrup', gen: 0, cx: 618, name: 'Hangrup Sambahamphe', ne: 'हाङरुप सम्बाहाङ्फे', short: 'c. 1832 – 1905 BS', village: 'Tehrathum', father: 'Not recorded', sons: 'Senehang, Kambahang', bio: 'The earliest ancestor this branch remembers by name. Oral testimony places his home above the Tamor river.' },
+      { id: 'sene', gen: 1, cx: 382, parent: 'hangrup', name: 'Senehang Sambahamphe', ne: 'सेनेहाङ सम्बाहाङ्फे', short: 'c. 1860 – 1931 BS', village: 'Tehrathum', father: 'Hangrup', sons: 'Jit Bahadur, Dhan Bahadur', bio: 'Remembered as a village elder who settled disputes between neighbouring families.' },
+      { id: 'kamba', gen: 1, cx: 855, parent: 'hangrup', name: 'Kambahang Sambahamphe', ne: 'काम्बाहाङ सम्बाहाङ्फे', short: 'c. 1864 – 1940 BS', village: 'Tehrathum', father: 'Hangrup', sons: 'Man Bahadur', bio: 'Moved part of the family to the next ridge after a landslide, according to family accounts.' },
+      { id: 'jit', gen: 2, cx: 225, parent: 'sene', name: 'Jit Bahadur Sambahamphe', ne: 'जित बहादुर सम्बाहाङ्फे', short: 'c. 1893 – 1962 BS', village: 'Tehrathum', father: 'Senehang', sons: 'Bhim Bahadur, and one living son', bio: 'A farmer and drummer in the village chyabrung group; his land record of 1955 BS is in the archive.' },
+      { id: 'dhan', gen: 2, cx: 540, parent: 'sene', name: 'Dhan Bahadur Sambahamphe', ne: 'धन बहादुर सम्बाहाङ्फे', short: 'c. 1897 – 1971 BS', village: 'Tehrathum', father: 'Senehang', sons: 'Lal Bahadur', bio: 'Served in the army and returned to farm the family land.' },
+      { id: 'man', gen: 2, cx: 855, parent: 'kamba', name: 'Man Bahadur Sambahamphe', ne: 'मान बहादुर सम्बाहाङ्फे', short: 'c. 1899 – 1970 BS', village: 'Tehrathum', father: 'Kambahang', sons: 'Hem Bahadur, and one living son', bio: 'Known for keeping the family pothi in which many of these names were written.' },
+      { id: 'bhim', gen: 3, cx: 120, parent: 'jit', name: 'Bhim Bahadur Sambahamphe', ne: 'भीम बहादुर सम्बाहाङ्फे', short: '1922 – 1999 BS', village: 'Dharan', father: 'Jit Bahadur', sons: '4 sons (2 living)', bio: 'Moved to Dharan; a founding member of the Sangh.' },
+      { id: 'priv1', gen: 3, cx: 330, parent: 'jit', private: true },
+      { id: 'lal', gen: 3, cx: 540, parent: 'dhan', name: 'Lal Bahadur Sambahamphe', ne: 'लाल बहादुर सम्बाहाङ्फे', short: '1925 – 2008 BS', village: 'Panchthar', father: 'Dhan Bahadur', sons: '3 sons', bio: 'Began the Panchthar branch after his marriage.' },
+      { id: 'priv2', gen: 3, cx: 750, parent: 'man', private: true },
+      { id: 'hem', gen: 3, cx: 960, parent: 'man', name: 'Hem Bahadur Sambahamphe', ne: 'हेम बहादुर सम्बाहाङ्फे', short: '1930 – 2010 BS', village: 'Tehrathum', father: 'Man Bahadur', sons: '2 sons', bio: 'Taught at the village school for thirty years.' },
+    ];
+    const byId = Object.fromEntries(people.map((p) => [p.id, p]));
+    const y = (gen) => TOP + gen * ROW;
+    const line = (left, top, width, height) => ({ style: 'position: absolute; background: #8c8ca6; left: ' + left + 'px; top: ' + top + 'px; width: ' + width + 'px; height: ' + height + 'px;' });
+    const lines = [];
+    people.filter((p) => !p.parent || true).forEach((parent) => {
+      const kids = people.filter((k) => k.parent === parent.id);
+      if (!kids.length) return;
+      const py = y(parent.gen) + H;
+      const mid = py + (ROW - H) / 2;
+      lines.push(line(parent.cx - 1, py, 2, mid - py));
+      const xs = kids.map((k) => k.cx);
+      lines.push(line(Math.min(...xs, parent.cx), mid - 1, Math.max(...xs, parent.cx) - Math.min(...xs, parent.cx), 2));
+      kids.forEach((k) => lines.push(line(k.cx - 1, mid, 2, y(k.gen) - mid)));
+    });
+    const sel = byId[this.state.selected];
+    const nodes = people.map((p) => {
+      const isSel = p.id === this.state.selected;
+      const base = 'position: absolute; left: ' + (p.cx - W / 2) + 'px; top: ' + y(p.gen) + 'px; width: ' + W + 'px; height: ' + H + 'px; box-sizing: border-box; padding: 10px 12px; border-radius: 8px; text-align: left; font: inherit; cursor: pointer;';
+      const look = p.private
+        ? ' background: var(--color-surface-muted); border: 1.5px dashed var(--color-border-strong); color: var(--color-foreground-muted);'
+        : isSel
+          ? ' background: var(--color-primary); border: 1px solid var(--color-primary); color: #ffffff; box-shadow: 0 6px 16px rgb(45 49 146 / 0.3);'
+          : ' background: var(--color-surface); border: 1px solid var(--color-border-strong); color: var(--color-foreground);';
+      return {
+        label: p.private ? 'Private' : p.name.replace(' Sambahamphe', ''),
+        sub: p.private ? 'Living person' : p.short,
+        selected: isSel ? 'true' : 'false',
+        style: base + look,
+        pick: () => this.setState({ selected: p.id }),
+      };
+    });
+    const initials = sel.private ? '' : sel.name.split(' ').slice(0, 2).map((w) => w[0]).join('');
+    return {
+      lines,
+      nodes,
+      selPrivate: !!sel.private,
+      selPublic: !sel.private,
+      sel: sel.private ? {} : { initials, name: sel.name, ne: sel.ne, dates: sel.short, village: sel.village, father: sel.father, sons: sel.sons, bio: sel.bio },
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e2266"/>
+      <stop offset="0.45" stop-color="#3a3f9e"/>
+      <stop offset="0.78" stop-color="#8f7fb8"/>
+      <stop offset="1" stop-color="#f2b483"/>
+    </linearGradient>
+    <linearGradient id="snowLit" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f6e4d6"/>
+    </linearGradient>
+    <linearGradient id="far" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5e5f9e"/>
+      <stop offset="1" stop-color="#4a4c86"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1240" cy="520" r="120" fill="#f7c58f" opacity="0.35"/>
+  <g fill="#ffffff" opacity="0.7">
+    <circle cx="210" cy="90" r="1.6"/><circle cx="360" cy="150" r="1.2"/><circle cx="520" cy="70" r="1.4"/>
+    <circle cx="660" cy="130" r="1"/><circle cx="140" cy="210" r="1.1"/><circle cx="460" cy="230" r="1"/>
+    <circle cx="760" cy="60" r="1.3"/><circle cx="1480" cy="90" r="1.2"/><circle cx="1360" cy="160" r="1"/>
+  </g>
+
+  <!-- distant range -->
+  <path d="M0 680 L0 520 L120 470 L190 500 L300 420 L380 470 L470 430 L560 480 L640 450 L720 500 L800 560 L800 680 Z" fill="url(#far)"/>
+  <path d="M120 470 L150 490 L170 482 L190 500 L160 498 Z M300 420 L330 445 L350 440 L380 470 L340 462 Z" fill="#d9d8f0" opacity="0.8"/>
+
+  <!-- Phaktanglung -->
+  <path d="M640 600 L860 380 L930 300 L975 240 L995 200 L1030 175 L1070 170 L1100 190 L1120 230 L1170 290 L1250 360 L1330 410 L1450 470 L1600 520 L1600 620 Z" fill="url(#snowLit)"/>
+  <path d="M1030 175 L1070 170 L1100 190 L1120 230 L1170 290 L1250 360 L1330 410 L1450 470 L1600 520 L1600 620 L1120 620 L1080 470 L1060 330 L1045 240 Z" fill="#c9c6e6"/>
+  <path d="M975 240 L995 200 L1030 175 L1045 240 L1020 300 L990 290 Z" fill="#eef0fb"/>
+  <g fill="#9a9cc4" opacity="0.75">
+    <path d="M912 372 L926 352 L930 384 L914 432 L908 410 Z"/>
+    <path d="M966 296 L980 284 L982 316 L970 350 Z"/>
+    <path d="M1016 272 L1028 262 L1030 296 L1020 322 Z"/>
+    <path d="M1118 306 L1134 326 L1138 372 L1124 356 Z"/>
+    <path d="M1206 370 L1226 388 L1224 418 L1210 402 Z"/>
+  </g>
+  <g stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.8">
+    <path d="M870 420 L930 360"/><path d="M820 470 L880 410"/><path d="M1000 330 L1030 290"/>
+  </g>
+
+  <!-- ridges -->
+  <path d="M0 640 C160 590 300 600 420 570 C560 540 680 600 820 580 C980 556 1120 600 1260 590 C1400 580 1500 560 1600 570 L1600 900 L0 900 Z" fill="#3e4a86"/>
+  <path d="M0 700 C140 660 260 680 400 650 C540 620 640 670 780 660 C940 648 1060 690 1220 680 C1380 670 1500 640 1600 650 L1600 900 L0 900 Z" fill="#2f5d58"/>
+  <path d="M0 760 C180 730 320 750 480 735 C640 720 760 760 920 752 C1100 742 1240 770 1400 760 C1500 754 1560 746 1600 744 L1600 900 L0 900 Z" fill="#3b7258"/>
+  <g fill="none" stroke="#5d9170" stroke-width="3" opacity="0.8">
+    <path d="M0 800 C200 780 380 800 560 790 C760 778 920 806 1120 798"/>
+    <path d="M0 835 C220 818 420 836 620 828 C820 820 980 842 1180 836"/>
+    <path d="M0 868 C240 852 460 870 680 862 C880 856 1040 876 1240 870"/>
+  </g>
+  <path d="M0 820 C300 800 600 830 900 820 C1200 810 1400 840 1600 830 L1600 900 L0 900 Z" fill="#2b5a46" opacity="0.6"/>
+
+  <!-- trees -->
+  <g>
+    <rect x="1018" y="690" width="8" height="40" fill="#4a2f1c"/><circle cx="1022" cy="680" r="30" fill="#2a5242"/>
+    <circle cx="1010" cy="672" r="5" fill="#c8323a"/><circle cx="1034" cy="686" r="5" fill="#c8323a"/><circle cx="1022" cy="664" r="4" fill="#c8323a"/>
+    <rect x="1508" y="700" width="8" height="44" fill="#4a2f1c"/><circle cx="1512" cy="688" r="34" fill="#2a5242"/>
+    <circle cx="1500" cy="680" r="5" fill="#c8323a"/><circle cx="1526" cy="696" r="5" fill="#c8323a"/>
+  </g>
+
+  <!-- house: thatched two-storey Limbu home with maize hung under the eaves -->
+  <g>
+    <ellipse cx="1270" cy="792" rx="230" ry="16" fill="#1f3f33" opacity="0.5"/>
+    <rect x="1110" y="690" width="320" height="100" fill="#b5562f"/>
+    <rect x="1110" y="690" width="320" height="10" fill="#8f3f22"/>
+    <rect x="1120" y="600" width="300" height="92" fill="#f4efe6"/>
+    <rect x="1120" y="672" width="300" height="20" fill="#7a4a2a"/>
+    <g fill="#5a3520">
+      <rect x="1124" y="692" width="10" height="98"/><rect x="1205" y="692" width="10" height="98"/>
+      <rect x="1325" y="692" width="10" height="98"/><rect x="1406" y="692" width="10" height="98"/>
+    </g>
+    <rect x="1240" y="712" width="56" height="78" fill="#4a2a16"/>
+    <rect x="1246" y="718" width="44" height="72" fill="#6b3f22"/>
+    <line x1="1268" y1="718" x2="1268" y2="790" stroke="#4a2a16" stroke-width="3"/>
+    <g>
+      <rect x="1150" y="618" width="54" height="40" fill="#5a3520"/>
+      <path d="M1154 622 L1200 654 M1200 622 L1154 654 M1177 622 L1177 654 M1154 638 L1200 638" stroke="#c99a62" stroke-width="2"/>
+      <rect x="1336" y="618" width="54" height="40" fill="#5a3520"/>
+      <path d="M1340 622 L1386 654 M1386 622 L1340 654 M1363 622 L1363 654 M1340 638 L1386 638" stroke="#c99a62" stroke-width="2"/>
+      <rect x="1252" y="622" width="36" height="30" fill="#5a3520"/>
+      <path d="M1256 626 L1284 648 M1284 626 L1256 648" stroke="#c99a62" stroke-width="2"/>
+    </g>
+    <path d="M1080 610 L1140 520 L1400 520 L1460 610 Z" fill="#c9a25b"/>
+    <path d="M1140 520 L1400 520 L1380 500 L1160 500 Z" fill="#a8823f"/>
+    <path d="M1080 610 L1460 610 L1452 620 L1088 620 Z" fill="#8a6a34"/>
+    <g stroke="#a8823f" stroke-width="2" fill="none" opacity="0.8">
+      <path d="M1110 590 L1430 590"/><path d="M1124 565 L1416 565"/><path d="M1138 542 L1402 542"/>
+    </g>
+    <g fill="#f2b630" stroke="#c98a1a" stroke-width="1.5">
+      <path d="M1130 622 q6 22 0 40 q-6 -18 0 -40 Z"/><path d="M1140 622 q6 26 0 46 q-6 -20 0 -46 Z"/>
+      <path d="M1214 622 q6 22 0 40 q-6 -18 0 -40 Z"/><path d="M1224 622 q6 26 0 46 q-6 -20 0 -46 Z"/>
+      <path d="M1300 622 q6 22 0 40 q-6 -18 0 -40 Z"/><path d="M1310 622 q6 26 0 46 q-6 -20 0 -46 Z"/>
+      <path d="M1400 622 q6 22 0 40 q-6 -18 0 -40 Z"/><path d="M1410 622 q6 26 0 46 q-6 -20 0 -46 Z"/>
+    </g>
+    <g fill="#6f7a6a">
+      <rect x="1040" y="770" width="70" height="22" rx="4"/><rect x="1430" y="770" width="80" height="22" rx="4"/>
+    </g>
+  </g>
+</svg>

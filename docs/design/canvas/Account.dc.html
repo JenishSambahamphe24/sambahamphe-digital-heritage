@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>My account</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="width: 100%; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans)">
+  <dc-import name="SiteHeader" active="none" signed-in="{{yes}}" hint-size="100%,84px"></dc-import>
+
+  <div style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 40px 48px 88px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+    <nav aria-label="Account" style="flex: 1 1 220px; max-width: 260px; display: flex; flex-direction: column; gap: 2px; font-size: 15px">
+      <a href="#profile" aria-current="true" style="padding: 10px 14px; border-radius: 6px; background: var(--color-info-subtle); color: var(--color-primary); font-weight: 600; text-decoration: none">Overview</a>
+      <a href="#tree" style="padding: 10px 14px; border-radius: 6px; color: var(--color-foreground); text-decoration: none">My family tree</a>
+      <a href="#submissions" style="padding: 10px 14px; border-radius: 6px; color: var(--color-foreground); text-decoration: none">My submissions</a>
+      <a href="#devices" style="padding: 10px 14px; border-radius: 6px; color: var(--color-foreground); text-decoration: none">Signed-in devices</a>
+      <a href="#" style="padding: 10px 14px; border-radius: 6px; color: var(--color-foreground); text-decoration: none">Password and email</a>
+      <a href="#" style="padding: 10px 14px; border-radius: 6px; color: var(--color-danger); text-decoration: none">Sign out</a>
+    </nav>
+
+    <main style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+      <section id="profile" aria-labelledby="hello" style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px; padding: 24px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px">
+        <span aria-hidden="true" style="width: 64px; height: 64px; border-radius: 9999px; background: var(--color-primary); color: #ffffff; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 22px; font-weight: 600">AS</span>
+        <div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 4px">
+          <h1 id="hello" style="margin: 0; font-family: var(--font-display); font-size: 28px; line-height: 36px; font-weight: 600">Anita Sambahamphe</h1>
+          <span style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--color-foreground-muted)">anita@example.com <span style="padding: 2px 8px; border-radius: 4px; background: var(--color-success-subtle); color: var(--color-success); font-size: 12px; font-weight: 600">Email confirmed</span></span>
+        </div>
+        <x-import component-from-global-scope="SambahampheUI.Button" variant="secondary">Edit profile</x-import>
+      </section>
+
+      <section id="tree" aria-labelledby="tree-h" style="padding: 24px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+          <h2 id="tree-h" style="margin: 0; font-family: var(--font-display); font-size: 22px; line-height: 30px; font-weight: 600">Your place in the family tree</h2>
+          <span style="padding: 3px 10px; border-radius: 4px; background: var(--color-warning-subtle); color: var(--color-warning); font-size: 13px; font-weight: 600">Claim under review</span>
+        </div>
+        <ol style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+          <li style="padding: 14px; border-radius: 8px; background: var(--color-success-subtle); color: var(--color-success); display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 600">1 · Claimed</span><span style="font-size: 14px; color: var(--color-foreground)">"Anita, daughter of Ram Bahadur" · 12 Kartik 2083</span></li>
+          <li style="padding: 14px; border-radius: 8px; background: var(--color-warning-subtle); color: var(--color-warning); display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 600">2 · Editor checking</span><span style="font-size: 14px; color: var(--color-foreground)">Usually takes about a week</span></li>
+          <li style="padding: 14px; border-radius: 8px; background: var(--color-surface-muted); color: var(--color-foreground-muted); display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 600">3 · Linked</span><span style="font-size: 14px">Then you can see your branch and add family</span></li>
+        </ol>
+        <div style="display: flex; flex-wrap: wrap; gap: 16px; padding-top: 4px; border-top: 1px solid var(--color-border)">
+          <div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 4px; padding-top: 16px">
+            <span style="font-size: 14px; font-weight: 600">Branch access</span>
+            <span style="font-size: 14px; color: var(--color-foreground-muted)">Tehrathum branch · requested 12 Kartik 2083 · waiting for your claim</span>
+          </div>
+          <div style="display: flex; align-items: flex-end; gap: 8px">
+            <x-import component-from-global-scope="SambahampheUI.Button" variant="secondary" disabled="{{yes}}">Add a family member</x-import>
+          </div>
+        </div>
+      </section>
+
+      <section id="submissions" aria-labelledby="subs" style="padding: 24px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; display: flex; flex-direction: column; gap: 14px">
+        <h2 id="subs" style="margin: 0; font-family: var(--font-display); font-size: 22px; line-height: 30px; font-weight: 600">My submissions</h2>
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px">
+          <thead><tr style="text-align: left; color: var(--color-foreground-muted); font-size: 13px">
+            <th scope="col" style="padding: 10px 0; font-weight: 600; border-bottom: 1px solid var(--color-border)">What</th>
+            <th scope="col" style="padding: 10px 0; font-weight: 600; border-bottom: 1px solid var(--color-border)">Sent</th>
+            <th scope="col" style="padding: 10px 0; font-weight: 600; border-bottom: 1px solid var(--color-border)">Status</th>
+          </tr></thead>
+          <tbody>
+            <sc-for list="{{subs}}" as="s" hint-placeholder-count="3">
+              <tr>
+                <td style="padding: 12px 16px 12px 0; border-bottom: 1px solid var(--color-border)">{{s.what}}</td>
+                <td style="padding: 12px 16px 12px 0; border-bottom: 1px solid var(--color-border); color: var(--color-foreground-muted); white-space: nowrap">{{s.when}}</td>
+                <td style="padding: 12px 0; border-bottom: 1px solid var(--color-border)"><span style="{{s.style}}">{{s.status}}</span></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="devices" aria-labelledby="dev" style="padding: 24px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; display: flex; flex-direction: column; gap: 6px">
+        <h2 id="dev" style="margin: 0 0 8px; font-family: var(--font-display); font-size: 22px; line-height: 30px; font-weight: 600">Signed-in devices</h2>
+        <sc-for list="{{devices}}" as="d" hint-placeholder-count="3">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--color-border)">
+            <span style="display: flex; flex-direction: column; gap: 2px">
+              <span style="font-size: 15px; font-weight: 500">{{d.name}}</span>
+              <span style="font-size: 13px; color: var(--color-foreground-muted)">{{d.meta}}</span>
+            </span>
+            <sc-if value="{{d.current}}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; color: var(--color-success); font-weight: 600">This device</span></sc-if>
+            <sc-if value="{{d.other}}" hint-placeholder-val="{{ true }}"><x-import component-from-global-scope="SambahampheUI.Button" variant="ghost">Sign out</x-import></sc-if>
+          </div>
+        </sc-for>
+      </section>
+    </main>
+  </div>
+
+  <dc-import name="SiteFooter" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2120}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const pill = (bg, fg) => 'padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; white-space: nowrap; background: ' + bg + '; color: ' + fg + ';';
+    return {
+      yes: true,
+      subs: [
+        { what: 'Claim: I am Anita, daughter of Ram Bahadur', when: '12 Kartik 2083', status: 'Under review', style: pill('var(--color-warning-subtle)', 'var(--color-warning)') },
+        { what: 'Photo: Elders’ day group, Tehrathum', when: '4 Kartik 2083', status: 'Approved', style: pill('var(--color-success-subtle)', 'var(--color-success)') },
+        { what: 'Correction: Lal Bahadur’s birth year', when: '28 Asoj 2083', status: 'Needs more detail', style: pill('var(--color-danger-subtle)', 'var(--color-danger)') },
+      ],
+      devices: [
+        { name: 'Chrome on Mac', meta: 'Website · Kathmandu · active now', current: true, other: false },
+        { name: 'Mobile app on Android', meta: 'Last active 2 hours ago', current: false, other: true },
+        { name: 'Safari on iPhone', meta: 'Last active 3 Kartik 2083', current: false, other: true },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

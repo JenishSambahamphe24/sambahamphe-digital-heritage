@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Site header</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<header style="width: 100%; background: var(--color-surface); border-bottom: 1px solid var(--color-border); font-family: var(--font-sans); color: var(--color-foreground)">
+  <div style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 16px 48px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px">
+    <a href="HomeDesktop.dc.html" style="display: flex; align-items: center; gap: 12px; margin-right: auto; color: var(--color-foreground); text-decoration: none">
+      <img src="/_blob/74d1d53640bbc4c25d8e208c90d53ca4" alt="Sambahamphe Utthan Sangh seal" style="width: 44px; height: 40px; object-fit: contain">
+      <span style="font-family: var(--font-display); font-size: 18px; font-weight: 600">Sambahamphe Utthan Sangh</span>
+    </a>
+    <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 2px; font-size: 14px; font-weight: 500">
+      <sc-for list="{{links}}" as="link" hint-placeholder-count="7">
+        <a href="{{link.href}}" aria-current="{{link.current}}" style="{{link.style}}">{{link.label}}</a>
+      </sc-for>
+    </nav>
+    <div style="display: flex; align-items: center; gap: 8px">
+      <a href="#" style="padding: 8px 10px; color: var(--color-foreground-muted); font-size: 14px; text-decoration: none">नेपाली</a>
+      <sc-if value="{{signedOut}}" hint-placeholder-val="{{ true }}">
+        <a href="SignInModal.dc.html" style="padding: 8px 12px; color: var(--color-primary); font-size: 14px; font-weight: 500; text-decoration: none">Sign in</a>
+        <x-import component-from-global-scope="SambahampheUI.Button">Become a member</x-import>
+      </sc-if>
+      <sc-if value="{{signedIn}}" hint-placeholder-val="{{ false }}">
+        <a href="Account.dc.html" style="display: flex; align-items: center; gap: 8px; padding: 4px 8px 4px 4px; border-radius: 9999px; border: 1px solid var(--color-border); color: var(--color-foreground); font-size: 14px; font-weight: 500; text-decoration: none">
+          <span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 9999px; background: var(--color-primary); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600">AS</span>
+          Anita
+        </a>
+      </sc-if>
+    </div>
+  </div>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["home","about","tree","boards","news","events","gallery"],"default":"about"},"signedIn":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":84}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const active = this.props.active ?? 'about';
+    const base = 'display: block; padding: 8px 12px; text-decoration: none; border-bottom: 2px solid transparent;';
+    const items = [
+      ['home', 'Home', 'HomeDesktop.dc.html'],
+      ['about', 'About us', 'About.dc.html'],
+      ['tree', 'Family tree', 'FamilyTree.dc.html'],
+      ['boards', 'Boards', 'Boards.dc.html'],
+      ['news', 'News', 'News.dc.html'],
+      ['events', 'Events', 'Events.dc.html'],
+      ['gallery', 'Gallery', 'Gallery.dc.html'],
+    ];
+    const signedIn = this.props.signedIn === true || this.props.signedIn === 'true';
+    return {
+      signedIn,
+      signedOut: !signedIn,
+      links: items.map(([key, label, href]) => ({
+        label,
+        href,
+        current: key === active ? 'page' : 'false',
+        style: key === active
+          ? base + ' color: var(--color-primary); border-bottom-color: var(--color-primary);'
+          : base + ' color: var(--color-foreground-muted);',
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

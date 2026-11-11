@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>News and articles</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="width: 100%; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans)">
+  <dc-import name="SiteHeader" active="news" hint-size="100%,84px"></dc-import>
+
+  <section style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 48px 48px 24px; display: flex; flex-direction: column; gap: 20px">
+    <h1 style="margin: 0; font-family: var(--font-display); font-size: 40px; line-height: 48px; font-weight: 600">News and articles</h1>
+    <a href="Article.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 8px; border: 1px solid var(--color-warning); background: var(--color-warning-subtle); color: var(--color-warning); text-decoration: none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+      <span style="flex: 1 1 auto; font-size: 15px"><strong style="font-weight: 600">Notice:</strong> Annual general meeting on 6 Poush 2083 in Dharan. Members, please bring your membership card.</span>
+      <span style="font-size: 14px; font-weight: 600">Read notice</span>
+    </a>
+    <div role="tablist" aria-label="Type" style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px">
+      <sc-for list="{{types}}" as="t" hint-placeholder-count="5">
+        <button type="button" role="tab" aria-selected="{{t.on}}" style="{{t.style}}">{{t.label}}</button>
+      </sc-for>
+    </div>
+  </section>
+
+  <main style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 16px 48px 88px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+    <div style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column; gap: 32px">
+      <a href="Article.dc.html" style="display: flex; flex-wrap: wrap; gap: 0; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; text-decoration: none; color: var(--color-foreground)">
+        <img src="/_blob/a7168cfe4f6cf50d4b9dd3fb80c1aede" alt="" style="flex: 1 1 320px; min-width: 0; height: 340px; object-fit: cover; object-position: center 12%">
+        <span style="flex: 1 1 320px; min-width: 0; padding: 28px; display: flex; flex-direction: column; gap: 12px; justify-content: center">
+          <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent)">Limbu history · featured</span>
+          <span style="font-family: var(--font-display); font-size: 28px; line-height: 36px; font-weight: 600">The Mundhum and the origin of the Sambahamphe clan name</span>
+          <span style="font-size: 16px; line-height: 25px; color: var(--color-foreground-muted)">What the oral scriptures say about where our name comes from, and how elders in Tehrathum still tell it.</span>
+          <span style="font-size: 13px; color: var(--color-foreground-muted)">9 Kartik 2083 · 8 min read</span>
+        </span>
+      </a>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+        <sc-for list="{{posts}}" as="p" hint-placeholder-count="6">
+          <a href="Article.dc.html" style="display: flex; flex-direction: column; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; text-decoration: none; color: var(--color-foreground)">
+            <img src="{{p.img}}" alt="" style="width: 100%; height: 180px; object-fit: cover; object-position: {{p.pos}}">
+            <span style="padding: 18px; display: flex; flex-direction: column; gap: 8px">
+              <span style="display: flex; gap: 8px; font-size: 12px; color: var(--color-foreground-muted)"><span style="font-weight: 600; color: var(--color-primary)">{{p.kind}}</span><span>{{p.date}}</span></span>
+              <span style="font-size: 18px; line-height: 25px; font-weight: 600">{{p.title}}</span>
+              <span style="font-size: 14px; line-height: 21px; color: var(--color-foreground-muted)">{{p.excerpt}}</span>
+            </span>
+          </a>
+        </sc-for>
+      </div>
+      <nav aria-label="Pages" style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px">
+        <a href="#" style="padding: 8px 12px; text-decoration: none">Previous</a>
+        <a href="#" aria-current="page" style="padding: 8px 14px; border-radius: 6px; background: var(--color-primary); color: #ffffff; text-decoration: none">1</a>
+        <a href="#" style="padding: 8px 14px; text-decoration: none">2</a>
+        <a href="#" style="padding: 8px 14px; text-decoration: none">3</a>
+        <a href="#" style="padding: 8px 12px; text-decoration: none">Next</a>
+      </nav>
+    </div>
+
+    <aside style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+      <div>
+        <label for="news-search" style="display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px">Search articles</label>
+        <x-import component-from-global-scope="SambahampheUI.Input" id="news-search" type="search" placeholder="Search by title or topic"></x-import>
+      </div>
+      <section aria-labelledby="topics" style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 4px">
+        <h2 id="topics" style="margin: 0 0 8px; font-family: var(--font-display); font-size: 18px; font-weight: 600">Heritage topics</h2>
+        <sc-for list="{{topics}}" as="c" hint-placeholder-count="10">
+          <a href="#" style="display: flex; justify-content: space-between; padding: 7px 0; font-size: 14px; text-decoration: none; color: var(--color-foreground)"><span>{{c.name}}</span><span style="color: var(--color-foreground-muted)">{{c.n}}</span></a>
+        </sc-for>
+      </section>
+    </aside>
+  </main>
+
+  <dc-import name="SiteFooter" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2240}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const on = 'padding: 8px 16px; border-radius: 9999px; border: 1px solid var(--color-primary); background: var(--color-primary); color: #ffffff; font: inherit; font-weight: 500;';
+    const off = 'padding: 8px 16px; border-radius: 9999px; border: 1px solid var(--color-border-strong); background: var(--color-surface); color: var(--color-foreground); font: inherit;';
+    const types = ['All', 'News', 'Notices', 'Heritage articles', 'Activity reports'];
+    const v = '/_blob/e43ef7d099b4aae609414fa54186664b', d = '/_blob/cd11962e7d1b5da2ea5327e82bf85c9f', g = '/_blob/968633793a1b2182437b3c75ef7c906c';
+    return {
+      types: types.map((label, i) => ({ label, on: i === 0 ? 'true' : 'false', style: i === 0 ? on : off })),
+      posts: [
+        { img: g, pos: 'center 70%', kind: 'News', date: '18 Kartik 2083', title: 'Family tree records now open for members to review', excerpt: 'Verified members can now check their branch and suggest corrections online.' },
+        { img: d, pos: 'center', kind: 'Activity report', date: '2 Kartik 2083', title: 'Youth chyabrung classes reach their first hundred students', excerpt: 'Weekly classes in Dharan and Itahari, and online for families abroad.' },
+        { img: v, pos: 'right bottom', kind: 'Heritage', date: '21 Asoj 2083', title: 'Houses of the hills: how our grandparents built with thatch and stone', excerpt: 'Elders describe the two-storey homes of Tehrathum and the maize hung under the eaves.' },
+        { img: d, pos: 'center', kind: 'Festivals & rituals', date: '12 Asoj 2083', title: 'Getting ready for Chasok Tangnam', excerpt: 'What happens on the day, and how families can take part.' },
+        { img: g, pos: 'center 60%', kind: 'Community stories', date: '30 Bhadra 2083', title: 'Three generations, one recipe book', excerpt: 'A family in Ilam on keeping its grandmother’s kitchen alive.' },
+        { img: v, pos: 'center bottom', kind: 'News', date: '15 Bhadra 2083', title: 'Koshi regional board elects its new term', excerpt: 'Eleven members will serve until the end of 2085 BS.' },
+      ],
+      topics: [
+        { name: 'Sambahamphe history', n: 12 }, { name: 'Limbu history', n: 18 }, { name: 'Kirant heritage', n: 9 },
+        { name: 'Limbu language', n: 7 }, { name: 'Sirijanga script', n: 4 }, { name: 'Cultural traditions', n: 15 },
+        { name: 'Festivals & rituals', n: 11 }, { name: 'Historical personalities', n: 6 }, { name: 'Historical publications', n: 3 },
+        { name: 'Community stories', n: 21 },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

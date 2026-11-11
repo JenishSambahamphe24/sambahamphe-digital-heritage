@@ -32,42 +32,51 @@ a{color:#2d3192}a:hover{color:#22256f}
 
     <main style="flex: 1 1 auto; display: flex; align-items: center; justify-content: center">
       <div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 24px">
-        <img src="/_blob/72ac33c727f15acdcad8b8577fe86042" alt="" aria-hidden="true" style="width: 40px; height: 40px">
-        <div role="tablist" aria-label="Account" style="display: flex; gap: 24px; border-bottom: 1px solid var(--color-border)">
+        <div role="tablist" aria-label="Account" style="display: flex; justify-content: center; gap: 32px; border-bottom: 1px solid var(--color-border)">
           <button type="button" role="tab" aria-selected="{{isLogin}}" onClick="{{showLogin}}" style="{{loginTabStyle}}">Sign in</button>
           <button type="button" role="tab" aria-selected="{{isSignup}}" onClick="{{showSignup}}" style="{{signupTabStyle}}">Create account</button>
         </div>
 
         <sc-if value="{{isLogin}}" hint-placeholder-val="{{ true }}">
-          <form style="display: flex; flex-direction: column; gap: 16px">
-            <x-import component-from-global-scope="SambahampheUI.FormField" id="email" label="Email">
+          <form style="display: flex; flex-direction: column; gap: 4px">
+            <div style="min-height: 92px">
+              <x-import component-from-global-scope="SambahampheUI.FormField" id="email" label="Email">
               <x-import component-from-global-scope="SambahampheUI.Input" id="email" type="email" placeholder="you@example.com"></x-import>
             </x-import>
-            <x-import component-from-global-scope="SambahampheUI.FormField" id="password" label="Password">
+            </div>
+            <div style="min-height: 92px">
+              <x-import component-from-global-scope="SambahampheUI.FormField" id="password" label="Password">
               <x-import component-from-global-scope="SambahampheUI.Input" id="password" type="password"></x-import>
             </x-import>
-            <div style="display: flex; justify-content: flex-end">
+            </div>
+            <div style="display: flex; justify-content: flex-end; margin: -8px 0 8px">
               <a href="#" style="font-size: 14px; font-weight: 500">Forgot your password?</a>
             </div>
             <x-import component-from-global-scope="SambahampheUI.Button" type="button" class-name="w-full" on-click="{{signIn}}">Sign in</x-import>
           </form>
-          <p style="margin: 0; font-size: 14px; color: var(--color-foreground-muted)">New here? <a href="#" onClick="{{showSignup}}" style="font-weight: 500">Create an account</a></p>
+          <p style="margin: 0; text-align: center; font-size: 14px; color: var(--color-foreground-muted)">New here? <a href="#" onClick="{{showSignup}}" style="font-weight: 500">Create an account</a></p>
         </sc-if>
 
         <sc-if value="{{isSignup}}" hint-placeholder-val="{{ false }}">
-          <form style="display: flex; flex-direction: column; gap: 16px">
-            <x-import component-from-global-scope="SambahampheUI.FormField" id="name" label="Your name">
+          <form style="display: flex; flex-direction: column; gap: 4px">
+            <div style="min-height: 92px">
+              <x-import component-from-global-scope="SambahampheUI.FormField" id="name" label="Your name">
               <x-import component-from-global-scope="SambahampheUI.Input" id="name" type="text" autocomplete="name"></x-import>
             </x-import>
-            <x-import component-from-global-scope="SambahampheUI.FormField" id="new-email" label="Email">
+            </div>
+            <div style="min-height: 92px">
+              <x-import component-from-global-scope="SambahampheUI.FormField" id="new-email" label="Email">
               <x-import component-from-global-scope="SambahampheUI.Input" id="new-email" type="email" placeholder="you@example.com"></x-import>
             </x-import>
-            <x-import component-from-global-scope="SambahampheUI.FormField" id="new-password" label="Password" hint="At least 12 characters.">
+            </div>
+            <div style="min-height: 92px">
+              <x-import component-from-global-scope="SambahampheUI.FormField" id="new-password" label="Password" hint="At least 12 characters.">
               <x-import component-from-global-scope="SambahampheUI.Input" id="new-password" type="password"></x-import>
             </x-import>
+            </div>
             <x-import component-from-global-scope="SambahampheUI.Button" type="button" class-name="w-full">Create account</x-import>
           </form>
-          <p style="margin: 0; font-size: 14px; color: var(--color-foreground-muted)">Already have an account? <a href="#" onClick="{{showLogin}}" style="font-weight: 500">Sign in</a></p>
+          <p style="margin: 0; text-align: center; font-size: 14px; color: var(--color-foreground-muted)">Already have an account? <a href="#" onClick="{{showLogin}}" style="font-weight: 500">Sign in</a></p>
         </sc-if>
       </div>
     </main>
