@@ -35,6 +35,12 @@
   --color-overlay: #12132b;
   --color-focus: #4b50b8;
 
+  /* Text on dark grounds (color-overlay, color-primary, color-foreground as a
+     band): primary-foreground for headings, inverse-muted for body (≥ 9:1),
+     inverse-accent for small eyebrow labels (≥ 7:1). */
+  --color-inverse-muted: #e8e9f7;
+  --color-inverse-accent: #f7c58f;
+
   /* Apps set these variables to their loaded fonts (next/font gives fonts
      generated names, so they can't be referenced by family name). Unset
      variables fall back to system fonts. Devanagari and Limbu follow Latin so
