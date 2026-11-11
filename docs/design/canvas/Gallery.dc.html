@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gallery</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="width: 100%; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans)">
+  <dc-import name="SiteHeader" active="gallery" hint-size="100%,84px"></dc-import>
+
+  <section style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 48px 48px 16px; display: flex; flex-direction: column; gap: 20px">
+    <h1 style="margin: 0; font-family: var(--font-display); font-size: 40px; line-height: 48px; font-weight: 600">Gallery</h1>
+    <p style="margin: 0; max-width: 640px; font-size: 17px; line-height: 27px; color: var(--color-foreground-muted)">Photos from our festivals, gatherings and villages, shared by members and checked by the archive committee.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end">
+      <sc-for list="{{filters}}" as="f" hint-placeholder-count="4">
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 500; color: var(--color-foreground-muted)">
+          {{f.label}}
+          <span style="display: flex; align-items: center; justify-content: space-between; gap: 24px; min-width: 160px; height: 40px; box-sizing: border-box; padding: 0 12px; border: 1px solid var(--color-border-strong); border-radius: 6px; background: var(--color-surface); color: var(--color-foreground); font-size: 14px; font-weight: 400">
+            {{f.value}}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </label>
+      </sc-for>
+    </div>
+  </section>
+
+  <main style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 24px 48px 88px; display: flex; flex-direction: column; gap: 32px">
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+      <sc-for list="{{albums}}" as="a" hint-placeholder-count="9">
+        <a href="Album.dc.html" style="display: flex; flex-direction: column; gap: 12px; text-decoration: none; color: var(--color-foreground)">
+          <span style="position: relative; display: block; border-radius: 8px; overflow: hidden; background: #e8e9f7">
+            <img src="{{a.img}}" alt="" style="display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: {{a.pos}}">
+            <span style="position: absolute; right: 10px; bottom: 10px; padding: 3px 8px; border-radius: 4px; background: rgba(18, 19, 43, 0.75); color: #ffffff; font-size: 12px; font-weight: 600">{{a.count}}</span>
+          </span>
+          <span style="display: flex; flex-direction: column; gap: 4px">
+            <span style="font-size: 18px; line-height: 24px; font-weight: 600">{{a.title}}</span>
+            <span style="font-size: 14px; color: var(--color-foreground-muted)">{{a.meta}}</span>
+          </span>
+        </a>
+      </sc-for>
+    </div>
+    <div style="display: flex; justify-content: center">
+      <x-import component-from-global-scope="SambahampheUI.Button" variant="secondary">Show more albums</x-import>
+    </div>
+  </main>
+
+  <dc-import name="SiteFooter" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1840}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const d = '/_blob/cd11962e7d1b5da2ea5327e82bf85c9f', v = '/_blob/e43ef7d099b4aae609414fa54186664b', g = '/_blob/968633793a1b2182437b3c75ef7c906c', m = '/_blob/80254a1ec7a3e1f1307fb2d1e7827958', c = '/_blob/a7168cfe4f6cf50d4b9dd3fb80c1aede';
+    return {
+      filters: [
+        { label: 'Event', value: 'All events' },
+        { label: 'Year', value: 'Any year' },
+        { label: 'Place', value: 'Anywhere' },
+        { label: 'Category', value: 'All categories' },
+      ],
+      albums: [
+        { img: d, pos: 'center', count: '64 photos', title: 'Chasok Tangnam 2082', meta: 'Mangsir 2082 · Dharan' },
+        { img: m, pos: 'center', count: '31 photos', title: 'Pilgrimage to Phaktanglung', meta: 'Baisakh 2083 · Taplejung' },
+        { img: g, pos: 'center 70%', count: '22 photos', title: 'Elders’ day', meta: 'Kartik 2083 · Tehrathum' },
+        { img: c, pos: 'center 12%', count: '18 photos', title: 'Traditional dress', meta: 'Collection · many years' },
+        { img: v, pos: 'right bottom', count: '40 photos', title: 'Our ancestral villages', meta: 'Collection · Tehrathum, Panchthar, Ilam' },
+        { img: d, pos: 'left center', count: '31 photos', title: 'Deusi-Bhailo round, Dharan', meta: 'Asoj 2083 · Dharan' },
+        { img: g, pos: 'center 40%', count: '12 photos', title: 'Founding members, 2052 BS', meta: 'Historical · scanned prints' },
+        { img: v, pos: 'center bottom', count: '27 photos', title: 'General assembly 2081', meta: 'Chaitra 2081 · Dharan' },
+        { img: d, pos: 'right center', count: '45 photos', title: 'Hong Kong families’ gathering', meta: 'Poush 2082 · Hong Kong' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chasok Tangnam 2082 — album</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="width: 100%; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans)">
+  <dc-import name="SiteHeader" active="gallery" hint-size="100%,84px"></dc-import>
+
+  <section style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 32px 48px 24px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px">
+    <div style="display: flex; flex-direction: column; gap: 12px; max-width: 760px">
+      <nav aria-label="Breadcrumb" style="display: flex; gap: 6px; font-size: 14px; color: var(--color-foreground-muted)">
+        <a href="Gallery.dc.html" style="text-decoration: none">Gallery</a><span aria-hidden="true">›</span><span aria-current="page" style="color: var(--color-foreground)">Chasok Tangnam 2082</span>
+      </nav>
+      <h1 style="margin: 0; font-family: var(--font-display); font-size: 40px; line-height: 48px; font-weight: 600">Chasok Tangnam 2082</h1>
+      <p style="margin: 0; font-size: 16px; line-height: 25px; color: var(--color-foreground-muted)">64 photos · 21 Mangsir 2082 · Community hall, Dharan · <a href="EventDetail.dc.html">See the event</a></p>
+      <p style="margin: 0; font-size: 16px; line-height: 25px">The offering, the meal and the youth group's chyabrung dance. Photos shared by members and the Dharan gaau committee.</p>
+    </div>
+    <div style="display: flex; gap: 8px">
+      <x-import component-from-global-scope="SambahampheUI.Button" variant="secondary">Share album</x-import>
+      <x-import component-from-global-scope="SambahampheUI.Button">Add your photos</x-import>
+    </div>
+  </section>
+
+  <main style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 8px 48px 88px; display: flex; flex-direction: column; gap: 32px">
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 200px; gap: 12px">
+      <sc-for list="{{photos}}" as="p" hint-placeholder-count="12">
+        <a href="PhotoViewer.dc.html" aria-label="{{p.label}}" style="{{p.cell}}">
+          <img src="{{p.img}}" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: {{p.pos}}">
+        </a>
+      </sc-for>
+    </div>
+    <p style="margin: 0; text-align: center; font-size: 14px; color: var(--color-foreground-muted)">Showing 12 of 64 · <a href="#">Load more</a></p>
+  </main>
+
+  <dc-import name="SiteFooter" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const d = '/_blob/cd11962e7d1b5da2ea5327e82bf85c9f', v = '/_blob/e43ef7d099b4aae609414fa54186664b', g = '/_blob/968633793a1b2182437b3c75ef7c906c', c = '/_blob/a7168cfe4f6cf50d4b9dd3fb80c1aede';
+    const cell = (wide, tall) => 'display: block; overflow: hidden; border-radius: 8px; background: #e8e9f7;' + (wide ? ' grid-column: span 2;' : '') + (tall ? ' grid-row: span 2;' : '');
+    const list = [
+      [d, 'center', true, true], [v, 'right bottom', false, false], [g, 'center 60%', false, false],
+      [c, 'center 15%', false, true], [d, 'left center', false, false], [v, 'center bottom', true, false],
+      [g, 'center 30%', false, false], [d, 'right center', false, false], [c, 'center 40%', false, false],
+      [v, 'right center', true, false], [g, 'center', false, false], [d, 'center 20%', false, false],
+    ];
+    return {
+      photos: list.map(([img, pos, wide, tall], i) => ({ img, pos, cell: cell(wide, tall), label: 'Photo ' + (i + 1) + ' of 64, open' })),
+    };
+  }
+}
+</script>
+</body>
+</html>

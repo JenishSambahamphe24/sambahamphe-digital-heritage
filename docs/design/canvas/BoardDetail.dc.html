@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Central Board</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="width: 100%; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans)">
+  <dc-import name="SiteHeader" active="boards" hint-size="100%,84px"></dc-import>
+
+  <section style="background: var(--color-surface); border-bottom: 1px solid var(--color-border)">
+    <div style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 24px 48px 0; display: flex; flex-direction: column; gap: 16px">
+      <nav aria-label="Breadcrumb" style="display: flex; gap: 6px; font-size: 14px; color: var(--color-foreground-muted)">
+        <a href="Boards.dc.html" style="text-decoration: none">Boards</a><span aria-hidden="true">›</span><span aria-current="page" style="color: var(--color-foreground)">Central Board</span>
+      </nav>
+      <h1 style="margin: 0; font-family: var(--font-display); font-size: 40px; line-height: 48px; font-weight: 600">Central Board</h1>
+      <p style="margin: 0; font-size: 16px; color: var(--color-foreground-muted)">Elected at the general assembly of 15 Chaitra 2081 BS · serving 1 Baisakh 2082 – end of Chaitra 2084 BS</p>
+      <div role="tablist" aria-label="Term" style="display: flex; gap: 28px; margin-top: 8px">
+        <button type="button" role="tab" aria-selected="true" style="padding: 10px 2px 12px; border: 0; border-bottom: 2px solid var(--color-primary); background: none; font: inherit; font-size: 15px; font-weight: 600; color: var(--color-foreground)">2082–2084 BS · current</button>
+        <button type="button" role="tab" aria-selected="false" style="padding: 10px 2px 12px; border: 0; border-bottom: 2px solid transparent; background: none; font: inherit; font-size: 15px; font-weight: 500; color: var(--color-foreground-muted)">2078–2081 BS</button>
+        <button type="button" role="tab" aria-selected="false" style="padding: 10px 2px 12px; border: 0; border-bottom: 2px solid transparent; background: none; font: inherit; font-size: 15px; font-weight: 500; color: var(--color-foreground-muted)">2074–2078 BS</button>
+        <button type="button" role="tab" aria-selected="false" style="padding: 10px 2px 12px; border: 0; border-bottom: 2px solid transparent; background: none; font: inherit; font-size: 15px; font-weight: 500; color: var(--color-foreground-muted)">Earlier terms</button>
+      </div>
+    </div>
+  </section>
+
+  <main style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 40px 48px 88px; display: flex; flex-direction: column; gap: 48px">
+    <section aria-labelledby="officers" style="display: flex; flex-direction: column; gap: 20px">
+      <h2 id="officers" style="margin: 0; font-family: var(--font-display); font-size: 24px; line-height: 32px; font-weight: 600">Office-bearers</h2>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px">
+        <sc-for list="{{officers}}" as="o" hint-placeholder-count="6">
+          <div style="display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px">
+            <span aria-hidden="true" style="flex: 0 0 56px; height: 56px; border-radius: 9999px; background: var(--color-info-subtle); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; font-weight: 600">{{o.initials}}</span>
+            <span style="min-width: 0; display: flex; flex-direction: column; gap: 3px">
+              <span style="font-size: 13px; font-weight: 600; color: var(--color-accent)">{{o.role}}</span>
+              <span style="font-size: 17px; font-weight: 600">{{o.name}}</span>
+              <span style="font-size: 13px; color: var(--color-foreground-muted)">{{o.note}}</span>
+            </span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="members" style="display: flex; flex-direction: column; gap: 20px">
+      <h2 id="members" style="margin: 0; font-family: var(--font-display); font-size: 24px; line-height: 32px; font-weight: 600">Members</h2>
+      <table style="width: 100%; border-collapse: collapse; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; font-size: 15px">
+        <thead>
+          <tr style="text-align: left; color: var(--color-foreground-muted); font-size: 13px">
+            <th scope="col" style="padding: 12px 20px; font-weight: 600; border-bottom: 1px solid var(--color-border)">Name</th>
+            <th scope="col" style="padding: 12px 20px; font-weight: 600; border-bottom: 1px solid var(--color-border)">Position</th>
+            <th scope="col" style="padding: 12px 20px; font-weight: 600; border-bottom: 1px solid var(--color-border)">How appointed</th>
+            <th scope="col" style="padding: 12px 20px; font-weight: 600; border-bottom: 1px solid var(--color-border)">Region</th>
+          </tr>
+        </thead>
+        <tbody>
+          <sc-for list="{{members}}" as="m" hint-placeholder-count="6">
+            <tr>
+              <td style="padding: 12px 20px; border-bottom: 1px solid var(--color-border); font-weight: 500">{{m.name}}</td>
+              <td style="padding: 12px 20px; border-bottom: 1px solid var(--color-border)">{{m.role}}</td>
+              <td style="padding: 12px 20px; border-bottom: 1px solid var(--color-border)"><span style="padding: 3px 10px; border-radius: 9999px; background: var(--color-surface-muted); font-size: 12px; font-weight: 600; color: var(--color-foreground-muted)">{{m.type}}</span></td>
+              <td style="padding: 12px 20px; border-bottom: 1px solid var(--color-border); color: var(--color-foreground-muted)">{{m.region}}</td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="changes" style="display: flex; flex-wrap: wrap; gap: 32px">
+      <div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 14px">
+        <h2 id="changes" style="margin: 0; font-family: var(--font-display); font-size: 24px; line-height: 32px; font-weight: 600">Changes during this term</h2>
+        <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 15px; line-height: 23px">
+          <li style="padding: 14px 16px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px"><strong style="font-weight: 600">3 Shrawan 2083</strong> · Bikash Sambahamphe became acting treasurer after the elected treasurer resigned.</li>
+          <li style="padding: 14px 16px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px"><strong style="font-weight: 600">10 Asar 2082</strong> · Two members co-opted to represent families abroad.</li>
+        </ul>
+      </div>
+      <div style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-family: var(--font-display); font-size: 24px; line-height: 32px; font-weight: 600">Under this board</h2>
+        <a href="Boards.dc.html" style="padding: 14px 16px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; text-decoration: none; font-weight: 500">3 regional boards · 9 gaau committees</a>
+        <a href="Boards.dc.html" style="padding: 14px 16px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; text-decoration: none; font-weight: 500">Advisory council · 5 members</a>
+      </div>
+    </section>
+  </main>
+
+  <dc-import name="SiteFooter" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2040}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      officers: [
+        { initials: 'KS', role: 'Chairperson', name: 'Kamal Sambahamphe', note: 'Elected · Dharan' },
+        { initials: 'RS', role: 'Vice-chairperson', name: 'Ramesh Sambahamphe', note: 'Elected · Kathmandu' },
+        { initials: 'PS', role: 'Vice-chairperson', name: 'Pabitra Sambahamphe', note: 'Elected · Ilam' },
+        { initials: 'SS', role: 'General secretary', name: 'Sita Sambahamphe', note: 'Elected · Dharan' },
+        { initials: 'NS', role: 'Secretary', name: 'Naresh Sambahamphe', note: 'Elected · Tehrathum' },
+        { initials: 'BS', role: 'Treasurer', name: 'Bikash Sambahamphe', note: 'Acting since 3 Shrawan 2083' },
+      ],
+      members: [
+        { name: 'Dil Kumar Sambahamphe', role: 'Member', type: 'Elected', region: 'Koshi' },
+        { name: 'Mina Sambahamphe', role: 'Member', type: 'Elected', region: 'Koshi' },
+        { name: 'Arjun Sambahamphe', role: 'Member', type: 'Elected', region: 'Kathmandu Valley' },
+        { name: 'Sabina Sambahamphe', role: 'Member', type: 'Nominated', region: 'Koshi' },
+        { name: 'Prakash Sambahamphe', role: 'Member', type: 'Co-opted', region: 'Hong Kong' },
+        { name: 'Durga Sambahamphe', role: 'Member', type: 'Co-opted', region: 'United Kingdom' },
+        { name: 'Chandra Sambahamphe', role: 'Advisor', type: 'Honorary', region: 'Dharan' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

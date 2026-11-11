@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Family tree — search</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="width: 100%; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans)">
+  <dc-import name="SiteHeader" active="tree" hint-size="100%,84px"></dc-import>
+
+  <section style="position: relative; overflow: hidden; background: var(--color-surface); border-bottom: 1px solid var(--color-border)">
+    <img src="/_blob/968633793a1b2182437b3c75ef7c906c" alt="" aria-hidden="true" style="position: absolute; right: 0; bottom: 0; height: 100%; width: auto; opacity: 0.9">
+    <div style="position: absolute; inset: 0; background: linear-gradient(90deg, #ffffff 0%, #ffffff 52%, rgba(255, 255, 255, 0.6) 70%, rgba(255, 255, 255, 0) 100%)"></div>
+    <div style="position: relative; max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 56px 48px; display: flex; flex-direction: column; gap: 20px">
+      <h1 style="margin: 0; font-family: var(--font-display); font-size: 40px; line-height: 48px; font-weight: 600">Family tree</h1>
+      <p style="margin: 0; max-width: 620px; font-size: 17px; line-height: 27px; color: var(--color-foreground-muted)">The Sambahamphe line from its earliest remembered ancestors to today, kept as it always has been: from father to son. Search for an ancestor, or open a branch.</p>
+      <form role="search" style="max-width: 760px; display: grid; grid-template-columns: 2fr 2fr 1.5fr auto; gap: 12px; align-items: end; padding: 16px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px">
+        <x-import component-from-global-scope="SambahampheUI.FormField" id="q-name" label="Name">
+          <x-import component-from-global-scope="SambahampheUI.Input" id="q-name" default-value="Jit"></x-import>
+        </x-import>
+        <x-import component-from-global-scope="SambahampheUI.FormField" id="q-father" label="Father's name">
+          <x-import component-from-global-scope="SambahampheUI.Input" id="q-father" placeholder="Optional"></x-import>
+        </x-import>
+        <x-import component-from-global-scope="SambahampheUI.FormField" id="q-village" label="Village">
+          <x-import component-from-global-scope="SambahampheUI.Input" id="q-village" placeholder="Any"></x-import>
+        </x-import>
+        <x-import component-from-global-scope="SambahampheUI.Button" type="button">Search</x-import>
+      </form>
+      <p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--color-foreground-muted)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        Public search lists ancestors only. Living family members are visible to verified members of their branch.
+      </p>
+    </div>
+  </section>
+
+  <main style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 48px 48px 88px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+    <section aria-labelledby="results" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+        <h2 id="results" style="margin: 0; font-family: var(--font-display); font-size: 22px; line-height: 30px; font-weight: 600">4 ancestors match "Jit"</h2>
+        <a href="TreeView.dc.html" style="font-size: 14px; font-weight: 500">Open the full tree</a>
+      </div>
+      <ul style="list-style: none; margin: 0; padding: 0; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px">
+        <sc-for list="{{results}}" as="p" hint-placeholder-count="4">
+          <li style="border-bottom: 1px solid var(--color-border)">
+            <a href="PersonProfile.dc.html" style="display: flex; align-items: center; gap: 16px; padding: 16px 20px; text-decoration: none; color: var(--color-foreground)">
+              <span aria-hidden="true" style="flex: 0 0 44px; height: 44px; border-radius: 9999px; background: var(--color-info-subtle); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 600">{{p.initials}}</span>
+              <span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+                <span style="font-size: 16px; font-weight: 600">{{p.name}} <span lang="ne" style="font-weight: 400; color: var(--color-foreground-muted)">{{p.ne}}</span></span>
+                <span style="font-size: 14px; color: var(--color-foreground-muted)">{{p.meta}}</span>
+              </span>
+              <span style="flex: 0 0 auto; padding: 4px 10px; border-radius: 9999px; background: var(--color-surface-muted); font-size: 12px; font-weight: 500; color: var(--color-foreground-muted)">{{p.branch}}</span>
+            </a>
+          </li>
+        </sc-for>
+      </ul>
+      <p style="margin: 0; font-size: 14px; color: var(--color-foreground-muted)">Can't find someone? <a href="SignInModal.dc.html" style="font-weight: 500">Sign in to suggest a missing ancestor</a>; a genealogy editor reviews every addition.</p>
+    </section>
+
+    <aside style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+      <section aria-labelledby="branches" style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+        <h2 id="branches" style="margin: 0; font-family: var(--font-display); font-size: 18px; line-height: 26px; font-weight: 600">Family branches</h2>
+        <sc-for list="{{branches}}" as="b" hint-placeholder-count="5">
+          <a href="TreeView.dc.html" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: 6px; background: var(--color-background); text-decoration: none; color: var(--color-foreground)">
+            <span style="display: flex; flex-direction: column; gap: 2px">
+              <span style="font-size: 15px; font-weight: 500">{{b.name}}</span>
+              <span style="font-size: 12px; color: var(--color-foreground-muted)">{{b.meta}}</span>
+            </span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </sc-for>
+      </section>
+      <section aria-labelledby="claim" style="position: relative; overflow: hidden; background: var(--color-primary); color: #ffffff; border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+        <img src="/_blob/72ac33c727f15acdcad8b8577fe86042" alt="" aria-hidden="true" style="position: absolute; right: -40px; bottom: -40px; width: 160px; height: 160px; opacity: 0.2">
+        <h2 id="claim" style="position: relative; margin: 0; font-family: var(--font-display); font-size: 20px; line-height: 28px; font-weight: 600">Are you already in the family tree?</h2>
+        <p style="position: relative; margin: 0; font-size: 14px; line-height: 21px; color: #e8e9f7">Create an account, find your record and claim it. Once an editor confirms it, you can see your branch and add your family.</p>
+        <div style="position: relative">
+          <x-import component-from-global-scope="SambahampheUI.Button" variant="secondary">Claim your record</x-import>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <dc-import name="SiteFooter" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2060}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      results: [
+        { initials: 'JB', name: 'Jit Bahadur Sambahamphe', ne: 'जित बहादुर सम्बाहाङ्फे', meta: 'c. 1893 – 1962 BS · son of Senehang · Tehrathum', branch: 'Tehrathum' },
+        { initials: 'JB', name: 'Jit Bahadur Sambahamphe', ne: 'जित बहादुर सम्बाहाङ्फे', meta: 'c. 1941 – 2017 BS · son of Lal Bahadur · Panchthar', branch: 'Panchthar' },
+        { initials: 'JM', name: 'Jitman Sambahamphe', ne: 'जितमान सम्बाहाङ्फे', meta: 'before 1910 – c. 1980 BS · son of Kambahang · Tehrathum', branch: 'Tehrathum' },
+        { initials: 'JH', name: 'Jithang Sambahamphe', ne: 'जितहाङ सम्बाहाङ्फे', meta: 'c. 1872 – unknown · father unknown · Ilam', branch: 'Ilam' },
+      ],
+      branches: [
+        { name: 'Tehrathum branch', meta: '9 generations · from Hangrup' },
+        { name: 'Panchthar branch', meta: '7 generations' },
+        { name: 'Ilam branch', meta: '6 generations' },
+        { name: 'Dharan and Sunsari', meta: '4 generations' },
+        { name: 'Families abroad', meta: 'Hong Kong, UK, Gulf' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

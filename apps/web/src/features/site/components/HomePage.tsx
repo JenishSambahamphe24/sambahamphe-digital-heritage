@@ -1,42 +1,55 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
-import { Alert } from "@repo/ui";
-
-import { Link } from "#/i18n/navigation";
-import { BRAND_LOGO } from "#/lib/brand";
+import { LinkButton } from "#/components/LinkButton";
+import { HERITAGE_IMAGES } from "#/lib/brand";
 import { ROUTES } from "#/lib/routes";
+
+import { HomeBoardTeaser } from "./HomeBoardTeaser";
+import { HomeJoinBand } from "./HomeJoinBand";
 
 export function HomePage() {
   const t = useTranslations();
   return (
-    <section className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-16">
-      <Image
-        src={BRAND_LOGO.src}
-        width={BRAND_LOGO.width}
-        height={BRAND_LOGO.height}
-        alt={t("logo_alt")}
-        sizes="160px"
-        className="h-40 w-auto self-start"
-      />
-      <p className="text-accent text-sm font-medium tracking-wide uppercase">{t("site_name")}</p>
-      <h1 className="font-display text-foreground text-4xl font-semibold">{t("home_title")}</h1>
-      <p className="text-foreground-muted text-lg">{t("home_intro")}</p>
-      <Alert tone="info">{t("home_status")}</Alert>
-      <div className="flex flex-wrap gap-3">
-        <Link
-          href={ROUTES.register}
-          className="bg-primary text-primary-foreground hover:bg-primary-hover inline-flex h-10 items-center rounded-md px-4 text-sm font-medium"
-        >
-          {t("home_cta_register")}
-        </Link>
-        <Link
-          href={ROUTES.login}
-          className="border-border-strong hover:bg-surface-muted inline-flex h-10 items-center rounded-md border px-4 text-sm font-medium"
-        >
-          {t("home_cta_login")}
-        </Link>
-      </div>
-    </section>
+    <>
+      <section className="bg-overlay relative flex min-h-180 flex-col overflow-hidden">
+        <Image
+          src={HERITAGE_IMAGES.village.src}
+          alt=""
+          fill
+          preload
+          unoptimized
+          sizes="100vw"
+          className="object-cover object-right-bottom"
+        />
+        <div className="from-overlay/95 via-overlay/80 to-overlay/10 absolute inset-0 bg-linear-to-t md:bg-linear-to-r" />
+        <div className="text-primary-foreground relative mx-auto mt-auto flex w-full max-w-7xl flex-col gap-6 px-4 pt-32 pb-16 md:my-auto md:px-12 md:pb-20">
+          <p className="text-inverse-accent flex items-center gap-2.5 text-xs font-semibold tracking-wider uppercase">
+            <Image
+              src={HERITAGE_IMAGES.motif.src}
+              width={HERITAGE_IMAGES.motif.width}
+              height={HERITAGE_IMAGES.motif.height}
+              alt=""
+              sizes="24px"
+              className="size-6"
+            />
+            {t("home_eyebrow")}
+          </p>
+          <h1 className="font-display max-w-2xl text-4xl font-semibold text-balance md:text-6xl">
+            {t("home_title")}
+          </h1>
+          <p className="text-inverse-muted max-w-xl text-lg">{t("home_intro")}</p>
+          <div className="flex flex-wrap gap-3 pt-2">
+            <LinkButton href={ROUTES.about}>{t("home_cta_about")}</LinkButton>
+            <LinkButton href={ROUTES.register} variant="inverse">
+              {t("nav_become_member")}
+            </LinkButton>
+          </div>
+          <p className="text-inverse-muted max-w-xl text-sm">{t("home_status")}</p>
+        </div>
+      </section>
+      <HomeBoardTeaser />
+      <HomeJoinBand />
+    </>
   );
 }

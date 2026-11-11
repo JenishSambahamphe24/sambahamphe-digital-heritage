@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>About us</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="width: 100%; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans)">
+  <dc-import name="SiteHeader" active="about" hint-size="100%,84px"></dc-import>
+
+  <section style="background: #fbf6ee; border-bottom: 1px solid var(--color-border)">
+    <div style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 56px 48px; display: flex; flex-wrap: wrap; align-items: center; gap: 48px">
+      <div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+        <p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent)">About us</p>
+        <h1 style="margin: 0; font-family: var(--font-display); font-size: 44px; line-height: 52px; font-weight: 600; text-wrap: balance">A community keeping its story together</h1>
+        <p style="margin: 0; font-size: 18px; line-height: 29px; color: var(--color-foreground-muted)">Sambahamphe Utthan Sangh brings together the Sambahamphe families of the Limbu (Yakthung) people, in Nepal and abroad, to preserve our history, keep our family line and pass our culture to the next generation.</p>
+      </div>
+      <img src="/_blob/cd11962e7d1b5da2ea5327e82bf85c9f" alt="Illustration of chyabrung drummers and dancers in traditional dress" style="flex: 1 1 480px; min-width: 0; max-width: 560px; height: auto; border-radius: 12px">
+    </div>
+  </section>
+
+  <section aria-labelledby="what" style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 80px 48px; display: flex; flex-direction: column; gap: 32px">
+    <h2 id="what" style="margin: 0; font-family: var(--font-display); font-size: 32px; line-height: 40px; font-weight: 600">What we do</h2>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">
+      <sc-for list="{{work}}" as="w" hint-placeholder-count="4">
+        <div style="padding: 24px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; display: flex; flex-direction: column; gap: 10px">
+          <span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 8px; background: var(--color-info-subtle); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 600">{{w.n}}</span>
+          <h3 style="margin: 0; font-size: 17px; line-height: 24px; font-weight: 600">{{w.title}}</h3>
+          <p style="margin: 0; font-size: 14px; line-height: 21px; color: var(--color-foreground-muted)">{{w.body}}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section aria-labelledby="seal" style="background: var(--color-surface); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border)">
+    <div style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 80px 48px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
+      <img src="/_blob/74d1d53640bbc4c25d8e208c90d53ca4" alt="The seal of Sambahamphe Utthan Sangh" style="flex: 0 1 360px; min-width: 0; height: auto">
+      <div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+        <h2 id="seal" style="margin: 0; font-family: var(--font-display); font-size: 32px; line-height: 40px; font-weight: 600">Our seal</h2>
+        <p style="margin: 0; font-size: 16px; line-height: 26px; color: var(--color-foreground-muted)">The seal carries the Sangh's name in Devanagari and in the Sirijanga script of the Limbu language, around three symbols:</p>
+        <dl style="margin: 0; display: flex; flex-direction: column; gap: 16px">
+          <div><dt style="font-weight: 600">The mountain</dt><dd style="margin: 4px 0 0; color: var(--color-foreground-muted); line-height: 24px">The Himalaya of the eastern hills, the land our ancestors came from.</dd></div>
+          <div><dt style="font-weight: 600">The Silam Sakma</dt><dd style="margin: 4px 0 0; color: var(--color-foreground-muted); line-height: 24px">The woven diamond of Yakthung culture, framing what we protect.</dd></div>
+          <div><dt style="font-weight: 600">The diyo</dt><dd style="margin: 4px 0 0; color: var(--color-foreground-muted); line-height: 24px">A lamp kept burning: knowledge handed from one generation to the next.</dd></div>
+        </dl>
+        <p style="margin: 0; font-size: 14px; color: var(--color-foreground-muted)">The year at its foot, २०५२, is the year the Sangh was founded.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="journey" style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 80px 48px; display: flex; flex-wrap: wrap; gap: 48px">
+    <div style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 12px">
+      <h2 id="journey" style="margin: 0; font-family: var(--font-display); font-size: 32px; line-height: 40px; font-weight: 600">Our journey</h2>
+      <p style="margin: 0; font-size: 16px; line-height: 26px; color: var(--color-foreground-muted)">Milestones are added as the Sangh records them. Items in brackets are waiting for the organisation's confirmation.</p>
+    </div>
+    <ol style="flex: 2 1 560px; list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--color-border); display: flex; flex-direction: column; gap: 28px">
+      <sc-for list="{{journey}}" as="j" hint-placeholder-count="4">
+        <li style="position: relative; padding-left: 28px">
+          <span aria-hidden="true" style="position: absolute; left: -8px; top: 4px; width: 14px; height: 14px; border-radius: 9999px; background: var(--color-primary); border: 3px solid var(--color-background)"></span>
+          <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--color-accent)">{{j.when}}</p>
+          <p style="margin: 4px 0 0; font-size: 17px; line-height: 26px; font-weight: 600">{{j.title}}</p>
+          <p style="margin: 4px 0 0; font-size: 15px; line-height: 23px; color: var(--color-foreground-muted)">{{j.body}}</p>
+        </li>
+      </sc-for>
+    </ol>
+  </section>
+
+  <section style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 0 48px 88px">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding: 32px; border-radius: 12px; background: var(--color-info-subtle)">
+      <div style="display: flex; flex-direction: column; gap: 6px; max-width: 640px">
+        <h2 style="margin: 0; font-family: var(--font-display); font-size: 24px; line-height: 32px; font-weight: 600">Who leads the Sangh</h2>
+        <p style="margin: 0; font-size: 15px; line-height: 23px; color: var(--color-foreground-muted)">The central board, the regional boards and the gaau committees are elected by the general assembly.</p>
+      </div>
+      <x-import component-from-global-scope="SambahampheUI.Button">See our boards</x-import>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2480}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      work: [
+        { n: '1', title: 'Keep the family line', body: 'Record every generation of the Sambahamphe line, checked by genealogy editors before it is published.' },
+        { n: '2', title: 'Preserve our history', body: 'Collect oral histories, documents and photographs before they are lost.' },
+        { n: '3', title: 'Celebrate our culture', body: 'Chasok Tangnam, chyabrung and the Mundhum, passed on through gatherings and teaching.' },
+        { n: '4', title: 'Support our families', body: 'Welfare work and a network for members in Nepal and abroad.' },
+      ],
+      journey: [
+        { when: '2052 BS', title: 'The Sangh is founded', body: '[Where and by whom: to be confirmed by the Sangh.]' },
+        { when: '[YEAR] BS', title: 'The first family tree is written down', body: '[Who compiled it and where the original is kept.]' },
+        { when: '[YEAR] BS', title: 'Regional boards and gaau committees form', body: '[Which regions, in which order.]' },
+        { when: '2083 BS', title: 'The digital archive opens', body: 'Members can claim their records and add their families online.' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

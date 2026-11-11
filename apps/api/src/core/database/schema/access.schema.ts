@@ -13,6 +13,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 import { ColumnHelper } from "./column.helper.js";
+import { orgUnits } from "./org-units.schema.js";
 import { users } from "./users.schema.js";
 
 export const scopeType = pgEnum("scope_type", ["global", "org_unit", "branch"]);
@@ -45,8 +46,7 @@ export const rolePermissions = pgTable(
   (table) => [primaryKey({ columns: [table.roleId, table.permissionKey] })],
 );
 
-// org_unit_id / branch_id get their foreign keys when those tables arrive
-// (Phase 2 and 3); until then they are plain ids.
+// branch_id gets its foreign key when branches arrive (Phase 3).
 export const roleAssignments = pgTable(
   "role_assignments",
   {
@@ -58,7 +58,7 @@ export const roleAssignments = pgTable(
       .notNull()
       .references(() => roles.id),
     scopeType: scopeType("scope_type").notNull(),
-    orgUnitId: uuid("org_unit_id"),
+    orgUnitId: uuid("org_unit_id").references(() => orgUnits.id),
     branchId: uuid("branch_id"),
     grantedBy: uuid("granted_by").references(() => users.id),
     grantedAt: timestamp("granted_at", { withTimezone: true }).notNull().defaultNow(),

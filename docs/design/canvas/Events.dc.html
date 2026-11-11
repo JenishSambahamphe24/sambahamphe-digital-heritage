@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Events</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/sambahampheui/tokens.css">
+<link rel="stylesheet" href="ds/sambahampheui/components/bundle.css">
+<script src="ds/sambahampheui/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&amp;family=Noto+Serif:wght@600&amp;family=Noto+Sans+Devanagari:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2d3192}a:hover{color:#22256f}
+</style>
+</helmet>
+<div style="width: 100%; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans)">
+  <dc-import name="SiteHeader" active="events" hint-size="100%,84px"></dc-import>
+
+  <section style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 48px 48px 8px; display: flex; flex-direction: column; gap: 20px">
+    <h1 style="margin: 0; font-family: var(--font-display); font-size: 40px; line-height: 48px; font-weight: 600">Events</h1>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+      <div role="tablist" aria-label="When" style="display: flex; gap: 28px; border-bottom: 1px solid var(--color-border)">
+        <button type="button" role="tab" aria-selected="{{isUpcoming}}" onClick="{{showUpcoming}}" style="{{upStyle}}">Upcoming</button>
+        <button type="button" role="tab" aria-selected="{{isPast}}" onClick="{{showPast}}" style="{{pastStyle}}">Past events</button>
+      </div>
+      <div role="group" aria-label="Category" style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px">
+        <sc-for list="{{cats}}" as="c" hint-placeholder-count="6">
+          <button type="button" aria-pressed="{{c.on}}" style="{{c.style}}">{{c.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <main style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 24px 48px 88px; display: flex; flex-direction: column; gap: 36px">
+    <sc-for list="{{groups}}" as="g" hint-placeholder-count="2">
+      <section style="display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-family: var(--font-display); font-size: 20px; line-height: 28px; font-weight: 600; color: var(--color-foreground-muted)">{{g.month}}</h2>
+        <sc-for list="{{g.items}}" as="e" hint-placeholder-count="2">
+          <a href="EventDetail.dc.html" style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px; padding: 18px 20px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; text-decoration: none; color: var(--color-foreground)">
+            <span style="flex: 0 0 72px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 6px; background: {{e.dateBg}}; color: {{e.dateFg}}">
+              <span style="font-family: var(--font-display); font-size: 28px; line-height: 32px; font-weight: 600">{{e.day}}</span>
+              <span style="font-size: 12px; font-weight: 500">{{e.mon}}</span>
+            </span>
+            <img src="{{e.img}}" alt="" style="flex: 0 0 140px; height: 80px; object-fit: cover; border-radius: 6px">
+            <span style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+              <span style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px">
+                <span style="padding: 2px 8px; border-radius: 4px; background: var(--color-surface-muted); color: var(--color-foreground-muted); font-weight: 600">{{e.cat}}</span>
+                <span style="{{e.statusStyle}}">{{e.status}}</span>
+              </span>
+              <span style="font-size: 18px; line-height: 24px; font-weight: 600">{{e.title}}</span>
+              <span style="font-size: 14px; color: var(--color-foreground-muted)">{{e.where}}</span>
+            </span>
+            <span style="font-size: 14px; font-weight: 500; color: var(--color-primary)">{{e.cta}}</span>
+          </a>
+        </sc-for>
+      </section>
+    </sc-for>
+  </main>
+
+  <dc-import name="SiteFooter" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1820}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'upcoming' };
+  }
+  renderVals() {
+    const isUpcoming = this.state.tab === 'upcoming';
+    const tabBase = 'margin: 0 0 -1px; padding: 0 2px 12px; border: 0; border-bottom: 2px solid transparent; background: none; font: inherit; font-size: 16px; cursor: pointer;';
+    const tabOn = tabBase + ' border-bottom-color: var(--color-primary); font-weight: 600; color: var(--color-foreground);';
+    const tabOff = tabBase + ' font-weight: 500; color: var(--color-foreground-muted);';
+    const chipOn = 'padding: 7px 14px; border-radius: 9999px; border: 1px solid var(--color-primary); background: var(--color-primary); color: #ffffff; font: inherit; font-weight: 500;';
+    const chipOff = 'padding: 7px 14px; border-radius: 9999px; border: 1px solid var(--color-border-strong); background: var(--color-surface); color: var(--color-foreground); font: inherit;';
+    const badge = (bg, fg) => 'padding: 2px 8px; border-radius: 4px; font-weight: 600; background: ' + bg + '; color: ' + fg + ';';
+    const status = {
+      Upcoming: badge('var(--color-info-subtle)', 'var(--color-info)'),
+      Ongoing: badge('var(--color-success-subtle)', 'var(--color-success)'),
+      Postponed: badge('var(--color-warning-subtle)', 'var(--color-warning)'),
+      Cancelled: badge('var(--color-danger-subtle)', 'var(--color-danger)'),
+      Completed: badge('var(--color-surface-muted)', 'var(--color-foreground-muted)'),
+    };
+    const d = '/_blob/cd11962e7d1b5da2ea5327e82bf85c9f', v = '/_blob/e43ef7d099b4aae609414fa54186664b', g = '/_blob/968633793a1b2182437b3c75ef7c906c';
+    const ev = (o) => ({ ...o, statusStyle: status[o.status], dateBg: o.status === 'Completed' || o.status === 'Cancelled' ? 'var(--color-surface-muted)' : 'var(--color-primary)', dateFg: o.status === 'Completed' || o.status === 'Cancelled' ? 'var(--color-foreground-muted)' : '#ffffff' });
+    const upcoming = [
+      { month: 'Mangsir 2083', items: [
+        ev({ day: '19', mon: 'Mangsir', img: d, cat: 'Cultural programme', status: 'Upcoming', title: 'Chasok Tangnam celebration', where: 'Community hall, Dharan · 10:00–16:00 · Central board and Dharan gaau committee', cta: 'Details' }),
+        ev({ day: '27', mon: 'Mangsir', img: v, cat: 'Picnic', status: 'Postponed', title: 'Kathmandu valley family picnic', where: 'Moved to Poush; new date to follow · Kathmandu Valley regional board', cta: 'Details' }),
+      ] },
+      { month: 'Poush 2083', items: [
+        ev({ day: '6', mon: 'Poush', img: g, cat: 'General assembly', status: 'Upcoming', title: 'Annual general meeting', where: 'Dharan · members only · Central board', cta: 'Details' }),
+      ] },
+      { month: 'Magh 2083', items: [
+        ev({ day: '20', mon: 'Magh', img: d, cat: 'Cultural programme', status: 'Upcoming', title: 'Youth chyabrung workshop', where: 'Online and in Itahari · Archive and culture committee', cta: 'Details' }),
+      ] },
+    ];
+    const past = [
+      { month: 'Kartik 2083', items: [
+        ev({ day: '2', mon: 'Kartik', img: g, cat: 'Social welfare', status: 'Completed', title: 'Elders’ day', where: 'Tehrathum · 22 photos', cta: 'Report and photos' }),
+      ] },
+      { month: 'Asoj 2083', items: [
+        ev({ day: '14', mon: 'Asoj', img: v, cat: 'Fundraising', status: 'Cancelled', title: 'Hall fundraising dinner', where: 'Cancelled by the central board · see the notice for refunds', cta: 'Notice' }),
+        ev({ day: '1', mon: 'Asoj', img: d, cat: 'Deusi-Bhailo', status: 'Completed', title: 'Deusi-Bhailo round, Dharan', where: '31 photos', cta: 'Report and photos' }),
+      ] },
+    ];
+    const cats = ['All', 'Cultural programme', 'General assembly', 'Picnic', 'Social welfare', 'Fundraising'];
+    return {
+      isUpcoming, isPast: !isUpcoming,
+      upStyle: isUpcoming ? tabOn : tabOff,
+      pastStyle: isUpcoming ? tabOff : tabOn,
+      showUpcoming: () => this.setState({ tab: 'upcoming' }),
+      showPast: () => this.setState({ tab: 'past' }),
+      cats: cats.map((label, i) => ({ label, on: i === 0 ? 'true' : 'false', style: i === 0 ? chipOn : chipOff })),
+      groups: isUpcoming ? upcoming : past,
+    };
+  }
+}
+</script>
+</body>
+</html>

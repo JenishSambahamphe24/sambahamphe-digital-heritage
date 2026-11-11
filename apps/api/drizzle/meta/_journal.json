@@ -50,6 +50,20 @@
       "when": 1794315409320,
       "tag": "0006_drop_place_coordinates",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1794316183645,
+      "tag": "0007_add_organization_units_terms_positions",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1794316218732,
+      "tag": "0008_add_organization_rules_and_seed",
+      "breakpoints": true
     }
   ]
 }

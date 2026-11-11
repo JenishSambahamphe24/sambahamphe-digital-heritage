@@ -12,5 +12,6 @@ import { PersonsRepository } from "./internal/persons.repository.js";
   imports: [AccessModule, ChangeRequestsModule, PlacesModule],
   controllers: [PersonsController, AdminPersonsController],
   providers: [PersonsRepository, PersonsService],
+  exports: [PersonsRepository],
 })
 export class PeopleModule {}

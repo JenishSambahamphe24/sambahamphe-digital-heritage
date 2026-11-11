@@ -242,3 +242,14 @@ describe("violations before saving", () => {
     expect(found.sort()).toEqual([...codes].sort());
   });
 });
+
+describe("board pages (Q-14 default)", () => {
+  it("shows an adult board member's name, even when living", () => {
+    expect(PrivacyPolicyHelper.boardNameVisible(livingAdult, TODAY)).toBe(true);
+    expect(PrivacyPolicyHelper.boardNameVisible(deceased, TODAY)).toBe(true);
+  });
+
+  it("never shows a minor", () => {
+    expect(PrivacyPolicyHelper.boardNameVisible(minor, TODAY)).toBe(false);
+  });
+});

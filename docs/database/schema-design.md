@@ -1045,6 +1045,7 @@ Enums that the organization may want to extend without a deploy (event categorie
 | Append-only audit | Trigger rejecting UPDATE / DELETE / TRUNCATE (works whatever DB role connects) |
 | Persons are never hard-deleted; revisions never change | Triggers on `persons` (DELETE / TRUNCATE) and `entity_revisions` (UPDATE / DELETE / TRUNCATE), migration `0005` |
 | Presumed living | `person_presumed_living(persons)` SQL function, migration `0005` |
+| Board terms don't overlap; one holder of a one-holder position; no double appointment to a seat; `is_exclusive` mirrors the position | Exclusion constraints `terms_no_overlap`, `appointments_exclusive_one_holder`, `appointments_no_double_seat` and two triggers, migration `0008` (`test/organization-schema.int.test.ts`) |
 | Privacy | `people/domain/privacy.ts` + response schemas + `person_presumed_living` SQL function for list queries |
 
 ## 14. Data volume & indexing notes
@@ -1052,6 +1053,8 @@ Enums that the organization may want to extend without a deploy (event categorie
 At 100k persons, ~250k relationship edges, the largest tables fit comfortably in memory on an 8 GB instance. Recursive CTE depth is capped server-side (max 6 per request for tree views, 30 for relationship-path search with early termination). `pg_stat_statements` will be enabled to drive further indexing decisions rather than speculative indexes now.
 
 ## 15. Deferred tables (later phases)
+
+Built in M2.2: organizations, unit types and allowed parents, org units, terms, position definitions, appointments (seeded: the organization, three board levels, the Central Board; positions are entered in the admin until the statute is confirmed). Deferred columns: `organizations.founded_date`/`registration_info`/`description`, `org_units.description` (rich text, M2.4) and `terms.elected_at_event_id` (events, M2.5).
 
 Built in M2.1: places, place alt names, clans, persons, person names, consents, person access grants, change requests and their operations, entity revisions. Still to come with their milestones: `person_translations`, `person_places` and `person_media` (M2.3/M2.4, with media and the rich-text editor), `change_request_comments` (M3.2), `user_person_links` and branches (Phase 3). Also deferred: `event_registrations`, `event_attendance`, `member_registry` (pending Q-6), `push_tokens`, `saved_searches`, `content_submissions` (reuses `change_requests` with `domain = 'content'`), `imports` (import batch tracking with row-level results).
 

@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { MapPin, ScrollText, UserRound, Users } from "lucide-react";
+import { Landmark, MapPin, ScrollText, UserRound, Users } from "lucide-react";
 import { useTranslations } from "use-intl";
 
 import { BRAND_LOGO } from "#/lib/brand";
 
 const NAV_ITEMS = [
+  { to: "/organization", label: "nav_organization", icon: Landmark },
   { to: "/persons", label: "nav_persons", icon: UserRound },
   { to: "/places", label: "nav_places", icon: MapPin },
   { to: "/users", label: "nav_users", icon: Users },

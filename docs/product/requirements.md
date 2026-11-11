@@ -168,7 +168,7 @@ These came up while analysing the brief. Items marked **(blocking)** affect the 
 | Q-11 | Should Phase ordering stand? Genealogy is the core value but is scheduled 3rd. | Roadmap | Build shared Person core in Phase 1–2, full genealogy in Phase 3 (see roadmap) |
 | Q-12 | Video: are there large video archives to host, or is YouTube acceptable? | Storage & transcoding cost | YouTube/Vimeo embeds first |
 | Q-13 | Do regional boards span countries (e.g., diaspora in Hong Kong, UK, Gulf)? | Place model, timezones | Support any country in Place; events store their own timezone |
-| Q-14 | Should publicly visible board members show photos and contact info? | Consent for living office-bearers | Name + position + photo with consent; no contact details publicly |
+| Q-14 | Should publicly visible board members show photos and contact info? | Consent for living office-bearers | **Default applied in M2.2, awaiting confirmation:** name + position public on board pages (minors never shown); no dates, places or contact details; photos with consent once media exists (M2.3) |
 
 ## 7. Decisions recorded
 

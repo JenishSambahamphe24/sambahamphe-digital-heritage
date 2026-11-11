@@ -91,6 +91,26 @@ Sign in to the admin as the super admin (or anyone with the Genealogy editor rol
 | F12 | **Audit log** | Entries "change_request.auto_approved" and "place.created" — no names or dates in them |
 | F13 | Switch the admin to **नेपाली** and open a person | Labels, dates and choices are in Nepali |
 
+## G. Admin — organization (M2.2)
+
+Run `pnpm db:migrate` once after pulling M2.2. Sign in as the super admin (or anyone with the Organization manager role).
+
+| # | Do | Expect |
+|---|---|---|
+| G1 | **Organization** in the sidebar | One board: Central Board |
+| G2 | **Positions** → add Chairperson (order 1, 1 holder at a time, office-bearer), Secretary (2, 1 holder), Member (9, up to 3) | Each appears in order with "One holder at a time" / "Up to 3 holders" |
+| G3 | Back on Organization: **Add a board under** Central Board → only *Regional Board* is offered; name it, web address `koshi-regional`, area Panchthar | Saved; you land on its page, path shows "Central Board" |
+| G4 | Add another board with the same web address | Toast: another board already uses this web address |
+| G5 | On Central Board → **Terms** → **Add a term**: number 5, starts BS 2079 (year only), no end | Listed as "Term 5 · Current", start shown in BS |
+| G6 | Add a second term starting BS 2080 | Toast: this board already has a term in those dates |
+| G7 | **Members** → add a Chairperson: type 2 letters of a person from section F, pick them, start = the term start | Listed under Members with "Elected" and the BS date |
+| G8 | Add a second Chairperson in the same term | Toast: someone else holds this position in those dates |
+| G9 | Add 3 Members, then a 4th | The 4th: every seat in this position is taken |
+| G10 | Add the minor from F9 as a Member, then open `http://localhost:3001/api/v1/org/units/<central id>/board` in a private window | The minor is **not** in the public board; the adults show name and position only |
+| G11 | **End** the Chairperson (BS 2081, Resigned), then add a new Chairperson from BS 2081 | Both saved: the first shows "– … (resigned)" |
+| G12 | **Retract** a member: confirmation dialog with a reason first | The entry leaves the list |
+| G13 | Switch the admin to **नेपाली** | Organization pages, dates and choices are in Nepali |
+
 ## E. Look and feel (any page)
 
 | # | Check |

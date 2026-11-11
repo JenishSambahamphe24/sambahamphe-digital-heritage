@@ -155,6 +155,16 @@ export class PrivacyPolicyHelper {
     return { visible: groups.has("names"), groups };
   }
 
+  // Q-14 default: a board member's name and position are public facts of the
+  // organization, shown on board pages even when the rest of the record is
+  // hidden. Minors are never shown, and nothing else from the record is.
+  static boardNameVisible(
+    subject: Pick<IPrivacySubject, "livingStatus" | "deathDate" | "birthSortTo">,
+    today: Date,
+  ): boolean {
+    return !PrivacyPolicyHelper.isMinor(subject, today);
+  }
+
   // Checked before saving, so an editor gets a clear error instead of a silent clamp.
   static violations(
     subject: IPrivacySubject,
